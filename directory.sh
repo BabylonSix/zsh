@@ -1,0 +1,82 @@
+# File and Directory creation
+alias f='touch $@'      # make a new file
+alias d='mkdir -pv $@'  # make a new directory
+alias lns='ln -s'       # create a symbolic link
+
+md() {
+if [[ $# = 0 ]]; then
+	echo 'Error: No directory name provided'
+else
+	mkdir -p "$1" # Create directory
+	cd "$1" || exit	 # CD into the newly created directory
+fi
+}
+
+
+# Open files | directories
+alias o='open .'
+alias oc='open -a Google\ Chrome'
+alias ot='open -a Atom'
+alias of='ot .' # open file | directory
+alias od='ot .' # open file | directory
+
+
+# take ownership of directory
+sch() { sudo chown -R $(whoami):admin '$1'; }
+
+
+# chose disk volume
+v () {
+if [[ -z $1 ]]; then # check if argument is empty
+	print '\n${RED}ERROR:${NC}'
+	print '\n  You did not enter a Disk Volume'
+else
+	/Volumes/$1
+fi
+}
+
+
+# Safe Directory Destruction
+alias srm='trash' # moves file to trash instead of instant deleting
+
+
+# Zip Directory or file
+zipr() { zip -r $1.zip $1; }
+
+
+# Directory Display
+alias l='clear; ls'               # 'ls' shorthand
+alias ls='clear; ls'              # clear screen + display current directory
+alias ll='clear; ls -lh'          # long list (permisions, owner, size)
+alias la='clear; ls -A'           # list all files (including hiddne files)
+alias lla='clear; ls -Alh'        # long list of all files
+alias lh='clear; ls -d .[^.]*'    # list all dotfiles
+alias llh='clear; ls -dlh .[^.]*' # long list of all dotfiles
+alias lm='clear; ls -t'           # sort with recently modified first
+alias llm='clear; ls -lht'        # long list of recently modified files
+
+# Directory Tree
+alias tree='tree -C'              # set tree to always show colors
+alias t='tree -I "node_modules"'  # shortcut for tree
+
+tl() {
+	# filter directory tree to '#a' levels deap
+	# ignore node_modulesn folder
+	tree -L "$@" -I "node_modules"
+}
+
+
+# Directory Navigation
+alias b='cd -; l' # toggle last & current directory
+
+
+# move up x number of directories or fail gracefully
+u() { cd .. || exit; l; }
+u2() { cd ../.. || exit; l; }
+u3() { cd ../../.. || exit; l; }
+u4() { cd ../../../.. || exit; l; }
+u5() { cd ../../../../.. || exit; l; }
+u6() { cd ../../../../../.. || exit; l; }
+u7() { cd ../../../../../../.. || exit; l; }
+u8() { cd ../../../../../../../.. || exit; l; }
+u9() { cd ../../../../../../../../.. ||exit; l; }
