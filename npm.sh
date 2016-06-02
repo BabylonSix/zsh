@@ -1,12 +1,8 @@
 # node version list
-function nvml() {
-	nvm list
-}
+nvml() { nvm list; }
 
 # use node version
-function nvmu() {
-	nvm use $1
-}
+nvmu() { nvm use $1; }
 
 # npm completions
 eval "$(npm completion 2>/dev/null)"
@@ -25,11 +21,7 @@ alias npmi='npm init '
 
 
 # Lists Local NPM Packages
-function npml() {
-  npm ls --depth=0 "$@" 2>/dev/null
-}
+npml() { npm ls --depth=0 "$@" 2>/dev/null; }
 
 # Lists Global NPM Packages
-function npmg() {
-  npm ls --depth=0 -g 2>/dev/null
-}
+npmg() { npm ls --depth=0 -g 2>/dev/null; }

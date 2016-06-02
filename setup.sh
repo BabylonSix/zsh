@@ -43,6 +43,7 @@ brewPrograms=(
   gzip        # file compression
   bzip2       # file compression
   xz          # file compression
+  git         # git version control
   exiftool    # read | write exif data
   imagemagick # image manipulator
   xmlstarlet  # parse xml

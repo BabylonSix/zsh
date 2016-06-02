@@ -9,8 +9,6 @@
 # $reset_color					will reset the text color to the default color. Does not reset bold. use %b to reset bold. Saves typing if it's just %f though.
 # %K{color} [...] %k		will set the background color. Same color as non-bold text color. Prefixing with any single-digit number makes the bg black.
 
-autoload -U colors && colors
-
 # Reset
 NC='%f'            # No Color
 
@@ -27,7 +25,8 @@ WHITE='%F{015}'    # White
 PINK='%F{213}'     # Pink
 
 
-
+# Load Colors for ZSH
+autoload -U colors && colors
 
 # ZSH PROMPT LOOK & FEEL
 # [user] directory (version control information):
