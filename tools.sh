@@ -1,6 +1,14 @@
 
-# Sets Default text editor: Sublime Text 3
-export EDITOR='subl -w'
+# Text Editors
+export ATOM='Atom'
+export SUBLIME='Sublime Text'
+
+ # Default Editor
+export EDITOR=$SUBLIME
+
+# Open With
+alias ot='open -a ${EDITOR}'
+alias oc='open -a Google\ Chrome'
 
 # Show ZSH Keyboard Shortcuts
 alias kb='bindkey'

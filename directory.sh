@@ -5,18 +5,17 @@ alias lns='ln -s'       # create a symbolic link
 
 md() {
 if [[ $# = 0 ]]; then
-	echo 'Error: No directory name provided'
+	print '\n${RED}Error:${NC}'
+	print '\n   No directory name provided'
 else
-	mkdir -p "$1" # Create directory
-	cd "$1" || exit	 # CD into the newly created directory
+	mkdir -p $1    # Create directory
+	cd $1 || exit	 # CD into the newly created directory
 fi
 }
 
 
 # Open files | directories
 alias o='open .'
-alias oc='open -a Google\ Chrome'
-alias ot='open -a Atom'
 alias of='ot .' # open file | directory
 alias od='ot .' # open file | directory
 
