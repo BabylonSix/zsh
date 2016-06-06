@@ -10,6 +10,9 @@ export EDITOR=$SUBLIME
 alias ot='open -a ${EDITOR}'
 alias oc='open -a Google\ Chrome'
 
+# JavaScript Mac Automation REPL
+alias jsx='osascript -l JavaScript -i'
+
 # Show ZSH Keyboard Shortcuts
 alias kb='bindkey'
 
