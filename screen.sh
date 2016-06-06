@@ -40,17 +40,18 @@ w3_4=$((screenWidth / 4 * 3))
 }; screenSize # invoke screenSize fucntion
 
 screenTest() {
-	print 'screenHeight'
-	print $screenHeight
-	print $h1_3
-	print $h2_3
-	print $h1_4
-	print $h2_4
-	print $h3_4
-	print '\nscreenWidth'
-	print $screenWidth
-	print $w1_3
-	print $w2_3
-	print $w1_4
-	print $w2_4
+	print '\n${ORANGE}screenHeight${NC}'
+	print '${PINK}${screenHeight}${NC}\t screen height'
+	print '${PINK}${h1_3}${NC}\t 1/3 height'
+	print '${PINK}${h2_3}${NC}\t 2/3 height'
+	print '${PINK}${h1_4}${NC}\t 1/4 height'
+	print '${PINK}${h2_4}${NC}\t 2/4 height'
+	print '${PINK}${h3_4}${NC}\t 3/4 height'
+	print '\n${ORANGE}screenWidth${NC}'
+	print '${PINK}${screenWidth}${NC}\t screen width'
+	print '${PINK}${w1_3}${NC}\t 1/3 width'
+	print '${PINK}${w2_3}${NC}\t 2/3 width'
+	print '${PINK}${w1_4}${NC}\t 1/4 width'
+	print '${PINK}${w2_4}${NC}\t 2/4 width'
+	print '${PINK}${w3_4}${NC}\t 3/4 width'
 }
