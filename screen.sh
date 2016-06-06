@@ -1,11 +1,24 @@
 screenSize() {
 
-# Define Screen Sizes
-macBook17Size() { screenHeight=1200; screenWidth=1920; }
-iMacSize() { screenHeight=1; screenWidth=1; }
+# automatically get screen width
+export screenWidth=`osascript <<EOF
+tell app "Finder"
+	-- get screen dimensions
+	set dimensions to bounds of window of desktop
+	-- pull out the width
+	set wide to item 3 of dimensions
+end tell
+EOF`
 
-# invoke desired screen size
-macBook17Size
+# automatically get screen height
+export screenHeight=`osascript <<EOF
+tell app "Finder"
+	-- get screen dimensions
+	set dimensions to bounds of window of desktop
+	-- pull out the height
+	set wide to item 4 of dimensions
+end tell
+EOF`
 
 # resulting screen sizes:
 # screenHeight
@@ -22,6 +35,8 @@ w2_3=$((screenWidth / 3 * 2))
 
 w1_4=$((screenWidth / 4))
 w2_4=$((screenWidth / 4 * 2))
+w3_4=$((screenWidth / 4 * 3))
+
 }; screenSize # invoke screenSize fucntion
 
 screenTest() {
