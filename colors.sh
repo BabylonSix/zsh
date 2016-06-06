@@ -23,7 +23,7 @@ BLUE='%F{075}'     # Blue
 PURPLE='%F{099}'   # Purple
 CYAN='%F{123}'     # Cyan
 WHITE='%F{015}'    # White
-PINK='%F{213}'     # Pink
+PINK='%F{211}'     # Pink
 
 
 # Load Colors for ZSH
