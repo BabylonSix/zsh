@@ -2,7 +2,11 @@
 # Symlink the setup to .zshrc as shown below to begin setup
 # ln -sf ~/bin/zsh/setup.sh ~/.zshrc
 
-
+# directory structure of zsh setup file should look as following
+# bin
+# ├── web
+# └── zsh
+#     └── setup.sh
 
 setupZSH() {
 
