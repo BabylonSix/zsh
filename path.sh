@@ -3,15 +3,22 @@
 # Looks in order, from first to last.
 # $PATH is the default system path.
 
-# Set PATH Variable
-PATH=$PATH:\
-/bin:\
-/sbin:\
-/usr/bin:\
-/usr/sbin:\
-/usr/local/bin:\
-/usr/local/sbin:\
-/usr/local/cellar:
+
+# Path Variable Constructor
+pathDirs=(
+  /bin
+  /sbin
+  /usr/bin
+  /usr/sbin
+  /usr/local/bin
+  /usr/local/sbin
+  /usr/local/cellar
+)
+
+for dir in $pathDirs
+do
+  PATH+=":$dir" # add our own directories to the system $PATH variable
+done
 
 
 path() { $SHELL -lc 'echo $PATH | tr : "\n"'; } # display path variable
