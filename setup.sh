@@ -1,12 +1,15 @@
-
-# Symlink the setup to .zshrc as shown below to begin setup
-# ln -sf ~/bin/zsh/setup.sh ~/.zshrc
-
-# directory structure of zsh setup file should look as following
+# INSTALLATION
+#
+# Directory structure of zsh setup file should look as following
 # bin
 # ├── web
 # └── zsh
 #     └── setup.sh
+#
+# If the directory structure looks like the above,
+# Symlink the setup to .zshrc as shown below to begin setup
+#
+# ln -sf ~/bin/zsh/setup.sh ~/.zshrc; zsh -l
 
 
 setupZSH() {
@@ -67,11 +70,18 @@ do
   fi
 done
 
-# check if node is installed, and if not => install it
-export ~/bin/zsh/node-setup.sh
 
 # reload everything & clean install
-export ~/zsh/setup.sh; brew prune
+. ~/zsh/setup.sh
+brew prune
+. ~/bin/zsh/path.sh # load $PATH first
+
+
+# If no version of node is installed, install node
+if [[ ! -a $currentNode ]]; then
+  nvm install node # install node
+  print '\n'       # visually separate install
+fi
 }
 
 
