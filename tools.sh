@@ -4,7 +4,7 @@ export ATOM='Atom'
 export SUBLIME='Sublime Text'
 
 # Default Editor
-export EDITOR=$SUBLIME
+export EDITOR=$ATOM
 
 # Open With
 alias ot='open -a ${EDITOR}'

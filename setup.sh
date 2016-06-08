@@ -77,7 +77,7 @@ brew prune
 
 
 # If no version of node is installed, install node
-if [[ ! -a $currentNode ]]; then
+if [[ ! -a ~/.nvm/versions/node/ ]]; then
   nvm install node # install node
   print '\n'       # visually separate install
 fi
