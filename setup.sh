@@ -9,21 +9,13 @@
 #     └── setup.sh
 
 
-
-# All of our tools depend on homebrew being installed, so
-# First, check if brew is installed, and if not, install it
-if [[ -a /usr/local/bin/brew ]]; then
-  'true' # if brew is installed - do nothing
-else
-  # install brew
-  setupZSH
-
-fi
-
-
-
-
 setupZSH() {
+
+  # if brew is not installed, install it
+  if [[ ! -a /usr/local/bin/brew ]]; then
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  fi
+
 
 # Load homebrew/dupes install directory (for rsync)
 brew tap homebrew/dupes || exit
@@ -68,14 +60,10 @@ brewPrograms=(
 
 for program in $brewPrograms
 do
-  # check if program is installed
-  if [[ -a /usr/local/Cellar/$program ]]; then
-  # if program is installed - do nothing
-  else
-    # install program
-    brew install $program
-    # divide the installs visually with 2 newlines
-    print '\n\n'
+  # if program is not installed, install it
+  if [[ ! -a /usr/local/Cellar/$program ]]; then
+    brew install $program # install program
+    print '\n\n'          # divide the installs visually with 2 newlines
   fi
 done
 
@@ -99,6 +87,14 @@ resetZSH() {
   # setupZSH again
   setupZSH
 }
+
+
+
+
+# If brew is not installed, run setupZSH
+if [[ ! -a /usr/local/bin/brew ]]; then
+  setupZSH
+fi
 
 
 
