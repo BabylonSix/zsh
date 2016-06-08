@@ -8,17 +8,22 @@
 # └── zsh
 #     └── setup.sh
 
-setupZSH() {
 
-# Check if brew is installed, and if not, install it
+
+# All of our tools depend on homebrew being installed, so
+# First, check if brew is installed, and if not, install it
 if [[ -a /usr/local/bin/brew ]]; then
-  # if brew is installed - do nothing
+  'true' # if brew is installed - do nothing
 else
   # install brew
-
+  setupZSH
 
 fi
 
+
+
+
+setupZSH() {
 
 # Load homebrew/dupes install directory (for rsync)
 brew tap homebrew/dupes || exit
