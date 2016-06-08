@@ -15,7 +15,8 @@ if [[ -a /usr/local/bin/brew ]]; then
   # if brew is installed - do nothing
 else
   # install brew
-  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+
 fi
 
 
@@ -73,6 +74,8 @@ do
   fi
 done
 
+# check if node is installed, and if not => install it
+export ~/bin/zsh/node-setup.sh
 
 # reload everything & clean install
 export ~/zsh/setup.sh; brew prune
@@ -124,7 +127,8 @@ export NVM_DIR=~/.nvm
 . ~/bin/zsh/shell.sh                 # Look & Feel of the shell
 . ~/bin/zsh/directory.sh             # Directory creation|navigation
 . ~/bin/zsh/tools.sh                 # Tools & Utilities
-. ~/bin/zsh/npm.sh                   # NPM completions
+. ~/bin/zsh/node-setup.sh            # NVM & NPM Setup + Packages
+. ~/bin/zsh/node-tools.sh            # NPM completions, etc...
 . ~/bin/zsh/completion.sh            # ZSH completions
 . ~/bin/zsh/ssh.sh                   # SSH configuration
 . ~/bin/zsh/git.sh                   # Git configuration
