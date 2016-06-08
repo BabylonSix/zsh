@@ -72,7 +72,6 @@ done
 
 
 # reload everything & clean install
-. ~/zsh/setup.sh
 brew prune
 . ~/bin/zsh/path.sh # load $PATH first
 

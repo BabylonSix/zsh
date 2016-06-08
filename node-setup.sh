@@ -2,6 +2,7 @@
 currentNode=~/.nvm/versions/node/$(node --version)
 
 
+
 # If no version of node is installed, install node
 if [[ ! -a $currentNode ]]; then
   nvm install node # install node
