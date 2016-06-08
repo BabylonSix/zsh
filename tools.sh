@@ -3,7 +3,7 @@
 export ATOM='Atom'
 export SUBLIME='Sublime Text'
 
- # Default Editor
+# Default Editor
 export EDITOR=$SUBLIME
 
 # Open With
