@@ -2,10 +2,8 @@
 currentNode=~/.nvm/versions/node/$(node --version)
 
 
-# Check if any version of Node is installed
-if [[ -a $currentNode ]]; then
-  'true'           # if node is installed - do nothing
-else               # if node isn't found
+# If no version of node is installed, install node
+if [[ ! -a $currentNode ]]; then
   nvm install node # install node
   print '\n'       # visually separate install
 fi
@@ -56,10 +54,8 @@ npmPackages=(
 # in current version of node, and if not, install them
 for package in $npmPackages
 do
-  # check if package is installed
-  if [[ -a $currentNode/lib/node_modules/$package ]]; then
-    'true'                  # if package is installed - do nothing
-  else                      # if package isn't found
+  # if package is not installed, install it
+  if [[ ! -a $currentNode/lib/node_modules/$package ]]; then
     npm install -g $package # install package globally
     print '\n'              # visually separate install
   fi
