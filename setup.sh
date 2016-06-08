@@ -125,16 +125,16 @@ export NVM_DIR=~/.nvm
 . ~/bin/zsh/directory.sh             # Directory creation|navigation
 . ~/bin/zsh/tools.sh                 # Tools & Utilities
 . ~/bin/zsh/npm.sh                   # NPM completions
-. ~/bin/zsh/completion.sh
+. ~/bin/zsh/completion.sh            # ZSH completions
 . ~/bin/zsh/ssh.sh                   # SSH configuration
 . ~/bin/zsh/git.sh                   # Git configuration
 . ~/bin/zsh/extract.sh               # unzip utility
 . ~/bin/zsh/alias.sh                 # Shortcut/Alias commands
 . ~/bin/zsh/screen.sh                # screensize tools
+. ~/bin/web/web-path.sh              # web project creation tools
 . `brew --prefix`/etc/profile.d/z.sh # Lets Z work
 . `brew --prefix`/share/antigen.zsh  # OH-MY-ZSH Plugins
 . /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-. ~/bin/web/web-path.sh
 
 
 
