@@ -9,15 +9,15 @@ eval "$(npm completion 2>/dev/null)"
 
 # Install and save to dependencies in your package.json
 # npms is used by https://www.npmjs.com/package/npms
-alias npms="npm i -S "
+alias npms="npm i -S"
 
 # Install and save to dev-dependencies in your package.json
 # npmd is used by https://github.com/dominictarr/npmd
-alias npmd="npm i -D "
+alias npmd="npm i -D"
 
 
 # Initialize NPM
-alias npmi='npm init '
+alias npmi='npm init'
 
 
 # Lists Local NPM Packages
