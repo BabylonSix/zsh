@@ -4,21 +4,27 @@
 # $PATH is the default system path.
 
 
-# Path Variable Constructor
-pathDirs=(
-  /bin
-  /sbin
-  /usr/bin
-  /usr/sbin
-  /usr/local/bin
-  /usr/local/sbin
-  /usr/local/cellar
-)
+setupPATH() {
+  # Path Variable Constructor
+  pathDirs=(
+    /bin
+    /sbin
+    /usr/bin
+    /usr/sbin
+    /usr/local/bin
+    /usr/local/sbin
+    /usr/local/cellar
+    /usr/local/opt/gnu-sed/libexec/gnuman
+    /usr/local/opt/gnu-tar/libexec/gnubin
+    /usr/local/opt/findutils/libexec/gnubin
+    /usr/local/opt/coreutils/libexec/gnubin
+  )
 
-for dir in $pathDirs
-do
-  PATH+=":$dir" # add our own directories to the system $PATH variable
-done
+  for dir in $pathDirs
+  do
+    PATH+=":$dir" # add our own directories to the system $PATH variable
+  done
+}; setupPATH
 
 
 path() { $SHELL -lc 'echo $PATH | tr : "\n"'; } # display path variable
