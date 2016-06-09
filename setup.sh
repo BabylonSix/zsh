@@ -14,61 +14,112 @@
 
 setupZSH() {
 
-  # if brew is not installed, install it
-  if [[ ! -a /usr/local/bin/brew ]]; then
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-  fi
+# fix permissions
+sudo chown $(whoami) /usr/local/etc;
+
+# if brew is not installed, install it
+if [[ ! -a /usr/local/bin/brew ]]; then
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  print '\n\n'
+fi
+
+setupSources() {
+  # Load homebrew/dupes install directory (for rsync)
+  brew tap homebrew/dupes    || exit; print '\n\n'
+  # Load homebrew/dupes install directory
+  brew tap homebrew/versions || exit; print '\n\n'
+  # extend the amount of available packages
+  brew tap caskroom/cask     || exit; print '\n\n'
+}; setupSources
 
 
-# Load homebrew/dupes install directory (for rsync)
-brew tap homebrew/dupes || exit
+setupPrograms() {
+  # check if the following programs are installed,
+  # if they are not, install them
+  Programs=(
+    nvm                      # node version manage
+    pyenv                    # python version manager
+    tree                     # shows directory tree
+    tmux                     # splits terminal windows
+    antigen                  # oh-my-zsh plugin manager
+    vcprompt                 # lets git display prompt messages
+    z                        # directory search tool
+    httpie                   # http tool
+    ack                      # grep for code
+    trash                    # safe deletion
+    rsync                    # sync files
+    wget                     # network downloader
+    nmap                     # port scanner
+    netcat                   # network utility
+    mplayer                  # video player
+    lynx                     # web browser
+    mcrypt                   # encrypt|decrypt data files
+    openssh                  # SSH connectivity tools
+    gzip                     # file compression
+    bzip2                    # file compression
+    xz                       # file compression
+    unzip                    # file compression
+    git                      # git version control
+    exiftool                 # read | write exif data
+    imagemagick              # image manipulator
+    xmlstarlet               # parse xml
+    tesseract                # OCR
+    gocr                     # another OCR
+    shellcheck               # shell linter
+    bash                     # updated bash
+    zsh                      # updated zsh
+    zsh-syntax-highlighting  # zsh highlighting
+    youtube-dl               # youtube downloader
+    ffmpeg                   # youtube-dl dependency
+    less                     # file content viewer
+    nano                     # text editor
+    emacs                    # text editing with super powers
+    tmux                     # terminal screen management
+    screen                   # terminal screen management
+    watch                    # watches a program
+    m4                       # macro processing language
+  )
 
 
-# check if the following programs are installed,
-# if they are not, install them
-brewPrograms=(
-  tree        # shows directory tree
-  tmux        # splits terminal windows
-  antigen     # oh-my-zsh plugin manager
-  vcprompt    # lets git display prompt messages
-  z           # directory search tool
-  nvm         # node version manage
-  pyenv       # python version manager
-  httpie      # http tool
-  grep        # regex tool
-  ack         # grep for code
-  trash       # safe deletion
-  rsync       # sync files
-  wget        # network downloader
-  nmap        # port scanner
-  netcat      # network utility
-  mplayer     # video player
-  lynx        # web browser
-  mcrypt      # encrypt|decrypt data files
-  gzip        # file compression
-  bzip2       # file compression
-  xz          # file compression
-  git         # git version control
-  exiftool    # read | write exif data
-  imagemagick # image manipulator
-  xmlstarlet  # parse xml
-  tesseract   # OCR
-  gocr        # another OCR
-  shellcheck  # shell linter
-  youtube-dl  # youtube downloader
-  ffmpeg      # youtube-dl dependency
-  zsh-syntax-highlighting
-)
+  for program in $Programs
+  do
+    # if program is not installed, install it
+    if [[ ! -a /usr/local/Cellar/$program ]]; then
+      brew install $program # install program
+      print '\n\n'          # divide the installs visually with 2 newlines
+    fi
+  done
+}; setupPrograms
 
 
-for program in $brewPrograms
-do
-  # if program is not installed, install it
-  if [[ ! -a /usr/local/Cellar/$program ]]; then
-    brew install $program # install program
-    print '\n\n'          # divide the installs visually with 2 newlines
-  fi
-done
+setupUtils() {
+  # gnu utils, or just stuff with a ton of flags
+  Utils=(
+    coreutils
+    binutils
+    diffutils
+    findutils --with-default-names  # collection of GNU find, xargs, and locate
+    gnutls                          # transport layer library
+    gnu-indent --with-default-names # C language beautifier
+    gnu-tar --with-default-names    # file compression
+    gnu-which --with-default-names  # program finder
+    grep --with-default-names       # regex tool
+    gawk                            # gnu awk (text processing)
+    gnu-sed --with-default-names    # gnu stream editor
+    ed --with-default-names         # text editor
+    vim --with-override-system-vi --with-python3 --with-lua --with-luajit # text editor
+  )
+
+
+  for util in $Utils
+  do
+    # if program is not installed, install it
+    if [[ ! -a /usr/local/Cellar/$util ]]; then
+      brew install $util # install program
+      print '\n\n'          # divide the installs visually with 2 newlines
+    fi
+  done
+}; setupUtils
 
 
 # reload everything & clean install
@@ -92,6 +143,9 @@ resetZSH() {
 
   # uninstall homebrew
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
+
+  # visually divide
+  print '\n\n'
 
   # setupZSH again
   setupZSH
