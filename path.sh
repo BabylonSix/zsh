@@ -29,7 +29,6 @@ setupPATH() {
 
 path() { $SHELL -lc 'echo $PATH | tr : "\n"'; } # display path variable
 
-ts() { $SHELL -lc 'echo hello'; } # use this guy for debugging the path file
 
 
 
