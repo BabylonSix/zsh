@@ -28,6 +28,11 @@ alias ka="killall -9"		# kill a running program
 # List Processes
 alias tu='htop'
 
+# find process X
+fp() {
+	ps ax | grep "$1"
+}
+
 # grep with color
 alias grep='grep --color=always'
 
