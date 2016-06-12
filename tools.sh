@@ -100,6 +100,11 @@ us() { # Update System
 
 
 
+# show state of zsh options
+alias zsho='set -o'
+
+
+
 # RamDisk
 ram() {
 if [[ -z $1 ]]; then       # check if argument is empty
