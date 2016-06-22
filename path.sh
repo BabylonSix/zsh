@@ -27,11 +27,13 @@ setupPATH() {
 }; setupPATH
 
 
+
+# TOOLS
 path() { $SHELL -lc 'echo $PATH | tr : "\n"'; } # display path variable
 
 
 
-
+# setup MANPATH variable
 setupMANPATH() {
   manpathDirs=(
     /usr/local/opt/gnu-sed/libexec/gnuman

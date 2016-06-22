@@ -38,8 +38,8 @@ setupPrograms() {
   # if they are not, install them
   Programs=(
     nvm                      # node version manage
-    pyenv                    # python version manager
     tree                     # shows directory tree
+    vim --with-override-system-vi --with-python3 # text editor
     tmux                     # splits terminal windows
     antigen                  # oh-my-zsh plugin manager
     vcprompt                 # lets git display prompt messages
@@ -78,6 +78,7 @@ setupPrograms() {
     screen                   # terminal screen management
     watch                    # watches a program
     m4                       # macro processing language
+    pyenv                    # python version manager
   )
 
 
@@ -107,7 +108,6 @@ setupUtils() {
     gawk                            # gnu awk (text processing)
     gnu-sed --with-default-names    # gnu stream editor
     ed --with-default-names         # text editor
-    vim --with-override-system-vi --with-python3 --with-lua --with-luajit # text editor
   )
 
 
@@ -123,6 +123,7 @@ setupUtils() {
 
 
 # reload everything & clean install
+brew uninstall python # uninstall python dependancy for vim (we'll use pyenv to manage python versions instead)
 brew prune
 . ~/bin/zsh/path.sh # load $PATH first
 

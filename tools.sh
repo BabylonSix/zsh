@@ -107,7 +107,7 @@ alias zsho='set -o'
 
 # RamDisk
 ram() {
-if [[ -z $1 ]]; then       # check if argument is empty
+if (( $# < 1 )); then # if number of arguments is less than one
 	print 'How many gigabytes in size'
 	print 'do you want your ram storage to be?'
 else

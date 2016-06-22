@@ -18,6 +18,7 @@ npmPackages=(
   babel-preset-es2015
   browser-sync
   browserify
+  caniuse
   cheerio
   css2stylus
   csslint
