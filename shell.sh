@@ -1,37 +1,64 @@
 
+
+##############
+# SHELL SETUP
+#
 # Raise number of files a task can open concurrently
-ulimit -S -n 4096
+ulimit -S -n 10000
 
 # Prefer US English and use UTF-8
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US"
 
 # load in new style completion for zsh
-autoload -U compinit
-compinit
+autoload -U compinit; compinit
+
+
 
 
 ###############
 # SHELL OPTIONS
 #
-# turn on zsh extended globbing, like ** for recursive directories...
-setopt extended_glob
-# perform variable substitution in PROMPT, so we can load git branch/status
-setopt prompt_subst
-setopt APPEND_HISTORY # adds history
-setopt INC_APPEND_HISTORY SHARE_HISTORY  # adds history incrementally and share it across sessions
-setopt HIST_IGNORE_ALL_DUPS  # don't record duplicates in history
-setopt HIST_REDUCE_BLANKS # ignore empty inputs in history
-setopt AUTO_CD # Change directories without CD
+shellOptions=(
+
+# Changing Directories
+auto_cd # Change directories without CD
+
+# Completion
+
+# Expansion and Globbing
+extended_glob # turn on zsh extended globbing, like ** for recursive directories...
+
+# History
+append_history                    # adds history
+hist_ignore_all_dups              # don't record duplicates in history
+hist_reduceblanks                 # ignore empty inputs in history
+inc_append_history share_history  # adds history incrementally and share it across sessions
+
+# Prompting
+prompt_subst # perform variable substitution in PROMPT, so we can load git branch/status
+
+)
+
+for option in $shellOptions
+do
+  set -o $option
+done
 
 
-# ZSH command history
+
+#####################
+# ZSH COMMAND HISTORY
+#
 HISTFILE=~/.zsh_history # Store history here
 HISTFILE=~/bin/dotfiles/zsh/.zsh_history # Location of the .histfile
 HISTSIZE=10000 # History size in the terminal
 SAVEHIST=10000 # Saved history size
 
 
+####################
+# KEYBOARD SHORTCUTS
+#
 bindkey '^[^[[D' backward-word
 bindkey '^[^[[C' forward-word
 bindkey '^[[5D' beginning-of-line
