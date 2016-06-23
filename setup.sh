@@ -148,7 +148,7 @@ resetZSH() {
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
 
   # visually divide
-  print '\n\n'
+  print "\n\n"
 
   # setupZSH again
   setupZSH
@@ -192,6 +192,7 @@ export NVM_DIR=~/.nvm
 . ~/bin/zsh/path.sh                  # load $PATH first
 . ~/bin/zsh/colors.sh                # Set color variables
 . ~/bin/zsh/shell.sh                 # Look & Feel of the shell
+. `brew --prefix`/share/antigen.zsh  # OH-MY-ZSH Plugins
 . ~/bin/zsh/directory.sh             # Directory creation|navigation
 . ~/bin/zsh/tools.sh                 # Tools & Utilities
 . ~/bin/zsh/node-setup.sh            # NVM & NPM Setup + Packages
