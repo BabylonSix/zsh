@@ -43,7 +43,6 @@ setupPrograms() {
     tree                     # shows directory tree
     --HEAD neovim            # new vim text editor
     tmux                     # splits terminal windows
-    antigen                  # oh-my-zsh plugin manager
     vcprompt                 # lets git display prompt messages
     z                        # directory search tool
     httpie                   # http tool
@@ -192,7 +191,6 @@ export NVM_DIR=~/.nvm
 . ~/bin/zsh/path.sh                  # load $PATH first
 . ~/bin/zsh/colors.sh                # Set color variables
 . ~/bin/zsh/shell.sh                 # Look & Feel of the shell
-. `brew --prefix`/share/antigen.zsh  # OH-MY-ZSH Plugins
 . ~/bin/zsh/directory.sh             # Directory creation|navigation
 . ~/bin/zsh/tools.sh                 # Tools & Utilities
 . ~/bin/zsh/node-setup.sh            # NVM & NPM Setup + Packages
