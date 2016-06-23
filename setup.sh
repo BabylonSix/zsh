@@ -30,6 +30,8 @@ setupSources() {
   brew tap homebrew/versions || exit; print '\n\n'
   # extend the amount of available packages
   brew tap caskroom/cask     || exit; print '\n\n'
+  # extend the amount of available packages
+  brew tap neovim/neovim     || exit; print '\n\n'
 }; setupSources
 
 
@@ -39,7 +41,7 @@ setupPrograms() {
   Programs=(
     nvm                      # node version manage
     tree                     # shows directory tree
-    vim --with-override-system-vi --with-python3 # text editor
+    --HEAD neovim            # new vim text editor
     tmux                     # splits terminal windows
     antigen                  # oh-my-zsh plugin manager
     vcprompt                 # lets git display prompt messages
@@ -202,7 +204,7 @@ export NVM_DIR=~/.nvm
 . ~/bin/zsh/screen.sh                # screensize tools
 . ~/bin/web/web-path.sh              # web project creation tools
 . `brew --prefix`/etc/profile.d/z.sh # Lets Z work
-. `brew --prefix`/share/antigen.zsh  # OH-MY-ZSH Plugins
+. ~/bin/nvim/setup.sh                # neovim setup
 . /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 

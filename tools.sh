@@ -2,6 +2,7 @@
 # Text Editors
 export ATOM='Atom'
 export SUBLIME='Sublime Text'
+alias vim='nvim'
 
 # Default Editor
 export EDITOR=$ATOM
