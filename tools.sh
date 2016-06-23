@@ -36,6 +36,8 @@ fp() {
 
 # grep with color
 alias grep='grep --color=always'
+alias egrep='egrep --color=always'
+alias ggrep='ggrep --color=always'
 
 # print with color
 alias print='print -P'
