@@ -1,14 +1,28 @@
-
+#################
 # Text Editors
+#
 export ATOM='Atom'
 export SUBLIME='Sublime Text'
+export NEOVIM=nvim
+
 alias vim='nvim'
+alias vi='nvim'
 
 # Default Editor
-export EDITOR=$ATOM
+export EDITOR=${NEOVIM}
 
-# Open With
-alias ot='open -a ${EDITOR}'
+# Open in Default Editor
+function ot() {
+if [[ ${EDITOR} == nvim ]]; then
+   ${EDITOR} $*
+else
+   open -a ${EDITOR} $*
+fi
+}
+
+
+
+
 alias oc='open -a Google\ Chrome'
 
 # JavaScript Mac Automation REPL
@@ -90,7 +104,7 @@ kn() { ps ax | grep $1 | cut -d ' ' -f 2 | xargs kill; }
 
 
 
-us() { # Update System
+us() {  # Update System
 	# update brew and upgrade all packages
 	brew update; brew upgrade
 	# update npm and upgrade all packages (global)
