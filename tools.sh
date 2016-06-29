@@ -38,7 +38,7 @@ alias hi='history'
 
 # Quiting Tasks
 alias e='exit'
-alias ka="killall -9"		# kill a running program
+alias ka="killall -9" # kill a running program
 
 # List Processes
 alias tu='htop'

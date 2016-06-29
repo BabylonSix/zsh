@@ -44,8 +44,8 @@ zipr() { zip -r $1.zip $1; }
 
 
 # Directory Display
+alias ls='ls --color=always --group-directories-first -N'
 alias l='clear; ls'               # 'ls' shorthand
-alias ls='clear; ls'              # clear screen + display current directory
 alias ll='clear; ls -lh'          # long list (permisions, owner, size)
 alias la='clear; ls -A'           # list all files (including hiddne files)
 alias lla='clear; ls -Alh'        # long list of all files

@@ -4,9 +4,15 @@
 # $PATH is the default system path.
 
 
-setupPATH() {
+setupMyPATH() {
   # Path Variable Constructor
   pathDirs=(
+    # START activate gnu-utils first
+    /usr/local/opt/coreutils/libexec/gnubin
+    /usr/local/opt/findutils/libexec/gnubin
+    /usr/local/opt/gnu-tar/libexec/gnubin
+    /usr/local/opt/gnu-sed/libexec/gnuman
+    # END activate gnu-utils first
     /bin
     /sbin
     /usr/bin
@@ -14,22 +20,20 @@ setupPATH() {
     /usr/local/bin
     /usr/local/sbin
     /usr/local/cellar
-    /usr/local/opt/gnu-sed/libexec/gnuman
-    /usr/local/opt/gnu-tar/libexec/gnubin
-    /usr/local/opt/findutils/libexec/gnubin
-    /usr/local/opt/coreutils/libexec/gnubin
   )
 
   for dir in $pathDirs
   do
-    PATH+=":$dir" # add our own directories to the system $PATH variable
+    myPATH+=":$dir" # add our own directories to the system $PATH variable
   done
-}; setupPATH
+}; setupMyPATH
 
+PATH=$myPATH:$PATH # add my path before system PATH
 
 
 # TOOLS
 path() { $SHELL -lc 'echo $PATH | tr : "\n"'; } # display path variable
+manpath() { $SHELL -lc 'echo $MANPATH | tr : "\n"'; } # display manpath variable
 
 
 
@@ -40,14 +44,15 @@ setupMANPATH() {
     /usr/local/opt/gnu-tar/libexec/gnuman
     /usr/local/opt/findutils/libexec/gnubin
     /usr/local/opt/coreutils/libexec/gnubin
-    $MANPATH
   )
 
   for dir in $manpathDirs
   do
-    MANPATH+=":$dir" # add our own directories to the system $PATH variable
+    myMANPATH+=":$dir" # add our own directories to the system $PATH variable
   done
 }; setupMANPATH
+
+MANPATH=$myMANPATH:$MANPATH # add my manpath before system MANPATH
 
 
 
