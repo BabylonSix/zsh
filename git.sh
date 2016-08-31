@@ -49,8 +49,27 @@ function gcl() {
 }
 
 # Create a New Git Repo
+function gr() {
+  if [[ -z $5 ]]; then # check if argument is empty
+    print '\n${RED}ERROR:${NC}'
+    print '\n  Repo Name Missing!' # if argument is empty
+    print '\n  ${GREEN}gr${NC} ${RED}<repo name>${NC}' # if argument is empty
+  else
+    git remote add origin https://github.com/BabylonSix/$1.git
+    git push --set-upstream origin master
+  fi
+}
+
+# stash (freeze) repo
 function gf() {
-	git remote add github https://github.com/BabylonSix/$1.git
+  git add .
+  git stash
+  git status
+}
+
+# stash apply (unfreeze)
+function guf() {
+  git stash apply
 }
 
 # Setup a tracking branch from [remote] [branch_name]
