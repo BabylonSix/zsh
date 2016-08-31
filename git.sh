@@ -40,7 +40,7 @@ alias gpsh='git push'
 alias egc='subl .git/config'
 
 alias gl="git log --oneline"
-alias gll='git log --graph --decorate --all'
+alias gll='git log --graph --decorate --stat --all'
 alias gch="git checkout"
 
 # Git clone from GitHub
@@ -50,7 +50,7 @@ function gcl() {
 
 # Create a New Git Repo
 function gr() {
-  if [[ -z $5 ]]; then # check if argument is empty
+  if [[ -z $1 ]]; then # check if argument is empty
     print '\n${RED}ERROR:${NC}'
     print '\n  Repo Name Missing!' # if argument is empty
     print '\n  ${GREEN}gr${NC} ${RED}<repo name>${NC}' # if argument is empty
