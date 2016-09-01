@@ -32,6 +32,8 @@ npmPackages=(
   iconv-lite
   jade
   jade-lint
+  pug
+  pug-cli
   jstransformer
   jstransformer-babel
   jstransformer-coffee-script
