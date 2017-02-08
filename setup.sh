@@ -80,6 +80,7 @@ setupPrograms() {
     watch                    # watches a program
     m4                       # macro processing language
     pyenv                    # python version manager
+    wine                     # windows program runner
   )
 
 

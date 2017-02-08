@@ -9,7 +9,7 @@ alias vim='nvim'
 alias vi='nvim'
 
 # Default Editor
-export EDITOR=${NEOVIM}
+export EDITOR=${SUBLIME}
 
 # Open in Default Editor
 function ot() {
