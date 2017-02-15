@@ -30,6 +30,7 @@ npmPackages=(
   html2jade
   htmlhint
   iconv-lite
+  npmvet
   pug
   pug-cli
   jstransformer
