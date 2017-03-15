@@ -3,6 +3,7 @@
 #
 export ATOM='Atom'
 export SUBLIME='Sublime Text'
+export MSCODE='Visual Studio Code'
 export NEOVIM=nvim
 
 alias vim='nvim'
