@@ -34,7 +34,7 @@ alias evim='ot ~/bin/nvim/settings.vim'
 # Directory Shortcuts
 alias hd='cd ~/Desktop; l'
 alias hl='cd ~/Downloads; l'
-alias hc='cd ~/Clients; l'
+alias hc='cd ~/Dropbox/Clients; l'
 alias hs='cd ~/Studies; l'
 alias hsw='cd ~/Studies/Web; l'
 alias hw='cd ~/Clients/HyperNova/; l'

@@ -40,6 +40,7 @@ setupPrograms() {
   # if they are not, install them
   Programs=(
     nvm                      # node version manage
+    yarn                     # Package manager line NPM
     tree                     # shows directory tree
     --HEAD neovim            # new vim text editor
     tmux                     # splits terminal windows

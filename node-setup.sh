@@ -9,15 +9,12 @@ if [[ ! -a $currentNode ]]; then
   print '\n'       # visually separate install
 fi
 
-
-
 # Default NPM packages to install
 npmPackages=(
   babel-cli
   babel-eslint
   babel-preset-es2015
   browser-sync
-  browserify
   caniuse
   cheerio
   css2stylus
