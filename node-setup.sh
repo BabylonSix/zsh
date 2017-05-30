@@ -6,7 +6,7 @@ currentNode=~/.nvm/versions/node/$(node --version)
 # If no version of node is installed, install node
 if [[ ! -a $currentNode ]]; then
   nvm install node # install node
-  print '\n'       # visually separate install
+  print '\n\n'       # visually separate install
 fi
 
 # Default NPM packages to install
@@ -56,7 +56,8 @@ for package in $npmPackages
 do
   # if package is not installed, install it
   if [[ ! -a $currentNode/lib/node_modules/$package ]]; then
+    print ${RED}installing${NC} ${CYAN}$package${NC}
     npm install -g $package # install package globally
-    print '\n'              # visually separate install
+    print '\n\n'              # visually separate install
   fi
 done
