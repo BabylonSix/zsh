@@ -46,6 +46,7 @@ npmPackages=(
   stylus
   trash
   vtop
+  yarn
   webpack
   xmlbuilder
 )
