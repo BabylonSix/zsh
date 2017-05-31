@@ -88,6 +88,7 @@ setupPrograms() {
   do
     # if program is not installed, install it
     if [[ ! -a /usr/local/Cellar/$program ]]; then
+      print ${RED}installing${NC} ${CYAN}$program${NC}
       brew install $program # install program
       print '\n\n'          # divide the installs visually with 2 newlines
     fi
@@ -117,6 +118,7 @@ setupUtils() {
   do
     # if program is not installed, install it
     if [[ ! -a /usr/local/Cellar/$util ]]; then
+      print ${RED}installing${NC} ${CYAN}$util${NC}
       brew install $util # install program
       print '\n\n'          # divide the installs visually with 2 newlines
     fi
@@ -132,8 +134,9 @@ brew prune
 
 # If no version of node is installed, install node
 if [[ ! -a ~/.nvm/versions/node/ ]]; then
+  print ${RED}installing${NC} ${CYAN}Node JS${NC}
   nvm install node # install node
-  print '\n'       # visually separate install
+  print '\n\n'       # visually separate install
 fi
 }
 
