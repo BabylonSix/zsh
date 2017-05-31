@@ -13,6 +13,12 @@
 
 
 setupZSH() {
+print '########################'
+print '#    SETTING UP ZSH    #'
+print '########################'
+print '\n'
+
+
 
 # fix permissions
 sudo chown $(whoami) /usr/local/etc;
@@ -24,15 +30,13 @@ if [[ ! -a /usr/local/bin/brew ]]; then
 fi
 
 setupSources() {
-  # Load homebrew/dupes install directory (for rsync)
-  brew tap homebrew/dupes    || exit; print '\n\n'
-  # Load homebrew/dupes install directory
-  brew tap homebrew/versions || exit; print '\n\n'
   # extend the amount of available packages
   brew tap caskroom/cask     || exit; print '\n\n'
   # extend the amount of available packages
   brew tap neovim/neovim     || exit; print '\n\n'
 }; setupSources
+
+
 
 
 setupPrograms() {
@@ -68,8 +72,6 @@ setupPrograms() {
     gocr                     # another OCR
     shellcheck               # shell linter
     bash                     # updated bash
-    zsh                      # updated zsh
-    zsh-syntax-highlighting  # zsh highlighting
     youtube-dl               # youtube downloader
     ffmpeg                   # youtube-dl dependency
     less                     # file content viewer
@@ -81,6 +83,8 @@ setupPrograms() {
     m4                       # macro processing language
     pyenv                    # python version manager
     wine                     # windows program runner
+    zsh                      # updated zsh
+    zsh-syntax-highlighting  # zsh highlighting
   )
 
 
@@ -88,7 +92,7 @@ setupPrograms() {
   do
     # if program is not installed, install it
     if [[ ! -a /usr/local/Cellar/$program ]]; then
-      print ${RED}installing${NC} ${CYAN}$program${NC}
+      print installing $program
       brew install $program # install program
       print '\n\n'          # divide the installs visually with 2 newlines
     fi
@@ -118,7 +122,7 @@ setupUtils() {
   do
     # if program is not installed, install it
     if [[ ! -a /usr/local/Cellar/$util ]]; then
-      print ${RED}installing${NC} ${CYAN}$util${NC}
+      print installing $util
       brew install $util # install program
       print '\n\n'          # divide the installs visually with 2 newlines
     fi
@@ -134,7 +138,7 @@ brew prune
 
 # If no version of node is installed, install node
 if [[ ! -a ~/.nvm/versions/node/ ]]; then
-  print ${RED}installing${NC} ${CYAN}Node JS${NC}
+  print installing Node JS
   nvm install node # install node
   print '\n\n'       # visually separate install
 fi
