@@ -30,6 +30,7 @@ npmPackages=(
   npmvet
   pug
   pug-cli
+  pug-lint
   jstransformer
   jstransformer-babel
   jstransformer-coffee-script
