@@ -7,9 +7,9 @@
 #     └── setup.sh
 #
 # If the directory structure looks like the above,
-# Symlink the setup to .zshrc as shown below to begin setup
+# Run the following command
 #
-# ln -sf ~/bin/zsh/setup.sh ~/.zshrc; zsh -l
+# link -sf ~/bin/zsh/setup.sh ~/.zshrc; zsh -l
 
 
 setupZSH() {
@@ -39,7 +39,7 @@ setupSources() {
 
 
 
-setupPrograms() {
+setupBrewPrograms() {
   # check if the following programs are installed,
   # if they are not, install them
   Programs=(
@@ -85,6 +85,7 @@ setupPrograms() {
     wine                     # windows program runner
     zsh                      # updated zsh
     zsh-syntax-highlighting  # zsh highlighting
+    zsh-autosuggestions      # zsh autosuggestions
   )
 
 
@@ -97,7 +98,15 @@ setupPrograms() {
       print '\n\n'          # divide the installs visually with 2 newlines
     fi
   done
-}; setupPrograms
+
+
+
+
+  setupLatestVersionZSH() {
+    # Add ZSH Setup Here
+  }; setupLatestVersionZSH
+
+}; setupBrewPrograms
 
 
 setupUtils() {
@@ -136,31 +145,29 @@ brew prune
 . ~/bin/zsh/path.sh # load $PATH first
 
 
+
+
+
+setupLatestVersionZSH() {
+  # check if latest ZSH version is default, and if not, make it so
+	latestZSH=/usr/local/Cellar/zsh/$(ls -t /usr/local/Cellar/zsh/ | head -n 1 | gsed -rz 's/(\[[0-9]+m)|(\[[0-9]+\;)|([0-9]+m)|(\)//g')/bin/zsh-$(ls -t /usr/local/Cellar/zsh/ | head -n 1 | gsed -rz 's/(\[[0-9]+m)|(\[[0-9]+\;)|([0-9]+m)|(\)|(\_[0-9])//g')
+
+  # if latestZSH doest not exist in /etc/shells, then
+  if ! grep -q $latestZSH /etc/shells; then
+    sudo sh -c "echo '\n$latestZSH' >> /etc/shells"
+  fi
+  
+}; setupLatestVersionZSH
+
+
+
 # If no version of node is installed, install node
 if [[ ! -a ~/.nvm/versions/node/ ]]; then
   print installing Node JS
-  nvm install node # install node
+  nvm install node   # install node
   print '\n\n'       # visually separate install
 fi
 }
-
-
-
-
-resetZSH() {
-  # uninstall all brew packages
-  brew uninstall --force $(brew list)
-
-  # uninstall homebrew
-  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
-
-  # visually divide
-  print "\n\n"
-
-  # setupZSH again
-  setupZSH
-}
-
 
 
 
@@ -173,15 +180,12 @@ fi
 
 
 # I'm using the following list of source control packages:
-# ANTIGEN -> OH-MY-ZSH Version Manager
 # NVM     -> Node Version Manager
 # NPM     -> Node Package Manager
 # PYENV   -> Python Version Manager
 # GEM     -> Ruby Package Manager
 # BREW    -> Homebrew Software Installer
 
-# Swift Programming Language
-export PATH=/Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin:"${PATH}"
 
 # Python Version Manager
 # To use Homebrew's directories rather than ~/.pyenv add to your profile:
@@ -213,8 +217,24 @@ export NVM_DIR=~/.nvm
 . `brew --prefix`/etc/profile.d/z.sh # Lets Z work
 . ~/bin/nvim/setup.sh                # neovim setup
 . /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+. ~/bin/zsh/test.sh                  # use for testing stuff out
 
 
 
 # iTerm Shell Integration
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+
+resetZSH() {
+  # uninstall all brew packages
+  brew uninstall --force $(brew list)
+
+  # uninstall homebrew
+  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
+
+  # visually divide
+  print "\n\n"
+
+  # setupZSH again
+  setupZSH
+}

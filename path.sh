@@ -7,6 +7,8 @@
 setupMyPATH() {
   # Path Variable Constructor
   pathDirs=(
+    # X-Code Toolchain
+    /usr/bin
     # START activate gnu-utils first
     /usr/local/opt/coreutils/libexec/gnubin
     /usr/local/opt/findutils/libexec/gnubin
@@ -19,7 +21,12 @@ setupMyPATH() {
     /usr/sbin
     /usr/local/bin
     /usr/local/sbin
-    /usr/local/cellar
+    /usr/local/Cellar
+    # EXTRA Tools TEMP
+    ~/.nvm/versions/node/$(node --version)/bin
+    /usr/local/var/pyenv/shims
+    /opt/X11/bin
+    /usr/local/var/pyenv/shims
   )
 
   for dir in $pathDirs
@@ -28,6 +35,7 @@ setupMyPATH() {
   done
 }; setupMyPATH
 
+unset PATH # clear PATH Variable before setting it 
 PATH=$myPATH:$PATH # add my path before system PATH
 
 

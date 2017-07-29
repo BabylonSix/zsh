@@ -109,6 +109,7 @@ us() {  # Update System
 	# update brew and upgrade all packages
 	brew update; brew upgrade
 	# update npm and upgrade all packages (global)
+	installNpmPackages
 	npm update -g; npm upgrade -g
 	# Clears Open With
 	alias cow='/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user'
