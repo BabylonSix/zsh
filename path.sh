@@ -27,6 +27,8 @@ setupMyPATH() {
     /usr/local/var/pyenv/shims
     /opt/X11/bin
     /usr/local/var/pyenv/shims
+    #Haskell
+    ~/.local/bin
   )
 
   for dir in $pathDirs
