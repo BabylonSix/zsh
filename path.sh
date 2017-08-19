@@ -7,8 +7,6 @@
 setupMyPATH() {
   # Path Variable Constructor
   pathDirs=(
-    # X-Code Toolchain
-    /usr/bin
     # START activate gnu-utils first
     /usr/local/opt/coreutils/libexec/gnubin
     /usr/local/opt/findutils/libexec/gnubin
@@ -17,9 +15,9 @@ setupMyPATH() {
     # END activate gnu-utils first
     /bin
     /sbin
+    /usr/local/bin
     /usr/bin
     /usr/sbin
-    /usr/local/bin
     /usr/local/sbin
     /usr/local/Cellar
     # EXTRA Tools TEMP
