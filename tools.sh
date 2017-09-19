@@ -97,7 +97,7 @@ alias nr='nw -setairportpower en1 off; nw -setairportpower en1 on' # restart net
 alias nwr='nr'
 alias nof='nw -setairportpower en1 off' # turn off network
 alias non='nw -setairportpower en1 on'  # turn on network
-alias nc='nc -v -w 3' # verbose + wait 3 seconds
+alias nc='nc -v' # verbose + wait 3 seconds
 
 
 
