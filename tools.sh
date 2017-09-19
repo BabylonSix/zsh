@@ -10,7 +10,7 @@ alias vim='nvim'
 alias vi='nvim'
 
 # Default Editor
-export EDITOR=${SUBLIME}
+export EDITOR=${MSCODE}
 
 # Open in Default Editor
 function ot() {
