@@ -64,6 +64,15 @@ tl() {
 	tree -L "$@" -I "node_modules"
 }
 
+t2() { tl 2 }
+t3() { tl 3 }
+t4() { tl 4 }
+t5() { tl 5 }
+t6() { tl 6 }
+t7() { tl 7 }
+t8() { tl 8 }
+t9() { tl 9 }
+
 
 # Directory Navigation
 alias b='cd -; l' # toggle last & current directory
