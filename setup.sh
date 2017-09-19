@@ -185,14 +185,6 @@ fi
 # PYENV   -> Python Version Manager
 # GEM     -> Ruby Package Manager
 # BREW    -> Homebrew Software Installer
-
-
-# Python Version Manager
-# To use Homebrew's directories rather than ~/.pyenv add to your profile:
-export PYENV_ROOT=/usr/local/var/pyenv
-# To enable shims and autocompletion add to your profile:
-if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
-
 export NVM_DIR=~/.nvm
 . `brew --prefix nvm`/nvm.sh
 
@@ -219,6 +211,12 @@ export NVM_DIR=~/.nvm
 . /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 . ~/bin/zsh/test.sh                  # use for testing stuff out
 
+
+# Python Version Manager
+# To use Homebrew's directories rather than ~/.pyenv add to your profile:
+export PYENV_ROOT=/usr/local/var/pyenv
+# To enable shims and autocompletion add to your profile:
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 
 
 # iTerm Shell Integration

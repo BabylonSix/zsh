@@ -22,7 +22,6 @@ setupMyPATH() {
     /usr/local/Cellar
     # EXTRA Tools TEMP
     ~/.nvm/versions/node/$(node --version)/bin
-    /usr/local/var/pyenv/shims
     /opt/X11/bin
     /usr/local/var/pyenv/shims
     #Haskell

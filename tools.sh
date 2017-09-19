@@ -81,7 +81,7 @@ alias kt='killall -9 tmux'
 alias compare='ksdiff'      # Use Kaleidoscope to see differences in file content
 alias chsh='chsh -s'        # Change Shell
 alias chp='chmod'           # Change Permissions
-cho() { chown $1; }          # Change Owners
+cho() { chown $1; }         # Change Owners
 alias mans='man -k'    			# search all man pages for key word
 alias dul='diskutil'   			# disk utility
 
@@ -97,6 +97,7 @@ alias nr='nw -setairportpower en1 off; nw -setairportpower en1 on' # restart net
 alias nwr='nr'
 alias nof='nw -setairportpower en1 off' # turn off network
 alias non='nw -setairportpower en1 on'  # turn on network
+alias nc='nc -v -w 3' # verbose + wait 3 seconds
 
 
 
