@@ -98,7 +98,11 @@ alias nwr='nr'
 alias nof='nw -setairportpower en1 off' # turn off network
 alias non='nw -setairportpower en1 on'  # turn on network
 alias nc='nc -v' # verbose + wait 3 seconds
+alias bs='browser-sync'
+alias bss='bs start --server --files "./*"'
 
+# WebDev
+alias pw='pug -P --watch ./*.pug'
 
 
 # kill named process
