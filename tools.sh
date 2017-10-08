@@ -90,6 +90,24 @@ alias dul='diskutil'   			# disk utility
 alias chdh="sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'select LSQuarantineDataURLString from LSQuarantineEvent'"
 
 
+# Reset Application Cache
+rac() {
+	lastDirectory=`pwd`
+	sudo rm -rf /Library/Caches/com.apple.iconservices.store
+	cd /Volumes/Macintosh\ HD/Library/Caches
+	sudo rm -fr ./*
+	cd /Volumes/Macintosh\ HD/System/Library/Caches
+	sudo rm -fr ./*
+	kextcache -system-prelinked-kernel
+	kextcache -system-caches
+	sudo -i kextcache -e
+	cd /Volumes/Macintosh\ HD/Users/`whoami`/Library/Caches
+	sudo rm -fr ./*
+	cd $lastDirectory
+	killall Dock
+	killall Finder
+}
+
 
 # Networking
 alias nw='networksetup'
@@ -102,6 +120,7 @@ alias bs='browser-sync'
 alias bss='bs start --server --files "./*"'
 
 # WebDev
+alias sw='stylus --watch ./*.styl'
 alias pw='pug -P --watch ./*.pug'
 alias sw='stylus -w ./*.styl'
 
