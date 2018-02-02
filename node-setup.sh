@@ -14,6 +14,7 @@ npmPackages=(
   babel-cli
   babel-eslint
   babel-preset-es2015
+  babel-preset-modern-browsers
   browser-sync
   caniuse
   cheerio
