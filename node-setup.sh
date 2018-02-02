@@ -28,6 +28,7 @@ npmPackages=(
   htmlhint
   iconv-lite
   npmvet
+  parcel-bundler
   pug
   pug-cli
   pug-lint
