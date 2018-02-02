@@ -92,6 +92,7 @@ alias chdh="sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEve
 
 # Reset Application Cache
 rac() {
+	# sudo -s
 	lastDirectory=`pwd`
 	sudo rm -rf /Library/Caches/com.apple.iconservices.store
 	cd /Volumes/Macintosh\ HD/Library/Caches
