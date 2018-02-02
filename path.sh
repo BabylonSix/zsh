@@ -6,6 +6,8 @@
 
 setupMyPATH() {
   # Path Variable Constructor
+  # first directory with a given tool
+  # will be used for that tool - order matters
   pathDirs=(
     # START activate gnu-utils first
     /usr/local/opt/coreutils/libexec/gnubin
@@ -13,12 +15,13 @@ setupMyPATH() {
     /usr/local/opt/gnu-tar/libexec/gnubin
     /usr/local/opt/gnu-sed/libexec/gnuman
     # END activate gnu-utils first
-    /bin
+    /usr/local/Cellar/sqlite/3.21.0/bin #change number to latest version when u want the latest
+    /usr/local/sbin
+    /usr/sbin
     /sbin
     /usr/local/bin
     /usr/bin
-    /usr/sbin
-    /usr/local/sbin
+    /bin
     /usr/local/Cellar
     # EXTRA Tools TEMP
     ~/.nvm/versions/node/$(node --version)/bin
