@@ -24,7 +24,7 @@ npmPackages=(
   express-generator
   graceful-fs
   gulp
-  html2jade
+  html2pug
   htmlhint
   iconv-lite
   npmvet
