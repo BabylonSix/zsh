@@ -123,7 +123,6 @@ alias bss='bs start --server --files "./*"'
 # WebDev
 alias sw='stylus --watch ./*.styl'
 alias pw='pug -P --watch ./*.pug'
-alias sw='stylus -w ./*.styl'
 
 # kill named process
 kn() { ps ax | grep $1 | cut -d ' ' -f 2 | xargs kill; }
