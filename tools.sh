@@ -22,9 +22,18 @@ fi
 }
 
 
+#################
+# Browsers
+#
+export CHROME='Google Chrome'
+export FIREFOX='Firefox'
+export SAFARI='Safari'
+
+# Default Browser
+export BROWSER=${FIREFOX}
 
 
-alias oc='open -a Google\ Chrome'
+alias ob='open -a ${BROWSER}'
 
 # JavaScript Mac Automation REPL
 alias jsx='osascript -l JavaScript -i'
