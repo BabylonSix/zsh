@@ -142,7 +142,6 @@ us() {  # Update System
 	# update brew and upgrade all packages
 	brew update; brew upgrade
 	# update npm and upgrade all packages (global)
-	installNpmPackages
 	npm update -g; npm upgrade -g
 	# prevent stupid nvm errors
 	npm config delete prefix 
