@@ -155,10 +155,11 @@ us() {  # Update System
 	print '\n\n\n\n${BLUE}Updating NPM${NC}\n'
 	revolver --style 'pong' start 'checking for updates'
 	npm update -g; npm upgrade -g
+	print 'All NPM packages are up-to-date'
 	revolver stop
 	
 	# System Resets
-	print '\n\n\n${BLUE}System Resets${NC}'
+	print '\n\n\n\n${BLUE}System Resets${NC}\n'
 	print 'Clear "Open With"'
 	# Clears Open With
 	alias cow='/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user'
