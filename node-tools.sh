@@ -7,7 +7,8 @@ nvmu() { nvm use $1; }
 # upgrade node version
 nvmup() {
 
-  print '\n'
+  print '' #vertical spacing
+
   revolver --style 'pong' start 'Checking if you have the latest version of NodeJS'
   myNODE=$(nvm ls | grep -Eo '\sv(\d+\.)+\d+' | tail -n 1 | tr -d '[:cntrl:]' | grep -Eo --colour=never '(\d+\.)+\d+')
 
