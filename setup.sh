@@ -86,6 +86,7 @@ setupBrewPrograms() {
     zsh                      # updated zsh
     zsh-syntax-highlighting  # zsh highlighting
     zsh-autosuggestions      # zsh autosuggestions
+    molovo/revolver/revolver # zsh progress spinner
   )
 
 

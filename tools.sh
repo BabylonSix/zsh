@@ -142,11 +142,10 @@ alias npmstart='installNpmPackages'
 us() {  # Update System
 	# update brew and upgrade all packages
 	brew update; brew upgrade
+	# upgrade node version
+	nvmup
 	# update npm and upgrade all packages (global)
 	npm update -g; npm upgrade -g
-	# prevent stupid nvm errors
-	npm config delete prefix 
-	npm config set prefix $NVM_DIR/$(node --version)
 	# Clears Open With
 	alias cow='/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user'
 	# Clear history of all downloads
