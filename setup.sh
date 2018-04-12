@@ -146,10 +146,6 @@ brew prune
 . ~/bin/zsh/path.sh # load $PATH first
 
 
-upZSH
-# command is found in ~/bin/zsh/shell.sh
-
-
 # If no version of node is installed, install node
 if [[ ! -a ~/.nvm/versions/node/ ]]; then
   print installing Node JS
