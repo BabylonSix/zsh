@@ -141,9 +141,6 @@ alias pw='pug -P --watch ./*.pug'
 # kill named process
 kn() { ps ax | grep $1 | cut -d ' ' -f 2 | xargs kill; }
 
-# install my listed npm packages
-alias npmstart='installNpmPackages'
-
 us() {  # Update System
 	
 	# update brew and upgrade all packages

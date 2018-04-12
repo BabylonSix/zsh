@@ -9,10 +9,10 @@
 # If the directory structure looks like the above,
 # Run the following command
 #
-# link -sf ~/bin/zsh/setup.sh ~/.zshrc; zsh -l
+# ln -sf ~/bin/zsh/setup.sh ~/.zshrc; zsh -l
 
 
-setupZSH() {
+setupzsh() {
 print '########################'
 print '#    SETTING UP ZSH    #'
 print '########################'
@@ -45,7 +45,7 @@ setupBrewPrograms() {
   Programs=(
     nvm                      # node version manage
     tree                     # shows directory tree
-    --HEAD neovim            # new vim text editor
+    neovim            # new vim text editor
     tmux                     # splits terminal windows
     vcprompt                 # lets git display prompt messages
     z                        # directory search tool
@@ -103,9 +103,7 @@ setupBrewPrograms() {
 
 
 
-  setupLatestVersionZSH() {
-    # Add ZSH Setup Here
-  }; setupLatestVersionZSH
+  upgradezsh
 
 }; setupBrewPrograms
 
@@ -116,15 +114,15 @@ setupUtils() {
     coreutils
     binutils
     diffutils
-    findutils --with-default-names  # collection of GNU find, xargs, and locate
+    findutils  # collection of GNU find, xargs, and locate
     gnutls                          # transport layer library
-    gnu-indent --with-default-names # C language beautifier
-    gnu-tar --with-default-names    # file compression
-    gnu-which --with-default-names  # program finder
-    grep --with-default-names       # regex tool
+    gnu-indent # C language beautifier
+    gnu-tar    # file compression
+    gnu-which  # program finder
+    grep       # regex tool
     gawk                            # gnu awk (text processing)
-    gnu-sed --with-default-names    # gnu stream editor
-    ed --with-default-names         # text editor
+    gnu-sed    # gnu stream editor
+    ed         # text editor
   )
 
 
@@ -158,7 +156,7 @@ fi
 
 # If brew is not installed, run setupZSH
 if [[ ! -a /usr/local/bin/brew ]]; then
-  setupZSH
+  setupzsh
 fi
 
 
@@ -208,7 +206,7 @@ if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 
-resetZSH() {
+resetzsh() {
   # uninstall all brew packages
   brew uninstall --force $(brew list)
 

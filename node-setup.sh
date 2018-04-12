@@ -55,7 +55,7 @@ npmPackages=(
 
 # check if packages are installed
 # in current version of node, and if not, install them
-installNpmPackages() {
+npmstart() {
 for package in $npmPackages
 do
 
@@ -82,19 +82,6 @@ do
     print $packageLocation3
     print '\n\n\n'              # visually separate install     
   }
-
-
-  # TEST2
-  # print is ${CYAN}$package${NC} 'installed?'
-  # if [[ ! -d $packageLocation2 ]]; then
-  #   print ${RED}no${NC}
-  #   print installing ${CYAN}$package${NC}
-  #   npm install -g $package # install package globally
-  #   showLocations
-  # elif [[ -L $packageLocation1 && -d $packageLocation2 ]]; then
-  #   print ${GREEN}yes${NC}', so we do not need to install anything'
-  #   showLocations
-  # fi
 
 done
 };
