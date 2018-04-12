@@ -146,20 +146,8 @@ brew prune
 . ~/bin/zsh/path.sh # load $PATH first
 
 
-
-
-
-setupLatestVersionZSH() {
-  # check if latest ZSH version is default, and if not, make it so
-	latestZSH=/usr/local/Cellar/zsh/$(ls -t /usr/local/Cellar/zsh/ | head -n 1 | gsed -rz 's/(\[[0-9]+m)|(\[[0-9]+\;)|([0-9]+m)|(\)//g')/bin/zsh-$(ls -t /usr/local/Cellar/zsh/ | head -n 1 | gsed -rz 's/(\[[0-9]+m)|(\[[0-9]+\;)|([0-9]+m)|(\)|(\_[0-9])//g')
-
-  # if latestZSH doest not exist in /etc/shells, then
-  if ! grep -q $latestZSH /etc/shells; then
-    sudo sh -c "echo '\n$latestZSH' >> /etc/shells"
-  fi
-  
-}; setupLatestVersionZSH
-
+upZSH
+# command is found in ~/bin/zsh/shell.sh
 
 
 # If no version of node is installed, install node
