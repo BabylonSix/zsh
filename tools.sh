@@ -94,6 +94,11 @@ cho() { chown $1; }         # Change Owners
 alias mans='man -k'    			# search all man pages for key word
 alias dul='diskutil'   			# disk utility
 
+# List Tools
+# first of list
+alias fst='head -n 1'
+# last of list
+alias lst='tail -n 1'
 
 # Check history of all downloads
 alias chdh="sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'select LSQuarantineDataURLString from LSQuarantineEvent'"
