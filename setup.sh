@@ -1,7 +1,7 @@
 # INSTALLATION
 #
 # Directory structure of zsh setup file should look as following
-# bin
+# ~/bin
 # ├── web
 # └── zsh
 #     └── setup.sh
