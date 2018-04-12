@@ -25,8 +25,9 @@ upzsh() {
   fi
 
   # setup latest ZSH version as login shell
-  print '\n${GREEN}Setting default login shell to${NC} ${BLUE}zsh $(ls -t /usr/local/Cellar/zsh/ | head -n 1)'
+  print '\n${GREEN}Setting default login shell to${NC} ${BLUE}zsh $(ls -t /usr/local/Cellar/zsh/ | head -n 1)${NC}'
   $(print 'chsh -s $(tail -n 1 /etc/shells) $USER')
+  reload; clear
 }
 
 
