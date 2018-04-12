@@ -23,9 +23,8 @@ upzsh() {
   if ! grep -q $latestZSH /etc/shells; then
     sudo sh -c "echo '\n$latestZSH' >> /etc/shells"
   fi
-
   # setup latest ZSH version as login shell
-  print '\n${GREEN}Setting default login shell to${NC} ${BLUE}zsh $(ls -t /usr/local/Cellar/zsh/ | head -n 1)${NC}'
+  print '\nSetting default login shell to latest ZSH version\n'
   $(print 'chsh -s $(tail -n 1 /etc/shells) $USER')
   reload; clear
 }
