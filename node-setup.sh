@@ -11,6 +11,7 @@ currentNodeBin=~/.nvm/versions/node/$(node --version)/bin
 
 # Default NPM packages to install
 npmPackages=(
+  autoprefixer
   babel-cli
   babel-eslint
   babel-preset-es2015
