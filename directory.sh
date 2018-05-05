@@ -73,6 +73,31 @@ t7() { tl 7 }
 t8() { tl 8 }
 t9() { tl 9 }
 
+tll() {
+	# tree long list
+	tree -p
+}
+
+tg() {
+	# tree group
+	tree -g
+}
+
+to() {
+	# tree owner
+	tree -u
+}
+
+ta() {
+	# tree display all
+	tree -a -I ".git|node_modules"
+}
+
+tlla() {
+	# tree long list all
+	tree -ap -I ".git|node_modules"
+}
+
 
 # Directory Navigation
 alias b='cd -; l' # toggle last & current directory
