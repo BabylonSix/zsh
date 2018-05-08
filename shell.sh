@@ -10,6 +10,9 @@ ulimit -S -n 10000
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US"
 
+# move or rename multiple files
+autoload -U zmv
+
 # load in new style completion for zsh
 autoload -U compinit; compinit
 
