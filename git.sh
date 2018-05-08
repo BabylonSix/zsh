@@ -19,6 +19,13 @@ function gu() {
 	git status
 }
 
+# git hard undo
+function ghu() {
+	git reset HEAD $@
+	git checkout .
+	# git clean -f 
+}
+
 alias gb='git branch --column'
 alias gba='git branch -a'
 function gc() {
