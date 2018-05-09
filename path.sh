@@ -8,7 +8,7 @@ setupMyPATH() {
   # Path Variable Constructor
   # first directory with a given tool
   # will be used for that tool - order matters
-  pathDirs=(
+  local pathDirs=(
     # START activate gnu-utils first
     /usr/local/opt/coreutils/libexec/gnubin
     /usr/local/opt/findutils/libexec/gnubin
@@ -50,7 +50,7 @@ manpath() { $SHELL -lc 'echo $MANPATH | tr : "\n"'; } # display manpath variable
 
 # setup MANPATH variable
 setupMANPATH() {
-  manpathDirs=(
+  local manpathDirs=(
     /usr/local/opt/gnu-sed/libexec/gnuman
     /usr/local/opt/gnu-tar/libexec/gnuman
     /usr/local/opt/findutils/libexec/gnubin

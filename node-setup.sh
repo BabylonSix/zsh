@@ -10,7 +10,7 @@ fi
 currentNodeBin=~/.nvm/versions/node/$(node --version)/bin
 
 # Default NPM packages to install
-npmPackages=(
+local npmPackages=(
   autoprefixer
   babel-cli
   babel-eslint
