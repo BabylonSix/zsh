@@ -6,7 +6,7 @@
 # ------------------------------------------------------------------------------
 
 
-function extract() {
+extract() {
   local remove_archive
   local success
   local file_name

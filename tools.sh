@@ -139,7 +139,12 @@ alias sw='stylus --watch ./*.styl'
 alias pw='pug -P --watch ./*.pug'
 
 # kill named process
-kn() { ps ax | grep $1 | cut -d ' ' -f 2 | xargs kill; }
+kn() { 
+	ps ax \
+		| grep $1 \
+		| cut -d ' ' -f 2 \
+		| xargs kill;
+}
 
 us() {  # Update System
 	

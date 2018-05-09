@@ -17,9 +17,16 @@ nvmup() {
 
   revolver --style 'pong' start 'Checking if you have the latest version of NodeJS'
   nvmreset
-  myNODE=$(nvm ls | grep -Eo '\sv(\d+\.)+\d+' | tail -n 1 | tr -d '[:cntrl:]' | grep -Eo --colour=never '(\d+\.)+\d+')
+  myNODE=$(nvm ls \
+    | grep -Eo '\sv(\d+\.)+\d+' \
+    | tail -n 1 \
+    | tr -d '[:cntrl:]' \
+    | grep -Eo --colour=never '(\d+\.)+\d+')
 
-  latestNODE=$(nvm ls-remote | tail -n 1 | tr -d '[:cntrl:]' | grep -Eo --colour=never '(\d+\.)+\d+')
+  latestNODE=$(nvm ls-remote \
+    | tail -n 1 \
+    | tr -d '[:cntrl:]' \
+    | grep -Eo --colour=never '(\d+\.)+\d+')
   revolver stop
   
   if is-at-least $latestNODE $myNODE; then

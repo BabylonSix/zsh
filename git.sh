@@ -2,25 +2,25 @@
 alias gs='git status'
 
 # git init command
-function gi() {
+gi() {
 	git init $@
 	git status
 }
 
 # git add command
-function ga() {
+ga() {
 	git add $@
 	git status
 }
 
 # git unstage command
-function gu() {
+gu() {
 	git reset HEAD $@
 	git status
 }
 
 # git hard undo
-function ghu() {
+ghu() {
 	git reset HEAD $@
 	git checkout .
 	# git clean -f 
@@ -28,13 +28,13 @@ function ghu() {
 
 alias gb='git branch --column'
 alias gba='git branch -a'
-function gc() {
+gc() {
 	git commit -vm "$*"
 }
 alias gca='git commit -va'
 
 # Commit pending changes and quote all args as message
-function gg() {
+gg() {
 	git commit -vam "$*"
 }
 alias gco='git checkout'
@@ -51,12 +51,12 @@ alias gll='git log --graph --decorate --stat --all'
 alias gch="git checkout"
 
 # Git clone from GitHub
-function gcl() {
+gcl() {
 	git clone git://github.com/$USER/$1.git
 }
 
 # Create a New Git Repo
-function gr() {
+gr() {
   if [[ -z $1 ]]; then # check if argument is empty
     print '\n${RED}ERROR:${NC}'
     print '\n  Repo Name Missing!' # if argument is empty
@@ -68,28 +68,28 @@ function gr() {
 }
 
 # stash (freeze) repo
-function gf() {
+gf() {
   git add .
   git stash
   git status
 }
 
 # stash apply (unfreeze)
-function guf() {
+guf() {
   git stash apply
 }
 
 # Setup a tracking branch from [remote] [branch_name]
-function gbt() {
+gbt() {
 	git branch --track $2 $1/$2 && git checkout $2
 }
 # Quickly clobber a file and checkout
-function grf() {
+grf() {
 	rm $1
 	git checkout $1
 }
 # Call from inside an initialized Git repo, with the name of the repo.
-function new-git() {
+new-git() {
 	ssh git@example.com "mkdir $1.git && cd $1.git && git --bare init"
 	git remote add origin git@example.com:$1.git
 	git push origin master
