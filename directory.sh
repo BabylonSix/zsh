@@ -113,3 +113,9 @@ u6() { cd ../../../../../.. || exit; l; }
 u7() { cd ../../../../../../.. || exit; l; }
 u8() { cd ../../../../../../../.. || exit; l; }
 u9() { cd ../../../../../../../../.. ||exit; l; }
+
+
+# show directory, but with ~/ instead of /Users/$user/
+sd() {
+  pwd | sed -E "s/\/Users\/$USER/~/g"
+}
