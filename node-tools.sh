@@ -2,7 +2,7 @@
 nvml() { nvm list; }
 
 # use node version
-nvmu() { nvm alias default $1; nvm use $1 }
+nvmu() { nvm alias default $1; nvm alias node $1; nvm alias stable $1; nvm use $1 }
 
 # upgrade node version
 nvmup() {
