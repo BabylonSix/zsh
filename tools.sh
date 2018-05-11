@@ -194,3 +194,32 @@ else
 	diskutil erasevolume HFS+ 'RamDisk' `hdiutil attach -nomount ram://$gigabytes`
 fi
 }
+
+
+
+#################
+# Shell Tools
+#
+
+# disable std-out
+disableOutput() {
+	exec >/dev/null
+	exec 2>/dev/null
+}
+
+# enable std-out
+enableOutput() {
+	exec >/dev/tty
+	exec 2>/dev/tty
+}
+
+# count # of characters 
+# while ignoring newlines & tabs
+charCount() {
+	if [[ $# = 0 ]]; then
+		local x=""
+	else
+		local x=$1
+	fi
+	print $x | perl -pe 's/(\n|\r|\t)//g' | wc -m
+}
