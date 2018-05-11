@@ -217,5 +217,5 @@ resetzsh() {
   print "\n\n"
 
   # setupZSH again
-  setupZSH
+  setupzsh
 }
