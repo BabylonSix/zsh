@@ -223,3 +223,18 @@ charCount() {
 	fi
 	print $x | perl -pe 's/(\n|\r|\t)//g' | wc -m
 }
+
+
+
+#################
+# Wine Tools
+#
+setWine32Bit() {
+	trash ~/.wine
+	export WINEARCH=win32
+}
+
+setWine64Bit() {
+	trash ~/.wine
+	export WINEARCH=win64
+}
