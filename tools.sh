@@ -27,10 +27,11 @@ fi
 #
 export CHROME='Google Chrome'
 export FIREFOX='Firefox'
+export FIREDEV='Firefox Developer Edition'
 export SAFARI='Safari'
 
 # Default Browser
-export BROWSER=${FIREFOX}
+export BROWSER=${FIREDEV}
 
 
 alias ob='open -a ${BROWSER}'
