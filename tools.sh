@@ -79,6 +79,7 @@ alias ya='youtube-dl -f 140'
 alias yal='youtube-dl -f 140 -a ' # audio playlist
 alias yu='sudo youtube-dl -U'
 
+# mpv video player
 
 # Dev environments
 alias p3='python3'

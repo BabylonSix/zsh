@@ -27,8 +27,8 @@ sch() { sudo chown -R $(whoami):admin '$1'; }
 # chose disk volume
 v () {
 if [[ -z $1 ]]; then # check if argument is empty
-	print '\n${RED}ERROR:${NC}'
-	print '\n  You did not enter a Disk Volume'
+	print "\n${RED}ERROR:${NC}"
+	print "\n  You did not enter a Disk Volume"
 else
 	/Volumes/$1
 fi
