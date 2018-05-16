@@ -80,6 +80,7 @@ alias yal='youtube-dl -f 140 -a ' # audio playlist
 alias yu='sudo youtube-dl -U'
 
 # mpv video player
+alias mpv='mpv --no-border' # who needs borders! 
 
 # Dev environments
 alias p3='python3'
