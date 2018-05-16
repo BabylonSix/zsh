@@ -56,7 +56,7 @@ setupBrewPrograms() {
     wget                     # network downloader
     nmap                     # port scanner
     netcat                   # network utility
-    mplayer                  # video player
+    mpv                      # video player (better than mplayer)
     lynx                     # web browser
     mcrypt                   # encrypt|decrypt data files
     openssh                  # SSH connectivity tools
