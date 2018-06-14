@@ -4,9 +4,9 @@ alias reload='source ~/bin/zsh/setup.sh'
 alias r='reload; clear'
 
 # System Settings
-alias ehosts='sudo subl /etc/hosts'
-alias eshells='sudo subl /etc/shells'
-alias elint='subl ~/.eslintrc' # configure eslint
+alias ehosts='ot /etc/hosts'
+alias eshells='ot /etc/shells'
+alias elint='ot ~/.eslintrc' # configure eslint
 
 # Edit Config Files
 alias ea='ot ~/bin/zsh/alias.sh && reload'
