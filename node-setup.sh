@@ -42,6 +42,7 @@ local npmPackages=(
   osascript
   postcss
   postcss-cli
+  sass
   sass-lint
   simplecrawler
   standard
