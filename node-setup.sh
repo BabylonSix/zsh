@@ -49,6 +49,7 @@ local npmPackages=(
   standard-format
   stylint
   stylus
+  svg-sprite
   vtop
   yarn
   webpack
