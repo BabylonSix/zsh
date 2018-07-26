@@ -50,6 +50,8 @@ alias gl="git log --oneline"
 alias gll='git log --graph --decorate --stat --all'
 alias gch="git checkout"
 
+alias gm='git merge'
+
 # Git clone from GitHub
 gcl() {
 	git clone git://github.com/$USER/$1.git
