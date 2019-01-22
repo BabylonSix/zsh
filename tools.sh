@@ -72,15 +72,14 @@ alias print='print -P'
 alias y='youtube-dl'
 alias yd='youtube-dl -f 137+140'
 alias yv='youtube-dl -f 137'
-alias yvl='youtube-dl -f 137+140 -a ' # video playlist
+alias yvl='youtube-dl -f 137+140 -a' # video playlist
 alias yF='youtube-dl -F'
 alias yf='youtube-dl -f'
-alias ya='youtube-dl -f 140'
-alias yal='youtube-dl -f 140 -a ' # audio playlist
+alias ya='youtube-dl --extract-audio --audio-format m4a'
 alias yu='sudo youtube-dl -U'
 
 # mpv video player
-alias mpv='mpv --no-border' # who needs borders! 
+alias mpv='mpv --no-border' # who needs borders!
 
 # Dev environments
 alias p3='python3'
@@ -149,7 +148,7 @@ alias sw='stylus --watch ./*.styl'
 alias pw='pug -P --watch ./*.pug'
 
 # kill named process
-kn() { 
+kn() {
 	ps ax \
 		| grep $1 \
 		| cut -d ' ' -f 2 \
@@ -157,7 +156,7 @@ kn() {
 }
 
 us() {  # Update System
-	
+
 	# update brew and upgrade all packages
 	print '\n${BLUE}Updating Brew${NC}\n'
 	revolver --style 'pong' start 'checking for updates'
@@ -167,20 +166,20 @@ us() {  # Update System
 	# upgrade node version
 	print '\n\n\n\n${BLUE}Updating NVM${NC}'
 	nvmup
-	
+
 	# update npm and upgrade all packages (global)
 	print '\n\n\n\n${BLUE}Updating NPM${NC}\n'
 	revolver --style 'pong' start 'checking for updates'
 	npm update -g; npm upgrade -g
 	print 'All NPM packages are up-to-date'
 	revolver stop
-	
+
 	# System Resets
 	print '\n\n\n\n${BLUE}System Resets${NC}\n'
 	print 'Clear "Open With"'
 	# Clears Open With
 	alias cow='/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user'
-	
+
 	# Clear history of all downloads
 	print 'Clear history of all downloads'
 	alias cdh="sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
@@ -223,7 +222,7 @@ enableOutput() {
 	exec 2>/dev/tty
 }
 
-# count # of characters 
+# count # of characters
 # while ignoring newlines & tabs
 charCount() {
 	if [[ $# = 0 ]]; then
