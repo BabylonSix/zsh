@@ -247,3 +247,33 @@ setWine64Bit() {
 	trash ~/.wine
 	export WINEARCH=win64
 }
+
+
+
+#################
+# Photo  Tools
+#
+
+# resize photos
+resize-photos() {
+	if [[ $# -lt 3 ]]; then
+		print "${RED}Format:${NC} ${YELLOW}'${NC}>${YELLOW}'${NC} or ${YELLOW}'${NC}<${YELLOW}'${NC} ${YELLOW}'${NC}size${YELLOW}'${NC} ${YELLOW}'${NC}size${YELLOW}'${NC}"
+	fi
+
+	if [[ $# -gt 3 ]]; then
+		print "${RED}Format:${NC} ${YELLOW}'${NC}>${YELLOW}'${NC} or ${YELLOW}'${NC}<${YELLOW}'${NC} ${YELLOW}'${NC}size${YELLOW}'${NC} ${YELLOW}'${NC}size${YELLOW}'${NC}"
+	fi
+
+	if [[ $# -eq 3 ]]; then
+		echo "identify -format '%w %h %i\\\n' ./**/*.(jpg|jpeg|png) |
+		awk '\$1 $1 $2 || \$2 $1 $2 {sub(/^[^ ]* [^ ]* /, \"\"); print}' |
+		tr '\\\n' '\\\0' |
+		xargs -0 mogrify -resize '$3'" | zsh
+	fi
+}
+
+# check photo sizes and print list of jpg, jpeg, and png files
+photo-sizes() {
+	print '\n${RED}[dimensions]${NC}	${RED}[filename]${NC}'
+	identify -format '%w x %h	%i\\\n' ./**/*.(jpg|jpeg|png)
+}
