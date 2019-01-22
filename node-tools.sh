@@ -28,11 +28,11 @@ nvmup() {
     | tr -d '[:cntrl:]' \
     | grep -Eo --colour=never '(\d+\.)+\d+')
   revolver stop
-  
+
   if is-at-least $latestNODE $myNODE; then
     print '${GREEN}$myNODE${NC} is the latest version of node'
   else
-  
+
     # install latest version of node
     print '${BLUE}Upgrading NodeJS${NC} from ${GREEN}v$myNODE${NC} to ${GREEN}v$latestNODE${NC} \n'
     nvm i node
@@ -44,7 +44,7 @@ nvmup() {
     nvm alias node $latestNODE
     nvm use $latestNODE
     print '\n\n\n'          # divide the installs visually with 2 newlines
-    
+
     nvmreset
 
     # install NPM packages

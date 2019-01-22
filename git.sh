@@ -23,7 +23,7 @@ gu() {
 ghu() {
 	git reset HEAD $@
 	git checkout .
-	# git clean -f 
+	# git clean -f
 }
 
 alias gb='git branch --column'

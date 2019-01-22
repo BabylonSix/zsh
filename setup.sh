@@ -45,7 +45,7 @@ setupBrewPrograms() {
   Programs=(
     nvm                      # node version manage
     tree                     # shows directory tree
-    neovim            # new vim text editor
+    neovim                   # new vim text editor
     tmux                     # splits terminal windows
     vcprompt                 # lets git display prompt messages
     z                        # directory search tool
@@ -74,6 +74,7 @@ setupBrewPrograms() {
     bash                     # updated bash
     youtube-dl               # youtube downloader
     ffmpeg                   # youtube-dl dependency
+    libdvdcss                # remove copy protection from dvd's
     less                     # file content viewer
     nano                     # text editor
     emacs                    # text editing with super powers

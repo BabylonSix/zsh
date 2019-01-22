@@ -38,7 +38,7 @@ setupMyPATH() {
   done
 }; setupMyPATH
 
-unset PATH # clear PATH Variable before setting it 
+unset PATH # clear PATH Variable before setting it
 PATH=$myPATH:$PATH # add my path before system PATH
 
 

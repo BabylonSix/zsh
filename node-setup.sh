@@ -63,7 +63,7 @@ for package in $npmPackages
 do
 
   packageLocation=$currentNodeBin/$package
-  
+
   # if package is not installed, install it
   if [[ ! -h $packageLocation ]]; then
     print ${RED}installing${NC} ${CYAN}$package${NC}
@@ -83,7 +83,7 @@ do
     print $packageLocation1
     print $packageLocation2
     print $packageLocation3
-    print '\n\n\n'              # visually separate install     
+    print '\n\n\n'              # visually separate install
   }
 
 done
