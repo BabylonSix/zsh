@@ -106,6 +106,10 @@ alias lst='tail -n 1'
 alias chdh="sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'select LSQuarantineDataURLString from LSQuarantineEvent'"
 
 
+# postgres cli with color
+alias psql='clear; pgcli --less-chatty --warn'
+
+
 # Reset Application Cache
 rac() {
 	# sudo -s
