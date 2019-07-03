@@ -115,11 +115,11 @@ sql() {
 		print '\n${RED}ERROR:${NC}'
 		print '\n  ${PINK}Database Name Missing!${NC}'
 		print '\n  Run: ${RED}psql${NC} ${GREEN}<database-name>${NC} to run existing database'
-		print '\n'
 		
 		# list existing databases that can be chosen
 		pgcli --list
 
+		print '\n'
 		print '\n  ${PINK}To Manage Databases${NC}'
 		print '\n  Run: ${RED}createdb${NC} ${GREEN}<database-name>${NC} to create new database'
 		print '\n  Run: ${RED}dropdb${NC} ${GREEN}<database-name>${NC} to delete existing database'
