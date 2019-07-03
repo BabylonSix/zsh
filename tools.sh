@@ -106,9 +106,30 @@ alias lst='tail -n 1'
 alias chdh="sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'select LSQuarantineDataURLString from LSQuarantineEvent'"
 
 
-# postgres cli with color
-alias psql='clear; pgcli --less-chatty --warn'
+# setup color cli for postgresql
+sql() {
+	# if number of entered arguments is 0
+	if [[ $# -eq 0 ]]; then
+		# error message
+		print '\n${RED}ERROR:${NC}'
+		print '\n  ${PINK}Database Name Missing!${NC}'
+		print '\n  Run: ${RED}psql${NC} ${GREEN}<database-name>${NC} to run existing database'
+		print '\n'
+		
+		# list existing databases that can be chosen
+		pgcli --list
 
+		print '\n  ${PINK}To Manage Databases${NC}'
+		print '\n  Run: ${RED}createdb${NC} ${GREEN}<database-name>${NC} to create new database'
+		print '\n  Run: ${RED}dropdb${NC} ${GREEN}<database-name>${NC} to delete existing database'
+		print '\n'
+	fi
+
+	# if number of entered arguments is > 0
+	if [[ $# -gt 0 ]]; then
+		clear; pgcli --less-chatty --warn $1
+	fi
+}
 
 # Reset Application Cache
 rac() {
