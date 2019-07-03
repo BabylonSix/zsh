@@ -64,6 +64,8 @@ setupBrewPrograms() {
     bzip2                    # file compression
     xz                       # file compression
     unzip                    # file compression
+    postgres                 # sql database
+    pgcli                    # postgres color command line interface
     git                      # git version control
     exiftool                 # read | write exif data
     imagemagick              # image manipulator
