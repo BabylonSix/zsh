@@ -115,6 +115,7 @@ sql() {
 		print '\n${RED}ERROR:${NC}'
 		print '\n  ${PINK}Database Name Missing!${NC}'
 		print '\n  Run: ${RED}psql${NC} ${GREEN}<database-name>${NC} to run existing database'
+		print '\n'
 		
 		# list existing databases that can be chosen
 		pgcli --list
