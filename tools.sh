@@ -303,3 +303,14 @@ photo-sizes() {
 	print '\n${RED}[dimensions]${NC}	${RED}[filename]${NC}'
 	identify -format '%w x %h	%i\\\n' ./**/*.(jpg|jpeg|png)
 }
+
+
+
+#################
+# VS Code Tools
+#
+
+# cpp-compile extension clean output
+alias cd='clear; cd'
+alias cls='clear'
+alias g++="print '\n\n\n'; clear; print '${GREEN}C++ Program${NC}\n'; g++"
