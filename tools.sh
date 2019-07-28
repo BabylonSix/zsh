@@ -310,7 +310,5 @@ photo-sizes() {
 # VS Code Tools
 #
 
-# cpp-compile extension clean output
-alias cd='clear; cd'
-alias cls='clear'
+# run C++ program
 alias g++="print '\n\n\n'; clear; print '${GREEN}C++ Program${NC}\n'; g++"
