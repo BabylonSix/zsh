@@ -311,7 +311,7 @@ photo-sizes() {
 #
 
 # run C++ program
-alias g++="print '\n\n\n'; clear; print '${GREEN}C++ Program${NC}\n'; g++"
+alias g++="print '\n\n\n'; clear; print '${GREEN}C++ Program${NC}\n'; g++-9"
 
 # print machine code for c or c++ executable
 alias mc="otool -tv"

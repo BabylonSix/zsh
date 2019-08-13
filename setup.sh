@@ -90,6 +90,7 @@ setupBrewPrograms() {
     zsh-syntax-highlighting  # zsh highlighting
     zsh-autosuggestions      # zsh autosuggestions
     molovo/revolver/revolver # zsh progress spinner
+    gcc                      # g++ C and C++ compiler
   )
 
 
