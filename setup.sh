@@ -213,21 +213,6 @@ if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 
-resetzsh() {
-  # uninstall all brew packages
-  brew uninstall --force $(brew list)
-
-  # uninstall homebrew
-  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
-
-  # visually divide
-  print "\n\n"
-
-  # setupZSH again
-  setupzsh
-}
-
-
 uninstallzsh() {
     # uninstall all brew packages
   brew uninstall --force $(brew list)
@@ -238,3 +223,13 @@ uninstallzsh() {
   # visually divide
   print "\n\n"
 }
+
+
+resetzsh() {
+  uninstallzsh
+
+  # setupZSH again
+  setupzsh
+}
+
+
