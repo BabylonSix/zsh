@@ -20,7 +20,8 @@ autoload -U compinit; compinit
 
 upgradezsh() {
   # check if latest ZSH version is default, and if not, make it so
-	latestZSH=/usr/local/Cellar/zsh/$(ls -t /usr/local/Cellar/zsh/)/bin/zsh
+	latestZSH=$(echo "/usr/local/Cellar/zsh/^[[0m^[[01;34m5.7.1^[[0m/bin/zsh" |\
+sed -E "s/(\^\[\[[0-9]+m)|(\^\[\[[0-9]+;[0-9]+m)//g")
 
   # if latestZSH doest not exist in /etc/shells, then
   if ! grep -q $latestZSH /etc/shells; then
