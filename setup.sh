@@ -29,6 +29,9 @@ if [[ ! -a /usr/local/bin/brew ]]; then
   print '\n\n'
 fi
 
+#fix homebrew permissions
+sudo chown -R $(whoami) /usr/local/var/homebrew;
+
 setupSources() {
   # extend the amount of available packages
   brew tap caskroom/cask     || exit; print '\n\n'
