@@ -226,3 +226,14 @@ resetzsh() {
   # setupZSH again
   setupzsh
 }
+
+
+uninstallzsh() {
+    # uninstall all brew packages
+  brew uninstall --force $(brew list)
+
+  # uninstall homebrew
+  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
+
+  # visually divide
+}
