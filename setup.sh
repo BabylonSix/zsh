@@ -146,8 +146,9 @@ setupUtils() {
 
 
 # reload everything & clean install
-brew uninstall python # uninstall python dependancy for vim (we'll use pyenv to manage python versions instead)
-brew prune
+brew uninstall --ignore-dependencies python # uninstall python dependancy for vim (we'll use pyenv to manage python versions instead)
+brew cleanup
+
 . ~/bin/zsh/path.sh # load $PATH first
 
 
@@ -173,7 +174,6 @@ fi
 # NVM     -> Node Version Manager
 # NPM     -> Node Package Manager
 # PYENV   -> Python Version Manager
-# GEM     -> Ruby Package Manager
 # BREW    -> Homebrew Software Installer
 export NVM_DIR=~/.nvm
 . `brew --prefix nvm`/nvm.sh
