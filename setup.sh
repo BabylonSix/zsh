@@ -88,6 +88,7 @@ setupBrewPrograms() {
     zsh-autosuggestions      # zsh autosuggestions
     molovo/revolver/revolver # zsh progress spinner
     gcc                      # g++ C and C++ compiler
+    cquery                   # requirement for tabnine C++ completion (in VS Code)
   )
 
 
