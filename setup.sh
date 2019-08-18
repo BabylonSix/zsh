@@ -19,18 +19,12 @@ print '########################'
 print '\n'
 
 
-
-# fix permissions
-sudo chown $(whoami) /usr/local/etc;
-
 # if brew is not installed, install it
 if [[ ! -a /usr/local/bin/brew ]]; then
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   print '\n\n'
 fi
 
-#fix homebrew permissions
-sudo chown -R $(whoami) /usr/local/var/homebrew;
 
 setupSources() {
   # extend the amount of available packages
@@ -219,6 +213,9 @@ uninstallzsh() {
 
   # uninstall homebrew
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
+
+  # clear /usr/local/ of all old files to insure clean uninstall of our setup
+  sudo rm -rf /usr/local/
 
   # visually divide
   print "\n\n"
