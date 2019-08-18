@@ -16,13 +16,14 @@ setupMyPATH() {
     /usr/local/opt/gnu-sed/libexec/gnuman
     # END activate gnu-utils first
     /usr/local/Cellar/sqlite/3.21.0/bin #change number to latest version when u want the latest
-    /usr/local/sbin
-    /usr/sbin
-    /sbin
     /usr/local/bin
-    /usr/bin
-    /bin
+    /usr/local/opt
+    /usr/local/sbin
     /usr/local/Cellar
+    /usr/sbin
+    /usr/bin
+    /sbin
+    /bin
     # EXTRA Tools TEMP
     ~/.nvm/versions/node/$(node --version)/bin
     ~/.nvm/$(node --version)/bin
