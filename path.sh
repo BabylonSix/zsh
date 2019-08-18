@@ -15,7 +15,7 @@ setupMyPATH() {
     /usr/local/opt/gnu-tar/libexec/gnubin
     /usr/local/opt/gnu-sed/libexec/gnuman
     # END activate gnu-utils first
-    /usr/local/Cellar/sqlite/3.21.0/bin #change number to latest version when u want the latest
+    /usr/local/Cellar/sqlite/$(\ls -t /usr/local/Cellar/sqlite/ | head -n 1)/bin
     /usr/local/bin
     /usr/local/opt
     /usr/local/sbin
