@@ -150,7 +150,7 @@ if [[ ! -a ~/.nvm/versions/node/ ]]; then
   print '\n\n'       # visually separate install
 fi
 
-}
+} # end setupzsh
 
 
 
