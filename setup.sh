@@ -21,7 +21,7 @@ print '\n'
 
 # if brew is not installed, install it
 if [[ ! -a /usr/local/bin/brew ]]; then
-  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)";
   print '\n\n'
 fi
 
@@ -39,7 +39,7 @@ setupSources() {
 setupBrewPrograms() {
   # check if the following programs are installed,
   # if they are not, install them
-  Programs=(
+  local Programs=(
     nvm                      # node version manage
     tree                     # shows directory tree
     neovim                   # new vim text editor
@@ -101,9 +101,6 @@ setupBrewPrograms() {
     fi
   done
 
-
-
-
   upgradezsh
 
 }; setupBrewPrograms
@@ -111,7 +108,7 @@ setupBrewPrograms() {
 
 setupUtils() {
   # gnu utils, or just stuff with a ton of flags
-  Utils=(
+  local Utils=(
     coreutils
     binutils
     diffutils
@@ -152,13 +149,14 @@ if [[ ! -a ~/.nvm/versions/node/ ]]; then
   nvm install node   # install node
   print '\n\n'       # visually separate install
 fi
+
 }
 
 
 
 # If brew is not installed, run setupZSH
 if [[ ! -a /usr/local/bin/brew ]]; then
-  setupzsh
+  setupzsh;
 fi
 
 
@@ -219,10 +217,10 @@ uninstallzsh() {
 
 
 resetzsh() {
-  uninstallzsh
+  uninstallzsh;
 
   # setupZSH again
-  setupzsh
+  setupzsh;
 }
 
 
