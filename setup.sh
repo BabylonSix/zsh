@@ -198,11 +198,9 @@ export NVM_DIR="$HOME/.nvm"
 # To use Homebrew's directories rather than ~/.pyenv add to your profile:
 export PYENV_ROOT=/usr/local/var/pyenv
 # To enable shims and autocompletion add to your profile:
-if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
-
-
-# iTerm Shell Integration
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+if 
+  which pyenv > /dev/null; then eval "$(pyenv init -)"; 
+fi
 
 
 uninstallzsh() {
