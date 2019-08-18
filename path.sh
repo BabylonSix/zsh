@@ -61,7 +61,3 @@ setupMANPATH() {
 }; setupMANPATH
 
 MANPATH=$myMANPATH:$MANPATH # add my manpath before system MANPATH
-
-
-
-manpath() { $SHELL -lc 'echo $MANPATH | tr : "\n"'; } # display manpath variable
