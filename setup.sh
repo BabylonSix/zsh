@@ -169,11 +169,9 @@ fi
 # NPM     -> Node Package Manager
 # PYENV   -> Python Version Manager
 # BREW    -> Homebrew Software Installer
-export NVM_DIR=~/.nvm
-. `brew --prefix nvm`/nvm.sh
-
-
-
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
 
 # Sources
 . ~/bin/zsh/path.sh                  # load $PATH first
