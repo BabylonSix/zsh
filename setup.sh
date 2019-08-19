@@ -52,8 +52,7 @@ setupBrewPrograms() {
     rsync                    # sync files
     wget                     # network downloader
     nmap                     # port scanner
-    netcat                   # network utility
-    mpv                      # video player (better than mplayer)
+    netcat                   # network utilitys
     lynx                     # web browser
     mcrypt                   # encrypt|decrypt data files
     openssh                  # SSH connectivity tools
@@ -217,9 +216,11 @@ uninstallzsh() {
   # clear npm & nvm packages
   sudo rm -rf ~/.npm ~/.nvm
   # clear other files installed by our dotfiles
-  sudo ~/.babel.json ~/.z ~/.zcompdump
+  sudo rm ~/.babel.json ~/.z ~/.zcompdump
   # clear .zsh settings symlink
-  sudo ~/.zshrc
+  sudo rm ~/.zshrc
+
+  sudo rm ~/bin
 
   # visually divide
   print "\n\n"
