@@ -220,7 +220,7 @@ uninstallzsh() {
   # clear .zsh settings symlink
   sudo rm ~/.zshrc
 
-  sudo rm ~/bin
+  sudo rm -rf ~/bin
 
   # visually divide
   print "\n\n"
