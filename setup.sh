@@ -151,6 +151,9 @@ if [[ ! -a ~/.nvm/versions/node/ ]]; then
   print '\n\n'       # visually separate install
 fi
 
+# load npm packages listed in node-setup.sh
+npmstart
+
 } # end setupzsh
 
 
@@ -211,6 +214,12 @@ uninstallzsh() {
 
   # clear /usr/local/ of all old files to insure clean uninstall of our setup
   sudo rm -rf /usr/local/
+  # clear npm & nvm packages
+  sudo rm -rf ~/.npm ~/.nvm
+  # clear other files installed by our dotfiles
+  sudo ~/.babel.json ~/.z ~/.zcompdump
+  # clear .zsh settings symlink
+  sudo ~/.zshrc
 
   # visually divide
   print "\n\n"

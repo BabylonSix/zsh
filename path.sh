@@ -17,14 +17,15 @@ setupMyPATH() {
     # END activate gnu-utils first
     /usr/local/Cellar/sqlite/$(\ls -t /usr/local/Cellar/sqlite/ | head -n 1)/bin
     /usr/local/bin
+    /usr/local/var/pyenv/shims
     /usr/sbin
     /usr/bin
     /sbin
     /bin
     # EXTRA Tools TEMP
     ~/.nvm/versions/node/$(node --version)/bin
+    ~/.nvm/$(node --version)/bin
     /opt/X11/bin
-    /usr/local/var/pyenv/shims
     #Haskell
     ~/.local/bin
   )
