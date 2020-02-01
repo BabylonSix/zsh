@@ -178,7 +178,8 @@ export NVM_DIR="$HOME/.nvm"
 . ~/bin/zsh/path.sh                  # load $PATH first
 . ~/bin/zsh/colors.sh                # Set color variables
 . ~/bin/zsh/shell.sh                 # Look & Feel of the shell
-. ~/bin/zsh/directory.sh             # Directory creation|navigation
+. ~/bin/zsh/directory-tools.sh       # Directory creation|navigation
+. ~/bin/zsh/directories.sh
 . ~/bin/zsh/tools.sh                 # Tools & Utilities
 . ~/bin/zsh/node-setup.sh            # NVM & NPM Setup + Packages
 . ~/bin/zsh/node-tools.sh            # NPM completions, etc...
@@ -209,7 +210,7 @@ uninstallzsh() {
   brew uninstall --force $(brew list)
 
   # uninstall homebrew
-  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
+  ruby -e "$(curl -fsSL https:                                                                                                         //raw.githubusercontent.com/Homebrew/install/master/uninstall)"
 
   # clear /usr/local/ of all old files to insure clean uninstall of our setup
   sudo rm -rf /usr/local/

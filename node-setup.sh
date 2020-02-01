@@ -29,6 +29,7 @@ local npmPackages=(
   html2pug
   htmlhint
   iconv-lite
+  nodemon
   npmvet
   parcel-bundler
   pug

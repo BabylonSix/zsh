@@ -75,3 +75,6 @@ npml() { npm ls --depth=0 "$@" 2>/dev/null; }
 
 # Lists Global NPM Packages
 npmg() { npm ls --depth=0 -g 2>/dev/null; }
+
+# set node to use modules
+alias node="node --experimental-modules"

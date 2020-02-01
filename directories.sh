@@ -1,0 +1,1 @@
+alias sites='~/Library/Mobile\ Documents/com~apple~CloudDocs/My\ Files/My\ Websites'
