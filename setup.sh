@@ -25,16 +25,11 @@ if [[ ! -a /usr/local/bin/brew ]]; then
   print '\n\n'
 fi
 
+# make sure system is set up properly
+brew doctor
 
-setupSources() {
-  # extend the amount of available packages
-  brew tap caskroom/cask     || exit; print '\n\n'
-  # extend the amount of available packages
-  brew tap neovim/neovim     || exit; print '\n\n'
-}; setupSources
-
-
-
+# agree to xcode license
+sudo xcodebuild -license
 
 setupBrewPrograms() {
   # check if the following programs are installed,
@@ -80,8 +75,7 @@ setupBrewPrograms() {
     screen                   # terminal screen management
     watch                    # watches a program
     m4                       # macro processing language
-    pyenv                    # python version manager
-    wine                     # windows program runner
+    pyenv                    # python version manager1
     zsh                      # updated zsh
     zsh-syntax-highlighting  # zsh highlighting
     zsh-autosuggestions      # zsh autosuggestions
