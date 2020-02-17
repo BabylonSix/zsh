@@ -214,9 +214,6 @@ uninstallzsh() {
   sudo rm ~/.babel.json ~/.z ~/.zcompdump
   # clear .zsh settings symlink
   sudo rm ~/.zshrc
-
-  sudo rm -rf ~/bin
-
   # visually divide
   print "\n\n"
 }
