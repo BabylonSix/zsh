@@ -25,11 +25,21 @@ if [[ ! -a /usr/local/bin/brew ]]; then
   print '\n\n'
 fi
 
-# make sure system is set up properly
-brew doctor
 
+
+# RESET XCODE TOOLS
+ 
+# remove old xcode tools
+sudo rm -rf /Library/Developer/CommandLineTools
 # agree to xcode license
 sudo xcodebuild -license
+# install xcode tools
+xcode-select --install
+
+
+
+# make sure system is set up properly
+brew doctor
 
 setupBrewPrograms() {
   # check if the following programs are installed,
