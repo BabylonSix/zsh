@@ -20,8 +20,8 @@ print '\n'
 
 
 # if brew is not installed, install it
-if [[ ! -a /usr/local/bin/brew ]]; then
-  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)";
+if [[ ! -a /opt/homebrew/bin/brew ]]; then
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)";
   print '\n\n'
 fi
 
