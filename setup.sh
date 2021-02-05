@@ -1,4 +1,5 @@
 # INSTALLATION
+# big sur update
 #
 # Directory structure of zsh setup file should look as following
 # ~/bin
@@ -10,7 +11,6 @@
 # Run the following command
 #
 # ln -sf ~/bin/zsh/setup.sh ~/.zshrc; zsh -l
-# big sur update
 
 setupzsh() {
 print '########################'
