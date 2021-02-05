@@ -10,7 +10,7 @@
 # Run the following command
 #
 # ln -sf ~/bin/zsh/setup.sh ~/.zshrc; zsh -l
-
+# big sur update
 
 setupzsh() {
 print '########################'
