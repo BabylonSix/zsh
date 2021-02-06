@@ -1,17 +1,3 @@
-# INSTALLATION
-# big sur update
-#
-# Directory structure of zsh setup file should look as following
-# ~/bin
-# ├── web
-# └── zsh
-#     └── setup.sh
-#
-# If the directory structure looks like the above,
-# Run the following command
-#
-# ln -sf ~/bin/zsh/setup.sh ~/.zshrc; zsh -l
-
 setupzsh() {
 print '########################'
 print '#    SETTING UP ZSH    #'
@@ -19,26 +5,33 @@ print '########################'
 print '\n'
 
 
-# if brew is not installed, install it
-if [[ ! -a /opt/homebrew/bin/brew ]]; then
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)";
-  print '\n\n'
-fi
 
-
-
-# RESET XCODE TOOLS
- 
+#-----------------------------------------------
+# RESET XCODE TOOLS                            |
+#-----------------------------------------------
 # remove old xcode tools
 sudo rm -rf /Library/Developer/CommandLineTools
 # agree to xcode license
 sudo xcodebuild -license
 # install xcode tools
 xcode-select --install
+#----------------------------------------------
 
 
 
-# make sure system is set up properly
+#-----------------------------------------------
+# HOMEBREW SETUP                               |
+#-----------------------------------------------
+# if brew is not installed, install it
+if [[ ! -a /opt/homebrew/bin/brew ]]; then
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)";
+  print '\n\n'
+fi
+#----------------------------------------------
+
+
+
+# check for problems with brew
 brew doctor
 
 setupBrewPrograms() {
@@ -91,14 +84,14 @@ setupBrewPrograms() {
     zsh-autosuggestions      # zsh autosuggestions
     molovo/revolver/revolver # zsh progress spinner
     gcc                      # g++ C and C++ compiler
-    cquery                   # requirement for tabnine C++ completion (in VS Code)
+    cquery                   # requirement for tabnine C++ completion
   )
 
 
   for program in $Programs
   do
     # if program is not installed, install it
-    if [[ ! -a /usr/local/Cellar/$program ]]; then
+    if [[ ! -a /opt/homebrew/Cellar/$program ]]; then
       print installing $program
       brew install $program # install program
       print '\n\n'          # divide the installs visually with 2 newlines
@@ -131,10 +124,10 @@ setupUtils() {
   for util in $Utils
   do
     # if program is not installed, install it
-    if [[ ! -a /usr/local/Cellar/$util ]]; then
+    if [[ ! -a /opt/homebrew/Cellar/$util ]]; then
       print installing $util
       brew install $util # install program
-      print '\n\n'          # divide the installs visually with 2 newlines
+      print '\n\n'       # divide the installs visually with 2 newlines
     fi
   done
 }; setupUtils
@@ -144,14 +137,14 @@ setupUtils() {
 brew uninstall --ignore-dependencies python # uninstall python dependancy for vim (we'll use pyenv to manage python versions instead)
 brew cleanup
 
-. ~/bin/zsh/path.sh # load $PATH first
+. ~/bin/zsh/path.sh      # load $PATH first
 
 
 # If no version of node is installed, install node
 if [[ ! -a ~/.nvm/versions/node/ ]]; then
   print installing Node JS
-  nvm install node   # install node
-  print '\n\n'       # visually separate install
+  nvm install node       # install node
+  print '\n\n'           # visually separate install
 fi
 
 # load npm packages listed in node-setup.sh
@@ -161,52 +154,6 @@ npmstart
 
 
 
-# If brew is not installed, run setupZSH
-if [[ ! -a /usr/local/bin/brew ]]; then
-  setupzsh;
-fi
-
-
-
-
-# I'm using the following list of source control packages:
-# NVM     -> Node Version Manager
-# NPM     -> Node Package Manager
-# PYENV   -> Python Version Manager
-# BREW    -> Homebrew Software Installer
-export NVM_DIR="$HOME/.nvm"
-[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
-
-# Sources
-. ~/bin/zsh/path.sh                  # load $PATH first
-. ~/bin/zsh/colors.sh                # Set color variables
-. ~/bin/zsh/shell.sh                 # Look & Feel of the shell
-. ~/bin/zsh/directory-tools.sh       # Directory creation|navigation
-. ~/bin/zsh/directories.sh
-. ~/bin/zsh/tools.sh                 # Tools & Utilities
-. ~/bin/zsh/node-setup.sh            # NVM & NPM Setup + Packages
-. ~/bin/zsh/node-tools.sh            # NPM completions, etc...
-. ~/bin/zsh/completion.sh            # ZSH completions
-. ~/bin/zsh/ssh.sh                   # SSH configuration
-. ~/bin/zsh/git.sh                   # Git configuration
-. ~/bin/zsh/extract.sh               # unzip utility
-. ~/bin/zsh/alias.sh                 # Shortcut/Alias commands
-. ~/bin/zsh/screen.sh                # screensize tools
-. ~/bin/web/web-path.sh              # web project creation tools
-. `brew --prefix`/etc/profile.d/z.sh # Lets Z work
-. ~/bin/nvim/setup.sh                # neovim setup
-. /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-. ~/bin/zsh/test.sh                  # use for testing stuff out
-
-
-# Python Version Manager
-# To use Homebrew's directories rather than ~/.pyenv add to your profile:
-export PYENV_ROOT=/usr/local/var/pyenv
-# To enable shims and autocompletion add to your profile:
-if 
-  which pyenv > /dev/null; then eval "$(pyenv init -)"; 
-fi
 
 
 uninstallzsh() {
