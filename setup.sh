@@ -210,11 +210,11 @@ fi
 
 
 uninstallzsh() {
-    # uninstall all brew packages
+  # uninstall all brew packages
   brew uninstall --force $(brew list)
 
   # uninstall homebrew
-  ruby -e "$(curl -fsSL https:                                                                                                         //raw.githubusercontent.com/Homebrew/install/master/uninstall)"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall.sh)"
 
   # clear /usr/local/ of all old files to insure clean uninstall of our setup
   sudo rm -rf /usr/local/
@@ -229,11 +229,12 @@ uninstallzsh() {
 }
 
 
+
+
+
 resetzsh() {
   uninstallzsh;
 
   # setupZSH again
   setupzsh;
 }
-
-
