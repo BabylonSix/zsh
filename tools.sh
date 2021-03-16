@@ -200,6 +200,11 @@ us() {  # Update System
 	print 'All NPM packages are up-to-date'
 	revolver stop
 
+	# erase global npmrc file
+	if [[ -a ~/.npmrc ]]; then
+	rm ~/.npmrc
+	fi
+
 	# System Resets
 	print '\n\n\n\n${BLUE}System Resets${NC}\n'
 	print 'Clear "Open With"'
