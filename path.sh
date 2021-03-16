@@ -3,31 +3,20 @@
 # Looks in order, from first to last.
 # $PATH is the default system path.
 
-
 setupMyPATH() {
   # Path Variable Constructor
   # first directory with a given tool
   # will be used for that tool - order matters
   local pathDirs=(
-    # START activate gnu-utils first
-    /usr/local/opt/coreutils/libexec/gnubin
-    /usr/local/opt/findutils/libexec/gnubin
-    /usr/local/opt/gnu-tar/libexec/gnubin
-    /usr/local/opt/gnu-sed/libexec/gnuman
-    # END activate gnu-utils first
-    /usr/local/Cellar/sqlite/$(\ls -t /usr/local/Cellar/sqlite/ | head -n 1)/bin
+    # HomeBrew
+    /opt/homebrew/bin/
+    /opt/homebrew/opt/sqlite/bin
+    # System
     /usr/local/bin
-    /usr/local/var/pyenv/shims
     /usr/sbin
     /usr/bin
     /sbin
     /bin
-    # EXTRA Tools TEMP
-    ~/.nvm/versions/node/$(node --version)/bin
-    ~/.nvm/$(node --version)/bin
-    /opt/X11/bin
-    #Haskell
-    ~/.local/bin
   )
 
   for dir in $pathDirs
@@ -49,10 +38,10 @@ manpath() { $SHELL -lc 'echo $MANPATH | tr : "\n"'; } # display manpath variable
 # setup MANPATH variable
 setupMANPATH() {
   local manpathDirs=(
-    /usr/local/opt/gnu-sed/libexec/gnuman
-    /usr/local/opt/gnu-tar/libexec/gnuman
-    /usr/local/opt/findutils/libexec/gnubin
-    /usr/local/opt/coreutils/libexec/gnubin
+    /opt/homebrew/opt/gnu-sed/libexec/gnuman
+    /opt/homebrew/opt/gnu-tar/libexec/gnuman
+    /opt/homebrew/opt/findutils/libexec/gnubin
+    /opt/homebrew/opt/coreutils/libexec/gnubin
   )
 
   for dir in $manpathDirs

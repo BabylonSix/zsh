@@ -16,6 +16,7 @@
 # Sources
 . ~/bin/zsh/setup.sh                 # setup zsh functions
 . ~/bin/zsh/path.sh                  # load $PATH first
+. ~/bin/zsh/package-managers.sh      # load package managers
 . ~/bin/zsh/colors.sh                # Set color variables
 . ~/bin/zsh/shell.sh                 # Look & Feel of the shell
 . ~/bin/zsh/directory-tools.sh       # Directory creation|navigation
@@ -32,35 +33,5 @@
 . ~/bin/web/web-path.sh              # web project creation tools
 . `brew --prefix`/etc/profile.d/z.sh # Lets Z work
 . ~/bin/nvim/setup.sh                # neovim setup
-. /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+. /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 . ~/bin/zsh/test.sh                  # use for testing stuff out
-
-
-# Package Managers
-# BREW    -> Homebrew Software Installer
-# NVM     -> Node Version Manager
-# NPM     -> Node Package Manager
-# PYENV   -> Python Version Manager
-
-
-# Homebrew Package Manager
-# If brew is not installed, run setupZSH
-if [[ ! -a /opt/homebrew/bin/brew ]]; then
-  setupzsh;
-fi
-
-
-# Node Version Manager
-export NVM_DIR="$HOME/.nvm"
-[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-
-[ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
-
-
-# Python Version Manager
-# To use Homebrew's directories rather than ~/.pyenv add to your profile:
-export PYENV_ROOT=/usr/local/var/pyenv
-# To enable shims and autocompletion add to your profile:
-if 
-  which pyenv > /dev/null; then eval "$(pyenv init -)"; 
-fi
