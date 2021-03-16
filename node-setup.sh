@@ -1,8 +1,9 @@
 currentNode=~/.nvm/versions/node/$(node --version)
+echo Running Node $(node --version)
 
 # If no version of node is installed, install node
 if [[ ! -a $currentNode ]]; then
-  nvm install node # install node
+  nvm install node   # install node
   print '\n\n'       # visually separate install
 fi
 
@@ -68,8 +69,8 @@ do
   # if package is not installed, install it
   if [[ ! -h $packageLocation ]]; then
     print ${RED}installing${NC} ${CYAN}$package${NC}
-    npm install -g $package # install package globally
-    print '\n\n\n'              # visually separate install
+    npm install -g $package  # install package globally
+    print '\n\n\n'           # visually separate install
   fi
 
 
