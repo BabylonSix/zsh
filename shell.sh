@@ -66,6 +66,13 @@ do
   set -o $option
 done
 
+# automatically put quotes around URLs
+autoload -Uz bracketed-paste-magic
+zle -N bracketed-paste bracketed-paste-magic
+
+autoload -Uz url-quote-magic
+zle -N self-insert url-quote-magic
+
 
 
 #####################
