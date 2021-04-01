@@ -74,6 +74,17 @@ autoload -Uz url-quote-magic
 zle -N self-insert url-quote-magic
 
 
+# Supress "last login" message
+if [[ ! -a ~/.hushlogin ]]; then
+ touch ~/.hushlogin
+fi
+
+# Supress "last login" message in desktop
+if [[ ! -a ~/Desktop/.hushlogin ]]; then
+ touch ~/.hushlogin
+fi
+
+
 
 #####################
 # ZSH COMMAND HISTORY
