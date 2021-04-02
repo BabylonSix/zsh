@@ -26,3 +26,18 @@ export PYENV_ROOT=/opt/homebrew/var/pyenv
 if 
   which pyenv > /dev/null; then eval "$(pyenv init -)"; 
 fi
+
+
+# show version info of set languages
+i() {
+  echo 'Brew \t v'$(brew --version)
+  echo
+  echo 'NVM \t v'$(nvm --version)
+  echo 'NPM \t v'$(npm --version)
+  echo 'Node \t '$(node --version)
+  echo
+  echo $(pyenv --version)
+  echo $(python --version)
+  echo $(pip3 --version)
+  echo $(python3 --version)
+}
