@@ -30,14 +30,14 @@ fi
 
 # show version info of set languages
 i() {
-  echo 'Brew \t v'$(brew --version)
+  echo 'Brew \t '$(brew --version)
   echo
   echo 'NVM \t v'$(nvm --version)
   echo 'NPM \t v'$(npm --version)
   echo 'Node \t '$(node --version)
   echo
-  echo $(pyenv --version)
   echo $(python --version)
+  echo $(pyenv --version)
   echo $(pip3 --version)
   echo $(python3 --version)
 }
