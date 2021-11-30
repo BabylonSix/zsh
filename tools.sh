@@ -322,3 +322,11 @@ alias g++="print '\n\n\n'; clear; print '${GREEN}C++ Program${NC}\n'; g++-9"
 alias mc="otool -tv"
 
 
+#################
+# Privacy Tools
+#
+
+# clean quicklook system cache
+clean() {
+	qlmanage -r cache
+}
