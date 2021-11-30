@@ -9,7 +9,7 @@ setupMyPATH() {
   # will be used for that tool - order matters
   local pathDirs=(
     # HomeBrew
-    /opt/homebrew/bin/
+    /opt/homebrew/bin
     /opt/homebrew/opt/sqlite/bin
     # System
     /usr/local/bin

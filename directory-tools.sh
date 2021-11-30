@@ -9,7 +9,7 @@ if [[ $# = 0 ]]; then
 	print '\n   No directory name provided'
 else
 	mkdir -p $1    # Create directory
-	cd $1 || exit	 # CD into the newly created directory
+	cd $1 || exit  # CD into the newly created directory
 fi
 }
 
