@@ -85,6 +85,7 @@ setupBrewPrograms() {
     molovo/revolver/revolver # zsh progress spinner
     gcc                      # g++ C and C++ compiler
     cquery                   # requirement for tabnine C++ completion
+    cliclick                 # tool for executing mouse/keyboard-related actions from the shell/Terminal
   )
 
 
