@@ -309,6 +309,10 @@ photo-sizes() {
 	identify -format '%w x %h	%i\\\n' ./**/*.(jpg|jpeg|png)
 }
 
+# download gif
+gif() {
+	curl $1 --output ~/Desktop/$2.gif
+}
 
 
 #################
