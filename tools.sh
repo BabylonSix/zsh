@@ -69,14 +69,14 @@ alias print='print -P'
 
 
 # youtube downloader
-alias y='youtube-dl'
-alias yd='youtube-dl -f 137+140'
-alias yv='youtube-dl -f 137'
-alias yvl='youtube-dl -f 137+140 -a' # video playlist
-alias yF='youtube-dl -F'
-alias yf='youtube-dl -f'
-alias ya='youtube-dl --extract-audio --audio-format m4a'
-alias yu='sudo youtube-dl -U'
+alias y='yt-dlp'
+alias yd='yt-dlp -f 137+140'
+alias yv='yt-dlp -f 137'
+alias yvl='yt-dlp -f 137+140 -a' # video playlist
+alias yF='yt-dlp -F'
+alias yf='yt-dlp -f'
+alias ya='yt-dlp --extract-audio --audio-format m4a'
+alias yu='sudo yt-dlp -U'
 
 # mpv video player
 alias mpv='mpv --no-border' # who needs borders!

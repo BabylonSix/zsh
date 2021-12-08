@@ -68,8 +68,8 @@ setupBrewPrograms() {
     gocr                     # another OCR
     shellcheck               # shell linter
     bash                     # updated bash
-    youtube-dl               # youtube downloader
-    ffmpeg                   # youtube-dl dependency
+    yt-dlp                   # youtube downloader
+    ffmpeg                   # yt-dlp dependency
     libdvdcss                # remove copy protection from dvd's
     less                     # file content viewer
     nano                     # text editor
