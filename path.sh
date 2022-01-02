@@ -10,6 +10,7 @@ setupMyPATH() {
   local pathDirs=(
     # HomeBrew
     /opt/homebrew/bin
+    /opt/homebrew/sbin
     /opt/homebrew/opt/sqlite/bin
     # System
     /usr/local/bin
