@@ -209,9 +209,10 @@ us() {  # Update System
 	# System Resets
 	print '\n\n\n\n${BLUE}System Resets${NC}\n'
 	print 'Clear "Open With"'
+
 	# Clears Open With
 	alias cow='/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user'
-
+	
 	# Clear history of all downloads
 	print 'Clear history of all downloads'
 	alias cdh="sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
