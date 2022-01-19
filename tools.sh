@@ -184,6 +184,11 @@ kn() {
 
 us() {  # Update System
 
+	# reset terminal device interface
+	# prevents return key from not working sometimes
+	stty sane
+
+
 	# update brew and upgrade all packages
 	print '\n${BLUE}Updating Brew${NC}\n'
 	revolver --style 'pong' start 'checking for updates'
@@ -216,6 +221,7 @@ us() {  # Update System
 	# Clear history of all downloads
 	print 'Clear history of all downloads'
 	alias cdh="sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
+
 }
 
 
