@@ -76,7 +76,7 @@ alias yvl='yt-dlp -f 137+140 -a' # video playlist
 alias yF='yt-dlp -F'
 alias yf='yt-dlp -f'
 # alias ya='yt-dlp --extract-audio --audio-format m4a'
-alias ya='yt-dlp -f 139'
+alias ya='yt-dlp -f 140'
 alias yu='sudo yt-dlp -U'
 
 # mpv video player
