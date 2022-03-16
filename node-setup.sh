@@ -15,7 +15,7 @@ local npmPackages=(
   autoprefixer
   babel-cli
   babel-eslint
-  babel-preset-es2015
+  babel-preset-env
   babel-preset-modern-browsers
   browser-sync
   caniuse
