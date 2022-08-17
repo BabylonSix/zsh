@@ -41,6 +41,7 @@ local npmPackages=(
   jstransformer-coffee-script
   jstransformer-marked
   jstransformer-stylus
+  npx
   osascript
   postcss
   postcss-cli
@@ -52,6 +53,7 @@ local npmPackages=(
   stylint
   stylus
   svg-sprite
+  vite
   vtop
   yarn
   webpack
@@ -69,7 +71,7 @@ do
   # if package is not installed, install it
   if [[ ! -h $packageLocation ]]; then
     print ${RED}installing${NC} ${CYAN}$package${NC}
-    npm install -g $package  # install package globally
+    npm install --location=global $package  # install package globally
     print '\n\n\n'           # visually separate install
   fi
 
