@@ -34,4 +34,4 @@
 . `brew --prefix`/etc/profile.d/z.sh # Lets Z work
 . ~/bin/nvim/setup.sh                # neovim setup
 . /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-. ~/bin/zsh/test-tools.sh                  # use for testing stuff out
+. ~/bin/zsh/test-tools.sh            # use for testing stuff out
