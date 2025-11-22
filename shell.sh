@@ -90,7 +90,7 @@ fi
 # ZSH COMMAND HISTORY
 #
 HISTFILE=~/.zsh_history # Store history here
-HISTFILE=~/bin/dotfiles/zsh/.zsh_history # Location of the .histfile
+HISTFILE=~/.dotfiles/dotfiles/zsh/.zsh_history # Location of the .histfile
 HISTSIZE=10000 # History size in the terminal
 SAVEHIST=10000 # Saved history size
 
