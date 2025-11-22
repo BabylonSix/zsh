@@ -67,17 +67,22 @@ fi
 brew doctor
 
 setupBrewPrograms() {
+
   # check if the following programs are installed,
   # if they are not, install them
   local Programs=(
     nvm                      # node version manage
     tree                     # shows directory tree
+    eza                      # modern ls
+    bat                      # cat with syntax highlighting
+    bat-extras               # batgrep, batman, batpipe, batwatch, batdiff, etc.
     neovim                   # new vim text editor
     tmux                     # splits terminal windows
     vcprompt                 # lets git display prompt messages
-    z                        # directory search tool
+    btop                     # modern system monitor
+    zoxide                   # directory search tool
     httpie                   # http tool
-    ack                      # grep for code
+    ripgrep                  # grep for code
     trash                    # safe deletion
     rsync                    # sync files
     wget                     # network downloader
@@ -93,31 +98,21 @@ setupBrewPrograms() {
     postgres                 # sql database
     pgcli                    # postgres color command line interface
     git                      # git version control
+    lazygit                  # Terminal UI for git
     exiftool                 # read | write exif data
     imagemagick              # image manipulator
-    xmlstarlet               # parse xml
-    tesseract                # OCR
-    gocr                     # another OCR
     shellcheck               # shell linter
     bash                     # updated bash
     yt-dlp                   # youtube downloader
     ffmpeg                   # yt-dlp dependency
     libdvdcss                # remove copy protection from dvd's
     less                     # file content viewer
-    nano                     # text editor
-    emacs                    # text editing with super powers
-    tmux                     # terminal screen management
-    screen                   # terminal screen management
     watch                    # watches a program
-    m4                       # macro processing language
     pyenv                    # python version manager1
     zsh                      # updated zsh
-    zsh-syntax-highlighting  # zsh highlighting
-    zsh-autosuggestions      # zsh autosuggestions
     molovo/revolver/revolver # zsh progress spinner
     gcc                      # g++ C and C++ compiler
-    cquery                   # requirement for tabnine C++ completion
-    cliclick                 # tool for executing mouse/keyboard-related actions from the shell/Terminal
+    zinit                    # zsh package manager
   )
 
 
