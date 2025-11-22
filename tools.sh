@@ -77,6 +77,8 @@ alias yf='yt-dlp -f'
 # alias ya='yt-dlp --extract-audio --audio-format m4a'
 alias ya='yt-dlp -f 140'
 alias yu='sudo yt-dlp -U'
+alias ycc='yt-dlp --skip-download --write-subs --write-auto-subs --sub-langs "en.*,en" --convert-subs srt'
+alias ysub='ycc'
 
 # mpv video player
 alias mpv='mpv --no-border' # who needs borders!
