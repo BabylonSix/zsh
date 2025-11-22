@@ -55,8 +55,8 @@ fi
 # HOMEBREW SETUP                               |
 #-----------------------------------------------
 # if brew is not installed, install it
-if [[ ! -a /opt/homebrew/bin/brew ]]; then
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)";
+if [[ ! -x /opt/homebrew/bin/brew ]]; then
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   print '\n\n'
 fi
 #----------------------------------------------
