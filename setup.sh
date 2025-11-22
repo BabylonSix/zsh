@@ -7,15 +7,47 @@ print '\n'
 
 
 #-----------------------------------------------
-# RESET XCODE TOOLS                            |
+# XCODE COMMAND LINE TOOLS — HEADLESS (ARM-ONLY)
 #-----------------------------------------------
-# remove old xcode tools
-sudo rm -rf /Library/Developer/CommandLineTools
-# agree to xcode license
-sudo xcodebuild -license
-# install xcode tools
-xcode-select --install
-#----------------------------------------------
+# Installs CLT without GUI prompts. Safe to re-run (idempotent).
+
+if ! xcode-select -p >/dev/null 2>&1; then
+  print "${BLUE}Installing Xcode Command Line Tools (headless)...${NC}"
+
+  # escalate if needed
+  if [[ $EUID -ne 0 ]]; then SUDO="sudo"; else SUDO=""; fi
+
+  # Apple only lists CLT in softwareupdate when this sentinel exists
+  $SUDO /usr/bin/touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
+
+  # pick latest CLT product from the catalog
+  CLT_PRODUCT=$(/usr/sbin/softwareupdate -l 2>/dev/null \
+    | awk -F'* ' '/Command Line Tools/ {print $2}' \
+    | sort -V | tail -n1)
+
+  if [[ -n "$CLT_PRODUCT" ]]; then
+    print "${BLUE}Installing:${NC} ${YELLOW}${CLT_PRODUCT}${NC}"
+    $SUDO /usr/sbin/softwareupdate -i "$CLT_PRODUCT" --verbose || {
+      print "${RED}ERROR:${NC} softwareupdate failed for CLT"
+      $SUDO rm -f /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
+      return 1
+    }
+    # Point xcode-select at the CLT (not full Xcode)
+    $SUDO /usr/bin/xcode-select --switch /Library/Developer/CommandLineTools
+    print "${GREEN}✓ Xcode Command Line Tools installed${NC}"
+  else
+    print "${RED}ERROR:${NC} Could not find 'Command Line Tools' in softwareupdate catalog"
+    print "${YELLOW}Fallback:${NC} launching GUI installer..."
+    /usr/bin/xcode-select --install >/dev/null 2>&1 || true
+    $SUDO rm -f /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
+    return 1
+  fi
+
+  $SUDO rm -f /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
+else
+  print "${GREEN}✓ Xcode Command Line Tools present${NC}"
+fi
+#-----------------------------------------------
 
 
 
