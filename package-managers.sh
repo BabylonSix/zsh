@@ -1,5 +1,6 @@
 # Package Managers
 # BREW    -> Homebrew Software Installer
+# ZINIT   -> zinit package manager
 # NVM     -> Node Version Manager
 # NPM     -> Node Package Manager
 # PYENV   -> Python Version Manager
@@ -43,17 +44,26 @@ i() {
 }
 
 
+# Zinit
+. /opt/homebrew/opt/zinit/zinit.zsh
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-autosuggestions
+zinit light z-shell/F-Sy-H
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/homebrew/Caskroom/miniforge/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/Users/bravo/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh" ]; then
-        . "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh"
+    if [ -f "/Users/bravo/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/bravo/miniconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/opt/homebrew/Caskroom/miniforge/base/bin:$PATH"
+        export PATH="/Users/bravo/miniconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+
+
+source /Users/bravo/.docker/init-zsh.sh || true # Added by Docker Desktop
