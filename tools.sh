@@ -68,7 +68,7 @@ alias print='print -P'
 
 
 # youtube downloader
-alias y='yt-dlp'
+alias yt='yt-dlp'
 alias yd='yt-dlp -f 137+140'
 alias yv='yt-dlp -f 137'
 alias yvl='yt-dlp -f 137+140 -a' # video playlist
