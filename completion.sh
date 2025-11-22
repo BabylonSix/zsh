@@ -20,7 +20,6 @@ WORDCHARS=''
 # Load the complist module
 zmodload -i zsh/complist
 
-## case-insensitive (all),partial-word and then substring completion
 # Set case-insensitive, partial-word, and substring completion
 if [ "x$CASE_SENSITIVE" = "xtrue" ]; then
   zstyle ':completion:*' matcher-list 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
@@ -45,18 +44,6 @@ zstyle ':completion:*:*:*:*:processes' command "ps -u `whoami` -o pid,user,comm 
 zstyle ':completion:*:cd:*' tag-order local-directories directory-stack path-directories
 cdpath=(.)
 
-# use /etc/hosts and known_hosts for hostname completion
-[ -r /etc/ssh/ssh_known_hosts ] && _global_ssh_hosts=(${${${${(f)"$(</etc/ssh/ssh_known_hosts)"}:#[\|]*}%%\ *}%%,*}) || _ssh_hosts=()
-[ -r ~/.ssh/known_hosts ] && _ssh_hosts=(${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[\|]*}%%\ *}%%,*}) || _ssh_hosts=()
-[ -r /etc/hosts ] && : ${(A)_etc_hosts:=${(s: :)${(ps:\t:)${${(f)~~"$(</etc/hosts)"}%%\#*}##[:blank:]#[^[:blank:]]#}}} || _etc_hosts=()
-hosts=(
-  "$_global_ssh_hosts[@]"
-  "$_ssh_hosts[@]"
-  "$_etc_hosts[@]"
-  "$HOST"
-  localhost
-)
-zstyle ':completion:*:hosts' hosts $hosts
 # Enable command line completion caching and set cache directory
 zstyle ':completion::complete:*' use-cache 1
 zstyle ':completion::complete:*' cache-path $ZSH/cache/
