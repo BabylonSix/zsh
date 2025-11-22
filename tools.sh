@@ -340,6 +340,6 @@ alias mc="otool -tv"
 #
 
 # clean quicklook system cache
-clean() {
+cleanQl() {
 	qlmanage -r cache
 }
