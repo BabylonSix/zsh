@@ -29,12 +29,10 @@ PINK='%F{211}'     # Pink
 # Load Colors for ZSH
 autoload -U colors && colors
 
-# ZSH PROMPT LOOK & FEEL
-# [user] directory (version control information):
-PS1="
 
-[$RED%n$NC] $BLUE%~$NC: $RED\$(vcprompt -f %n:%b$a%u%m)$NC
- $GREEN•➤$NC "
+# ZSH PROMPT LOOK & FEEL
+eval "$(starship init zsh)"
+
 
 # Set LS to always show colors
 export CLICOLOR="Yes"
