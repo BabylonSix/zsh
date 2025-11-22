@@ -165,7 +165,7 @@ setupUtils() {
 brew uninstall --ignore-dependencies python # uninstall python dependancy for vim (we'll use pyenv to manage python versions instead)
 brew cleanup
 
-. ~/bin/zsh/path.sh      # load $PATH first
+. ~/.dotfiles/zsh/path.sh      # load $PATH first
 
 
 # If no version of node is installed, install node
