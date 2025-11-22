@@ -8,10 +8,14 @@ setupMyPATH() {
   # first directory with a given tool
   # will be used for that tool - order matters
   local pathDirs=(
+    # pyEnv
+    /Users/bravo/.local/bin
     # HomeBrew
     /opt/homebrew/bin
     /opt/homebrew/sbin
     /opt/homebrew/opt/sqlite/bin
+    # Zinit
+    /opt/homebrew/opt/zinit/zinit.zsh
     # System
     /usr/local/bin
     /usr/sbin
