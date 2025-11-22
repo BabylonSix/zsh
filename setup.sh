@@ -184,7 +184,7 @@ npmstart
 
 
 
-uninstallzsh() {
+wipezsh() {
   # uninstall all brew packages
   brew uninstall --force $(brew list)
 
