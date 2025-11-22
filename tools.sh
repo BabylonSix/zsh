@@ -343,3 +343,21 @@ alias mc="otool -tv"
 cleanQl() {
 	qlmanage -r cache
 }
+
+
+#################
+# AI Tools
+#
+
+# Launch ComfyUI
+cui() {
+	cd ~/AI/ComfyUI
+	python3 ~/AI/ComfyUI/main.py &
+	(sleep 3; open -a "Google Chrome" http://127.0.0.1:8188) &
+}
+
+# Open AI Models Folder
+oai() {
+	cd ~/AI/ComfyUI
+	o
+}
