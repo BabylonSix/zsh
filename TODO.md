@@ -1,104 +1,106 @@
-# BRAVØ Terminal OS – Change Plan
+# BRAVO Terminal OS - Change Plan
 
-## 0. Baseline (already true)
+## 0. Baseline (Verified Complete)
 
-+ Homebrew is installed and working  
-+ `~/.dotfiles` repo exists and is under git  
-+ ZSH is your main shell  
-+ `.zshrc` already sources a startup.sh (or equivalent) from `~/.dotfiles/zsh/`  
-+ Existing provisioning scripts exist (`setupzsh`, `resetzsh`, `us()`, etc.)  
-+ Existing `~/.tmux.conf` is working with your current Resolve-style mappings  
-+ Core brew tools already present (tmux, neovim, git, zsh, bash, ffmpeg, postgres, etc.)
-
----
-
-## 1. Toolchain – install/verify modern CLI stack
-
-[*] Ensure modern navigation / search tools are installed via brew  
-    - yazi  
-    - zoxide  
-    - fzf  
-    - eza  
-    - bat  
-    - bat-extras  
-    - ripgrep  
-    - fd  
-    - jq  
-    - btop  
-    - tldr  
-    - gdu  
-
-[*] Remove / de-emphasize legacy tools  
-    - stop relying on `tree`  
-    - stop relying on `ack`  
-    - stop relying on `nano` / `emacs`  
-    - stop using `screen`
-
-[*] Confirm older infra tools you *do* keep are present  
-    - gzip / bzip2 / xz / unzip  
-    - openssh  
-    - watch  
++ Homebrew installed and working via setupzsh()
++ ~/.dotfiles repo exists
++ ZSH is main shell
++ ~/.zshrc symlinked to ~/.dotfiles/zsh/startup.sh
++ Provisioning scripts exist (setupzsh, wipezsh, resetzsh, us)
++ Core brew tools installed via setupzsh()
 
 ---
 
-## 2. Dotfiles layout – move configs into `~/.dotfiles` + symlink
+## 1. Toolchain Gaps
 
-[*] Move tmux config into dotfiles and symlink  
-    - create `~/.dotfiles/tmux/`  
-    - move `~/.tmux.conf` → `~/.dotfiles/tmux/tmux.conf`  
-    - `ln -s ~/.dotfiles/tmux/tmux.conf ~/.tmux.conf`
+[ ] Add missing modern CLI tools to setupzsh() Programs array:
+    - bat-extras
+    - jq
+    - tldr
+    - gdu
 
-[ ] Move yazi config into dotfiles and symlink  
-    - create `~/.dotfiles/yazi/`  
-    - move `~/.config/yazi/*` → `~/.dotfiles/yazi/`  
-    - `ln -s ~/.dotfiles/yazi ~/.config/yazi`
-
-[ ] Move neovim config into dotfiles and symlink  
-    - create `~/.dotfiles/nvim/`  
-    - move `~/.config/nvim/*` → `~/.dotfiles/nvim/`  
-    - `ln -s ~/.dotfiles/nvim ~/.config/nvim`
-
-[ ] Centralize git config  
-    - create `~/.dotfiles/git/gitconfig`  
-    - write minimal `~/.gitconfig` that includes it
+[ ] Remove legacy tools from codebase:
+    - tree (still in Programs array and used in directory-tools.sh)
+    - Consider removing if fully replaced by eza tree mode
 
 ---
 
-## 3. ZSH + provisioning – make the environment portable
+## 2. Config Management
 
-[ ] Add a `link_dotfile()` helper in `~/.dotfiles/zsh/tools.sh`  
-[ ] Add a full `link_all_dotfiles()` that links tmux, yazi, nvim, gitconfig  
-[ ] Call `link_all_dotfiles()` inside `setupzsh`  
-[ ] Add an `install_tools()` / `update_tools()` helper (brew update, install, cleanup)  
-[ ] Update `us()` to call `update_tools()`  
-[ ] Ensure error formatting follows your color-coded self-teaching standard  
+[ ] tmux config in dotfiles (linked via setupzsh)
+[ ] yazi config in dotfiles (linked via setupzsh)
+[ ] neovim config in dotfiles (linked via setupzsh)
+[ ] starship config in dotfiles (linked via setupzsh)
+[ ] ghostty config in dotfiles (linked via setupzsh)
+[ ] zed config in dotfiles (linked via setupzsh)
 
----
-
-## 4. tmux / yazi / tool integration – workflow layer
-
-[*] Confirm tmux north-star config lives fully in `~/.dotfiles/tmux/tmux.conf`  
-    - J/K/L/I pane nav  
-    - Alt + J/K/L/I resize  
-    - N / n / m / g window verbs  
-    - `,` / `.` window navigation  
-    - base-index 1  
-
-[ ] Add a wrapper function (e.g. `work()` or `bravo()`) to auto-launch your tmux workspace  
-[ ] Integrate yazi as a first-class tool (alias or tmux key to open it)  
-[ ] Begin replacing:  
-    - `ls` → `eza`  
-    - `cat` → `bat`  
-    - `grep` → `rg`  
-    - `find` → `fd`  
-    - `top/htop` → `btop`  
-    - `cd` → `zoxide`  
+[ ] Centralize git config:
+    - create ~/.dotfiles/config/git/gitconfig
+    - minimal ~/.gitconfig that includes it
+    - add linking logic to setupzsh()
 
 ---
 
-## 5. Future / optional layers
+## 3. Provisioning Improvements
 
-[ ] nvim custom keymap (Resolve-style: J/K/L/I, Alt, Shift, stems)  
-[ ] Add AI-CLI diff helpers (send file or block to Claude/Gemini/Codex)  
-[ ] Build BRAVØ Music tmux layout (lyrics pane, AI pane, yazi pane, git pane)  
-[ ] Gradually refactor provisioning (`us()`, setup scripts) using AI agents
+[ ] Refactor setupzsh() linking logic:
+    - Extract to link_dotfile() helper function
+    - Create link_all_dotfiles() orchestrator
+    - Reduces repetition in setupzsh()
+
+[*] Error formatting follows color-coded standard
+
+---
+
+## 4. Tool Integration
+
+[*] tmux config in dotfiles with J/K/L/I mappings
+[*] yazi installed with y() cd-on-exit function
+[*] Modern tool aliases working:
+    - ls -> eza (via directory-tools.sh)
+    - cat -> bat (via tools.sh)
+    - top -> btop (via tools.sh 'tu' alias)
+    - cd -> zoxide (via tools.sh eval)
+
+[ ] Complete tool migration:
+    - grep -> rg (currently grep uses --color=always, not rg)
+    - find -> fd (no fd alias exists)
+
+[ ] Add tmux workspace launcher:
+    - work() or bravo() function
+    - Auto-launch configured tmux layout
+
+---
+
+## 5. First-Run Experience
+
+[ ] Add setupzsh prompt to startup.sh:
+    - If .dotfiles/.checkmark marker doesn't exist
+    - Ask user if they want to run setupzsh
+    - Exit gracefully if declined
+
+[ ] Fix nvm version picker in us():
+    - When node already at latest version
+    - Should still show picker for other versions
+    - Currently shows empty list if all versions installed
+
+---
+
+## 6. Configuration Tuning
+
+[ ] Starship prompt customization:
+    - Display [username] directory (git status)
+    - Match terminal color scheme
+
+[ ] Tool-specific keybindings (J/K/L/I pattern):
+    - neovim (if not already configured)
+    - yazi (if not already configured)
+
+---
+
+## 7. Future Enhancements
+
+[ ] nvim custom keymap (Resolve-style: J/K/L/I, Alt, Shift, stems)
+[ ] AI-CLI diff helpers (send file/block to Claude/Gemini/Codex)
+[ ] BRAVO Music tmux layout (lyrics, AI, yazi, git panes)
+[ ] AI-assisted refactoring of provisioning scripts
