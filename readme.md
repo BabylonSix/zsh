@@ -12,7 +12,6 @@ A personal productivity system for macOS optimized for learning velocity and wor
 - **Error States as Learning** — Failures teach correct usage through visual feedback
 
 ## Quick Start
-
 ```zsh
 # Install (symlink startup.sh to .zshrc)
 ln -sf ~/.dotfiles/zsh/startup.sh ~/.zshrc
@@ -22,6 +21,7 @@ setupzsh      # ~30 minutes for full provisioning
 # Daily use
 reload        # Apply config changes (or just: r)
 us            # Update entire dev stack
+us -a         # Update + interactive Node/Python version selection
 ezsh          # Quick reference (opens dotfiles in editor)
 i             # Show version info for all package managers
 ```
@@ -35,14 +35,17 @@ i             # Show version info for all package managers
 | `resetzsh` | Fresh start (wipe + setup) |
 | `upgradezsh` | Update to latest ZSH version |
 | `us` | Universal system update |
+| `us -n` | Update + interactive Node version picker |
+| `us -p` | Update + interactive Python version picker |
+| `us -a` | Update + both version pickers |
+| `us -h` | Show help |
 
 ## Architecture
-
 ```
 ~/.dotfiles/
 ├── zsh/
 │   ├── startup.sh          # Entry point (symlink to ~/.zshrc)
-│   ├── zsh-management.sh   # setupzsh, wipezsh, resetzsh
+│   ├── zsh-management.sh   # setupzsh, wipezsh, resetzsh, us
 │   ├── path.sh             # PATH configuration
 │   ├── package-managers.sh # Homebrew, NVM, pyenv, zinit
 │   ├── colors.sh           # 256-color system + starship prompt
@@ -95,6 +98,24 @@ i             # Show version info for all package managers
 GUI apps: `ghostty`, `zed`
 
 ZSH plugins: `zsh-syntax-highlighting`, `zsh-autosuggestions`, `F-Sy-H`
+
+## System Update (`us`)
+
+The `us` command is an interactive system updater with optional version management:
+```zsh
+us            # Safe daily driver — updates Homebrew, NPM, runs maintenance
+us -n         # Also opens interactive Node version picker (fzf menu)
+us -p         # Also opens interactive Python version picker (fzf menu)
+us -a         # Both Node and Python pickers
+us -np        # Same as -a
+us -h         # Show help
+```
+
+**Version pickers:**
+- Show only uninstalled versions (no duplicates)
+- Newest versions first
+- Node menu shows LTS labels
+- Arrow keys to navigate, type to filter, Enter to select, Esc to cancel
 
 ## Command Patterns
 
@@ -226,7 +247,6 @@ ZSH plugins: `zsh-syntax-highlighting`, `zsh-autosuggestions`, `F-Sy-H`
 ## Error Handling
 
 Functions use color-coded, educational error messages:
-
 ```zsh
 if [[ -z $1 ]]; then
   print "\n${RED}ERROR:${NC}"
@@ -238,7 +258,6 @@ fi
 ## PATH Precedence
 
 Deterministic tool resolution (brew → system):
-
 ```
 /opt/homebrew/bin
 /opt/homebrew/sbin
@@ -270,5 +289,5 @@ View with: `path`
 ## Documentation
 
 - [CLAUDE.md](CLAUDE.md) — AI assistant guidance for this codebase
-- [ZSH Prompt Customization](http://www.nparikh.org/unix/prompt.php)
-- [256 Color Reference](http://lucentbeing.com/blog/that-256-color-thing/)
+- [ZSH Prompt Expansion](https://zsh.sourceforge.io/Doc/Release/Prompt-Expansion.html) — Official ZSH docs
+- [256 Colors Cheat Sheet](https://www.ditig.com/256-colors-cheat-sheet) — Xterm color codes
