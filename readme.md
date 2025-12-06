@@ -289,5 +289,5 @@ View with: `path`
 ## Documentation
 
 - [CLAUDE.md](CLAUDE.md) — AI assistant guidance for this codebase
-- [ZSH Prompt Expansion](https://zsh.sourceforge.io/Doc/Release/Prompt-Expansion.html) — Official ZSH docs
+- [ZSH Prompt Expansion](https://zsh.sourceforge.io/Doc/Release/zsh_toc.html#SEC_Contents) — Official ZSH docs
 - [256 Colors Cheat Sheet](https://www.ditig.com/256-colors-cheat-sheet) — Xterm color codes
