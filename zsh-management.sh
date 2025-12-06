@@ -380,6 +380,8 @@ us() {
         print "  ${GREEN}-p${NC}, ${GREEN}--python${NC}  upgrade Python version via pyenv"
         print "  ${GREEN}-a${NC}, ${GREEN}--all${NC}     upgrade both Node and Python"
         print "  ${GREEN}-h${NC}, ${GREEN}--help${NC}    show this help"
+        print ""
+        print ""
         return 0
         ;;
       -*)
@@ -390,6 +392,8 @@ us() {
         print "  ${GREEN}-p${NC}, ${GREEN}--python${NC}  upgrade Python version via pyenv"
         print "  ${GREEN}-a${NC}, ${GREEN}--all${NC}     upgrade both Node and Python"
         print "  ${GREEN}-h${NC}, ${GREEN}--help${NC}    show this help"
+        print ""
+        print ""
         return 1
         ;;
     esac
