@@ -266,7 +266,7 @@ setupzsh() {
 
   # Create initialization marker
   print "${BLUE}→ Creating initialization marker...${NC}"
-  cat > ~/.dotfiles/.✓ << 'EOF'
+  cat > ~/.dotfiles/.M-bM-^\M-^S << 'EOF'
 # BRAVO ZSH System — Initialization Complete
 #
 # Usage:
@@ -318,14 +318,14 @@ wipezsh() {
 
   print "\n${GREEN}✔ Cleanup complete${NC}"
 
-  rm -f ~/.dotfiles/.✓
+  rm -f ~/.dotfiles/.M-bM-^\M-^S
   print "${YELLOW}→ Initialization marker removed${NC}"
   print "${BLUE}→ Run 'setupzsh' to rebuild${NC}\n"
 }
 
 
 upgradezsh() {
-  if [[ ! -f ~/.dotfiles/.✓ ]]; then
+  if [[ ! -f ~/.dotfiles/.M-bM-^\M-^S ]]; then
     print "${RED}ERROR:${NC} setupzsh() has not run yet"
     print "${BLUE}→ Run: setupzsh${NC}"
     return 1
@@ -348,7 +348,7 @@ alias upzsh='upgradezsh'
 
 
 resetzsh() {
-  if [[ ! -f ~/.dotfiles/.✓ ]]; then
+  if [[ ! -f ~/.dotfiles/.M-bM-^\M-^S ]]; then
     print "${RED}ERROR:${NC} setupzsh() has not run yet"
     print "${BLUE}→ Run: setupzsh${NC}"
     return 1
