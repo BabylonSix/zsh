@@ -13,6 +13,75 @@
 #   setupzsh
 
 #################
+# Bootstrap Check
+#################
+
+# First-run detection: check for initialization marker
+if [[ ! -f ~/.dotfiles/.✓ ]]; then
+  # Print wrapper for color codes (temporary, will be redefined in colors.sh)
+  print() { builtin print -P "$@" }
+
+  # Colors for fresh shell (before colors.sh loads)
+  local NC='%f%b%k'
+  local RED='%F{009}'
+  local GREEN='%F{078}'
+  local YELLOW='%F{227}'
+  local BLUE='%F{075}'
+
+  print ""
+  print "${BLUE}╔═════════════════════════════════════╗${NC}"
+  print "${BLUE}║   BRAVØ ZSH — First Run Detected    ║${NC}"
+  print "${BLUE}╚═════════════════════════════════════╝${NC}"
+  print ""
+  print "${YELLOW}This system has not been initialized yet.${NC}"
+  print ""
+  print "${BLUE}Initialization will:${NC}"
+  print "  • Install Homebrew"
+  print "  • Install development tools (Node, Python, Git, etc.)"
+  print "  • Configure your shell environment"
+  print "  • Takes ~30 minutes"
+  print ""
+
+  # Prompt user
+  print -n "${GREEN}Run setupzsh now?${NC} (y/n): "
+  read -r response
+
+  if [[ "$response" == "y" || "$response" == "Y" ]]; then
+    print ""
+    print "${BLUE}→ Starting installation...${NC}"
+    print ""
+
+    # Source only what's needed for setupzsh to run
+    . ~/.dotfiles/zsh/zsh-management.sh
+    . ~/.dotfiles/zsh/path.sh
+    . ~/.dotfiles/zsh/colors.sh
+
+    # Run setup
+    setupzsh
+
+    print ""
+    print "${GREEN}✓ Installation complete!${NC}"
+    print "${BLUE}→ Restart your terminal or run: reload${NC}"
+    print ""
+
+    return 0
+  else
+    print ""
+    print "${YELLOW}Installation skipped.${NC}"
+    print ""
+    print "${BLUE}To install later, run:${NC} setupzsh"
+    print "${BLUE}To exit this shell:${NC} exit"
+    print ""
+
+    # Exit gracefully without loading dotfiles
+    return 0
+  fi
+
+  # Cleanup: undefine temporary print function
+  unfunction print 2>/dev/null || true
+fi
+
+#################
 # Core ZSH
 #################
 
