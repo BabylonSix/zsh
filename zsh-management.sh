@@ -289,5 +289,5 @@ View with: `path`
 ## Documentation
 
 - [CLAUDE.md](CLAUDE.md) — AI assistant guidance for this codebase
-- [ZSH Prompt Customization](http://www.nparikh.org/unix/prompt.php)
-- [256 Color Reference](http://lucentbeing.com/blog/that-256-color-thing/)
+- [ZSH Prompt Customization](https://zsh.sourceforge.io/Doc/Release/zsh_toc.html#SEC_Contents)
+- [256 Color Reference](https://www.ditig.com/256-colors-cheat-sheet)
