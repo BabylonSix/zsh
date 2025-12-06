@@ -16,27 +16,6 @@ autoload -U compinit; compinit
 
 
 
-upgradezsh() {
-  # check if latest ZSH version is default, and if not, make it so
-
-  # capture latest version of zsh
-  # the backslash in \ls temporarily turns off color output
-  # the -t flag in ls -t, orders results from newest to oldest
-  # head -n 1 => grabs the first item from listed items 
-	latestZSH=$(echo "/opt/homebrew/Cellar/zsh/$(\ls -t /opt/homebrew/Cellar/zsh/|head -n 1)/bin/zsh")
-
-  # if latestZSH doest not exist in /etc/shells, then
-  if ! grep -q $latestZSH /etc/shells; then
-    sudo sh -c "echo '\n$latestZSH' >> /etc/shells"
-  fi
-  # setup latest ZSH version as login shell
-  print '\nSetting default login shell to latest ZSH version\n'
-  $(print 'chsh -s $(tail -n 1 /etc/shells) $USER')
-}
-alias upzsh='upgradezsh'
-
-
-
 ###############
 # SHELL OPTIONS
 #
@@ -89,8 +68,7 @@ fi
 #####################
 # ZSH COMMAND HISTORY
 #
-HISTFILE=~/.zsh_history # Store history here
-HISTFILE=~/.dotfiles/dotfiles/zsh/.zsh_history # Location of the .histfile
+HISTFILE=~/.dotfiles/zsh/.zsh_history # Location of the .histfile
 HISTSIZE=10000 # History size in the terminal
 SAVEHIST=10000 # Saved history size
 

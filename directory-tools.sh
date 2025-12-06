@@ -1,133 +1,127 @@
 # File and Directory creation
-alias f='touch $@'      # make a new file
-alias d='mkdir -pv $@'  # make a new directory
-alias lns='ln -s'       # create a symbolic link
+alias f='touch'
+alias d='mkdir -pv'
+alias lns='ln -s'
 
 md() {
-if [[ $# = 0 ]]; then
-	print '\n${RED}Error:${NC}'
-	print '\n   No directory name provided'
-else
-	mkdir -p $1    # Create directory
-	cd $1 || exit  # CD into the newly created directory
-fi
+  if [[ $# = 0 ]]; then
+    print "\n${RED}ERROR:${NC}"
+    print "\n  No directory name provided"
+    return 1
+  fi
+  mkdir -p "$1" && cd "$1" && l
 }
 
 
 # Open files | directories
 alias o='open .'
-alias of='ot .' # open file | directory
-alias od='ot .' # open file | directory
+alias of='ot .'
+alias od='ot .'
 
 
-# take ownership of directory
-sch() { sudo chown -R $(whoami):admin '$1'; }
+# Take ownership of directory
+sch() {
+  if [[ -z "$1" ]]; then
+    print "\n${RED}ERROR:${NC}"
+    print "\n  ${GREEN}sch${NC} ${RED}<path>${NC}"
+    return 1
+  fi
+  sudo chown -R "$(whoami)":admin "$1"
+}
 
 
-# chose disk volume
-v () {
-if [[ -z $1 ]]; then # check if argument is empty
-	print "\n${RED}ERROR:${NC}"
-	print "\n  You did not enter a Disk Volume"
+# Choose disk volume
+v() {
+  if [[ -z "$1" ]]; then
+    print "\n${RED}ERROR:${NC}"
+    print "\n  You did not enter a Disk Volume"
+    print "\n${BLUE}Available volumes:${NC}"
+    ls /Volumes
+    return 1
+  fi
+  cd "/Volumes/$1" && l
+}
+
+
+# Safe deletion
+alias srm='trash'
+
+
+# Zip directory or file
+zipr() { zip -r "$1.zip" "$1"; }
+
+
+# Directory display (use eza if available, fallback to ls)
+if command -v eza &>/dev/null; then
+  alias l='clear; eza'
+  alias ll='clear; eza -lh'
+  alias la='clear; eza -a'
+  alias lla='clear; eza -alh'
+  alias lh='clear; eza -d .[^.]*'
+  alias llh='clear; eza -dlh .[^.]*'
+  alias lm='clear; eza -s modified'
+  alias llm='clear; eza -lhs modified'
 else
-	/Volumes/$1
+  alias ls='ls -G'
+  alias l='clear; ls'
+  alias ll='clear; ls -lh'
+  alias la='clear; ls -A'
+  alias lla='clear; ls -Alh'
+  alias lh='clear; ls -d .[^.]*'
+  alias llh='clear; ls -dlh .[^.]*'
+  alias lm='clear; ls -t'
+  alias llm='clear; ls -lht'
 fi
-}
 
 
-# Safe Directory Destruction
-alias srm='trash' # moves file to trash instead of instant deleting
+# Directory tree
+alias tree='tree -C'
+alias t='tree -I "node_modules"'
+
+tl() { tree -L "$@" -I "node_modules"; }
+
+t2() { tl 2; }
+t3() { tl 3; }
+t4() { tl 4; }
+t5() { tl 5; }
+t6() { tl 6; }
+t7() { tl 7; }
+t8() { tl 8; }
+t9() { tl 9; }
+
+alias tll='tree -p'
+alias tg='tree -g'
+alias to='tree -u'
+alias ta='tree -a -I ".git|node_modules"'
+alias tlla='tree -ap -I ".git|node_modules"'
 
 
-# Zip Directory or file
-zipr() { zip -r $1.zip $1; }
+# Directory navigation
+alias b='cd -; l'
+
+u() { cd .. || return 1; l; }
+u2() { cd ../.. || return 1; l; }
+u3() { cd ../../.. || return 1; l; }
+u4() { cd ../../../.. || return 1; l; }
+u5() { cd ../../../../.. || return 1; l; }
+u6() { cd ../../../../../.. || return 1; l; }
+u7() { cd ../../../../../../.. || return 1; l; }
+u8() { cd ../../../../../../../.. || return 1; l; }
+u9() { cd ../../../../../../../../.. || return 1; l; }
 
 
-# Directory Display
-# alias ls='ls --color=always --group-directories-first -N --ignore=Icon'
-alias ls='ls -G'
-
-alias l='clear; ls'               # 'ls' shorthand
-alias ll='clear; ls -lh'          # long list (permisions, owner, size)
-alias la='clear; ls -A'           # list all files (including hiddne files)
-alias lla='clear; ls -Alh'        # long list of all files
-alias lh='clear; ls -d .[^.]*'    # list all dotfiles
-alias llh='clear; ls -dlh .[^.]*' # long list of all dotfiles
-alias lm='clear; ls -t'           # sort with recently modified first
-alias llm='clear; ls -lht'        # long list of recently modified files
-
-# Directory Tree
-alias tree='tree -C'              # set tree to always show colors
-alias t='tree -I "node_modules"'  # shortcut for tree
-
-tl() {
-	# filter directory tree to '#a' levels deap
-	# ignore node_modulesn folder
-	tree -L "$@" -I "node_modules"
-}
-
-t2() { tl 2 }
-t3() { tl 3 }
-t4() { tl 4 }
-t5() { tl 5 }
-t6() { tl 6 }
-t7() { tl 7 }
-t8() { tl 8 }
-t9() { tl 9 }
-
-tll() {
-	# tree long list
-	tree -p
-}
-
-tg() {
-	# tree group
-	tree -g
-}
-
-to() {
-	# tree owner
-	tree -u
-}
-
-ta() {
-	# tree display all
-	tree -a -I ".git|node_modules"
-}
-
-tlla() {
-	# tree long list all
-	tree -ap -I ".git|node_modules"
-}
+# Show directory with ~ instead of /Users/$USER
+sd() { pwd | sed -E "s|$HOME|~|"; }
 
 
-# Directory Navigation
-alias b='cd -; l' # toggle last & current directory
-
-
-# move up x number of directories or fail gracefully
-u() { cd .. || exit; l; }
-u2() { cd ../.. || exit; l; }
-u3() { cd ../../.. || exit; l; }
-u4() { cd ../../../.. || exit; l; }
-u5() { cd ../../../../.. || exit; l; }
-u6() { cd ../../../../../.. || exit; l; }
-u7() { cd ../../../../../../.. || exit; l; }
-u8() { cd ../../../../../../../.. || exit; l; }
-u9() { cd ../../../../../../../../.. ||exit; l; }
-
-
-# show directory, but with ~/ instead of /Users/$user/
-sd() {
-  pwd | sed -E "s/\/Users\/$USER/~/g"
-}
-
-
-# launches yazi and upon close sets cd to last visited directory
-function y() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-	yazi "$@" --cwd-file="$tmp"
-	IFS= read -r -d '' cwd < "$tmp"
-	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
-	rm -f -- "$tmp"
-}
+# Yazi file manager (cd to directory on exit)
+if command -v yazi &>/dev/null; then
+  y() {
+    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" || return 1
+    yazi "$@" --cwd-file="$tmp"
+    local cwd
+    IFS= read -r cwd < "$tmp"
+    rm -f -- "$tmp"
+    [[ -n "$cwd" && "$cwd" != "$PWD" ]] && cd -- "$cwd" && l
+  }
+fi
