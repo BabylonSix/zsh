@@ -217,9 +217,12 @@ setupzsh() {
 
     if [[ ! -d "$NVM_DIR/versions/node" ]]; then
       print "  ${YELLOW}→${NC} Installing Node (latest)"
-      nvm install node || print "  ${RED}⚠${NC} Failed to install Node"
-      nvm alias default node
-      print "  ${GREEN}✔${NC} Node installed via NVM"
+      if nvm install node; then
+        nvm alias default node
+        print "  ${GREEN}✔${NC} Node installed via NVM"
+      else
+        print "  ${RED}⚠${NC} Failed to install Node"
+      fi
     else
       print "  ${GREEN}✔${NC} Node already installed via NVM"
     fi
@@ -243,9 +246,12 @@ setupzsh() {
     if [[ -n "$latest_py" ]]; then
       if [[ ! -d "$PYENV_ROOT/versions/$latest_py" ]]; then
         print "  ${YELLOW}→${NC} Installing Python $latest_py"
-        pyenv install "$latest_py" || print "  ${RED}⚠${NC} Failed to install Python $latest_py"
-        pyenv global "$latest_py"
-        print "  ${GREEN}✔${NC} Python $latest_py installed"
+        if pyenv install "$latest_py"; then
+          pyenv global "$latest_py"
+          print "  ${GREEN}✔${NC} Python $latest_py installed"
+        else
+          print "  ${RED}⚠${NC} Failed to install Python $latest_py"
+        fi
       else
         print "  ${GREEN}✔${NC} Python $latest_py already installed"
       fi
@@ -260,13 +266,20 @@ setupzsh() {
   # NPM packages
   if (( $+functions[npmstart] )); then
     print "${BLUE}→ Installing npm packages...${NC}"
-    npmstart
+    npmstart || print "  ${YELLOW}⚠${NC} Some npm packages failed to install"
+  else
+    print "${YELLOW}→ Skipping npm packages (npmstart not defined yet)${NC}"
   fi
 
 
   # Create initialization marker
   print "${BLUE}→ Creating initialization marker...${NC}"
-  cat > ~/.dotfiles/.M-bM-^\M-^S << 'EOF'
+
+  # Ensure directory exists
+  mkdir -p ~/.dotfiles
+
+  # Create marker with explicit error checking
+  if cat > ~/.dotfiles/.✓ << 'EOF'
 # BRAVO ZSH System — Initialization Complete
 #
 # Usage:
@@ -275,7 +288,22 @@ setupzsh() {
 #   resetzsh    # Clean slate: wipe then rebuild
 #   upgradezsh  # Update to latest ZSH version
 EOF
-  print "  ${GREEN}✔${NC} Marker file created"
+  then
+    print "  ${GREEN}✔${NC} Marker file created"
+  else
+    # Fallback: use echo if heredoc fails
+    print "  ${YELLOW}⚠${NC} Heredoc failed, using fallback method..."
+    echo "BRAVO ZSH initialized on $(date)" > ~/.dotfiles/.✓
+  fi
+
+  # Verify it was created
+  if [[ -f ~/.dotfiles/.✓ ]]; then
+    print "  ${GREEN}✔${NC} Marker verified at: ~/.dotfiles/.✓"
+  else
+    print "  ${RED}⚠${NC} Warning: Marker file not found after creation"
+    print "  ${BLUE}→${NC} Attempting manual touch..."
+    touch ~/.dotfiles/.✓ || print "  ${RED}✗${NC} Cannot create marker file"
+  fi
 
 
   # Done
@@ -318,14 +346,14 @@ wipezsh() {
 
   print "\n${GREEN}✔ Cleanup complete${NC}"
 
-  rm -f ~/.dotfiles/.M-bM-^\M-^S
+  rm -f ~/.dotfiles/.✓
   print "${YELLOW}→ Initialization marker removed${NC}"
   print "${BLUE}→ Run 'setupzsh' to rebuild${NC}\n"
 }
 
 
 upgradezsh() {
-  if [[ ! -f ~/.dotfiles/.M-bM-^\M-^S ]]; then
+  if [[ ! -f ~/.dotfiles/.✓ ]]; then
     print "${RED}ERROR:${NC} setupzsh() has not run yet"
     print "${BLUE}→ Run: setupzsh${NC}"
     return 1
@@ -348,7 +376,7 @@ alias upzsh='upgradezsh'
 
 
 resetzsh() {
-  if [[ ! -f ~/.dotfiles/.M-bM-^\M-^S ]]; then
+  if [[ ! -f ~/.dotfiles/.✓ ]]; then
     print "${RED}ERROR:${NC} setupzsh() has not run yet"
     print "${BLUE}→ Run: setupzsh${NC}"
     return 1

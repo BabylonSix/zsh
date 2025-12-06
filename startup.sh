@@ -17,7 +17,7 @@
 #################
 
 # First-run detection: check for initialization marker
-if [[ ! -f ~/.dotfiles/.M-bM-^\M-^S ]]; then
+if [[ ! -f ~/.dotfiles/.✓ ]]; then
   # Print wrapper for color codes (temporary, will be redefined in colors.sh)
   print() { builtin print -P "$@" }
 
