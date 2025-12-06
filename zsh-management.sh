@@ -419,10 +419,10 @@ us() {
       print "${BLUE}→ Updating Node...${NC}"
 
       local current=$(nvm current 2>/dev/null)
-      local installed=$(nvm ls --no-colors | rg '^\s*v[\d.]+' -o)
+      local installed=$(nvm ls --no-colors | rg '^\s*v[\d.]+' -o || true)
 
       local selected=$(nvm ls-remote \
-        | rg -vFf <(echo "$installed") \
+        | { [[ -n "$installed" ]] && rg -vFf <(echo "$installed") || cat; } \
         | fzf --ansi --tac --height=15 --prompt="Node (current: ${current:-none}) > " --reverse)
 
       # extract just the version number
@@ -446,11 +446,11 @@ us() {
       print "${BLUE}→ Updating Python...${NC}"
 
       local current=$(pyenv global 2>/dev/null | head -n1)
-      local installed=$(pyenv versions --bare)
+      local installed=$(pyenv versions --bare || true)
 
       local selected=$(pyenv install --list \
         | rg '^\s*3\.[\d.]+$' --trim \
-        | rg -vxFf <(echo "$installed") \
+        | { [[ -n "$installed" ]] && rg -vxFf <(echo "$installed") || cat; } \
         | fzf --tac --height=15 --prompt="Python (current: ${current:-none}) > " --reverse)
 
       if [[ -n "$selected" ]]; then
