@@ -100,8 +100,9 @@ setupzsh() {
     nmap                     # network scanner
     neovim                   # text editor
     nvm                      # node version manager
-    openssh                  # ssh tools
     pyenv                    # python version manager
+    mas                      # mac app store
+    openssh                  # ssh tools
     ripgrep                  # fast grep (rg)
     rsync                    # file sync
     starship                 # prompt
