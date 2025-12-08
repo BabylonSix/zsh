@@ -89,12 +89,6 @@ alias lg='lazygit'           # Git TUI
 alias cat='bat'              # Better cat with syntax highlighting
 alias grep='grep --color=always'
 
-# FZF fuzzy finder (if installed)
-[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
-
-# Zoxide smart directory navigation (replaces z)
-eval "$(zoxide init zsh)" 2>/dev/null || true
-
 
 #################
 # YouTube Downloader

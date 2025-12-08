@@ -25,8 +25,5 @@ PINK='%F{211}'     # Pink
 # Load Colors for ZSH
 autoload -U colors && colors
 
-# ZSH PROMPT LOOK & FEEL
-eval "$(starship init zsh)"
-
 # Set LS to always show colors
 export CLICOLOR="Yes"

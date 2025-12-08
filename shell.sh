@@ -16,6 +16,21 @@ autoload -U compinit; compinit
 
 
 
+#################
+# SHELL INTEGRATIONS
+#################
+
+# Starship Prompt system
+[[ -x $(command -v starship) ]] && eval "$(starship init zsh)"
+
+# Zoxide Smart directory navigation
+[[ -x $(command -v zoxide) ]] && eval "$(zoxide init zsh)"
+
+# Fuzzy finder
+[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+
+
+
 ###############
 # SHELL OPTIONS
 #
@@ -71,6 +86,7 @@ fi
 HISTFILE=~/.dotfiles/zsh/.zsh_history # Location of the .histfile
 HISTSIZE=10000 # History size in the terminal
 SAVEHIST=10000 # Saved history size
+
 
 
 ####################
