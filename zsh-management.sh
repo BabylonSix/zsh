@@ -89,6 +89,7 @@ setupzsh() {
 
   local Programs=(
     bat                      # cat with syntax highlighting
+    tldr                     # command line documentation
     btop                     # modern system monitor
     eza                      # modern ls
     fd                       # find alternative
