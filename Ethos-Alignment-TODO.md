@@ -9,8 +9,6 @@ This document outlines improvements to better align the codebase with the **Mini
 
 Add these missing short aliases (using consonant compression to avoid system conflicts):
 ```zsh
-alias stst='screenTest'    # screen test (avoid st conflict with Suckless Terminal)
-alias psz='photosize'      # photo size (consonant compression)
 alias cql='cleanQl'        # clean QuickLook
 ```
 
@@ -119,8 +117,6 @@ gitcreate() {
 **Rename following usage context and noun+verb patterns:**
 
 **Manual terminal commands (lowercase compound with noun+verb):**
-- `resize-photos()` → `photoresize()` (noun+verb: photo+resize)
-- `photo-sizes()` → `photosize()` (noun+verb: photo+size)
 - `split_txt()` → `txtsplit()` (noun+verb: txt+split)
 - `new-git()` → `gitcreate()` (noun+verb: git+create)
 

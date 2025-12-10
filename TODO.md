@@ -2,26 +2,20 @@
 
 ## 0. Baseline (Verified Complete)
 
-+ Homebrew installed and working via setupzsh()
-+ ~/.dotfiles repo exists
-+ ZSH is main shell
-+ ~/.zshrc symlinked to ~/.dotfiles/zsh/startup.sh
-+ Provisioning scripts exist (setupzsh, wipezsh, resetzsh, us)
-+ Core brew tools installed via setupzsh()
+[*] Homebrew installed and working via setupzsh()
+[*] ~/.dotfiles repo exists
+[*] ZSH is main shell
+[*] ~/.zshrc symlinked to ~/.dotfiles/zsh/startup.sh
+[*] Provisioning scripts exist (setupzsh, wipezsh, resetzsh, us)
+[*] Core brew tools installed via setupzsh()
 
 ---
 
 ## 1. Toolchain Gaps
 
-[ ] Add missing modern CLI tools to setupzsh() Programs array:
-    - bat-extras
-    - jq
-    - tldr
-    - gdu
+[*] Add missing modern CLI tools to setupzsh() Programs array: + bat-extras - jq + tldr - gdu
 
-[ ] Remove legacy tools from codebase:
-    - tree (still in Programs array and used in directory-tools.sh)
-    - Consider removing if fully replaced by eza tree mode
+[ ] Remove legacy tools from codebase: - tree (still in Programs array and used in directory-tools.sh) - Consider removing if fully replaced by eza tree mode
 
 ---
 
@@ -34,21 +28,18 @@
 [ ] ghostty config in dotfiles (linked via setupzsh)
 [ ] zed config in dotfiles (linked via setupzsh)
 
-[ ] Centralize git config:
-    - create ~/.dotfiles/config/git/gitconfig
-    - minimal ~/.gitconfig that includes it
-    - add linking logic to setupzsh()
+[ ] Centralize git config: - create ~/.dotfiles/config/git/gitconfig - minimal ~/.gitconfig that includes it - add linking logic to setupzsh()
 
 ---
 
 ## 3. Provisioning Improvements
 
-[ ] Refactor setupzsh() linking logic:
-    - Extract to link_dotfile() helper function
-    - Create link_all_dotfiles() orchestrator
-    - Reduces repetition in setupzsh()
-
 [*] Error formatting follows color-coded standard
+[*] Modernize us() update system
+[ ] Organize packages to be installed via brew into what they're used for, specifically: - Provisioning - Development - Utilities - Tools - Documentation - File Management
+[ ] Write script to automate symlinking to different types of config files: - Create symlink_config_files() function - Add logic to setupzsh() to call symlink_config_files()
+[ ] Refactor setupzsh() linking logic: - Extract to link_dotfile() helper function - Create link_all_dotfiles() orchestrator - Reduces repetition in setupzsh()
+
 
 ---
 
@@ -56,45 +47,27 @@
 
 [*] tmux config in dotfiles with J/K/L/I mappings
 [*] yazi installed with y() cd-on-exit function
-[*] Modern tool aliases working:
-    - ls -> eza (via directory-tools.sh)
-    - cat -> bat (via tools.sh)
-    - top -> btop (via tools.sh 'tu' alias)
-    - cd -> zoxide (via tools.sh eval)
+[*] Modern tool aliases working: - ls -> eza (via directory-tools.sh) - cat -> bat (via tools.sh) - top -> btop (via tools.sh 'tu' alias) - cd -> zoxide (via tools.sh eval)
 
-[ ] Complete tool migration:
-    - grep -> rg (currently grep uses --color=always, not rg)
-    - find -> fd (no fd alias exists)
+[ ] Complete tool migration: - grep -> rg (currently grep uses --color=always, not rg) - find -> fd (no fd alias exists)
 
-[ ] Add tmux workspace launcher:
-    - work() or bravo() function
-    - Auto-launch configured tmux layout
+[ ] Add tmux workspace launcher: - work() or bravo() function - Auto-launch configured tmux layout
 
 ---
 
 ## 5. First-Run Experience
 
-[ ] Add setupzsh prompt to startup.sh:
-    - If .dotfiles/.checkmark marker doesn't exist
-    - Ask user if they want to run setupzsh
-    - Exit gracefully if declined
+[ ] Add setupzsh prompt to startup.sh: - If .dotfiles/.checkmark marker doesn't exist - Ask user if they want to run setupzsh - Exit gracefully if declined
 
-[ ] Fix nvm version picker in us():
-    - When node already at latest version
-    - Should still show picker for other versions
-    - Currently shows empty list if all versions installed
+[ ] Fix nvm version picker in us(): - When node already at latest version - Should still show picker for other versions - Currently shows empty list if all versions installed
 
 ---
 
 ## 6. Configuration Tuning
 
-[ ] Starship prompt customization:
-    - Display [username] directory (git status)
-    - Match terminal color scheme
+[ ] Starship prompt customization: - Display [username] directory (git status) - Match terminal color scheme
 
-[ ] Tool-specific keybindings (J/K/L/I pattern):
-    - neovim (if not already configured)
-    - yazi (if not already configured)
+[ ] Tool-specific keybindings (J/K/L/I pattern): - neovim (if not already configured) - yazi (if not already configured)
 
 ---
 
