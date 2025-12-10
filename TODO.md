@@ -57,9 +57,9 @@
 
 ## 5. First-Run Experience
 
-[ ] Add setupzsh prompt to startup.sh: - If .dotfiles/.checkmark marker doesn't exist - Ask user if they want to run setupzsh - Exit gracefully if declined
+[*] Add setupzsh prompt to startup.sh: - If .dotfiles/.checkmark marker doesn't exist - Ask user if they want to run setupzsh - Exit gracefully if declined
 
-[ ] Fix nvm version picker in us(): - When node already at latest version - Should still show picker for other versions - Currently shows empty list if all versions installed
+[*] Fix nvm version picker in us(): - When node already at latest version - Should still show picker for other versions - Currently shows empty list if all versions installed
 
 ---
 
