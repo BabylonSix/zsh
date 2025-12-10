@@ -10,7 +10,7 @@
 
 
 # list all active ssh keys
-alias sshl='ssh-add -l'
+sshl() { ssh-add -l; }
 
 # add ssh key to keychain
-alias ssha='ssh-add -K'
+ssha() { ssh-add --apple-use-keychain "$@"; }
