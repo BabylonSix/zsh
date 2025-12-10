@@ -1,80 +1,73 @@
-# node version list
+#################
+# NVM — Node Version Manager
+#################
+
+# List installed versions
 nvml() { nvm list; }
 
-# use node version
-nvmu() { nvm alias default $1; nvm alias node $1; nvm alias stable $1; nvm use $1 }
-
-# upgrade node version
-nvmup() {
-
-  nvmreset(){
-    # prevent stupid nvm errors
-    npm config delete prefix
-    npm config set prefix $NVM_DIR/$(node --version)
-  }
-
-  print '' #vertical spacing
-
-  revolver --style 'pong' start 'Checking if you have the latest version of NodeJS'
-  nvmreset
-  myNODE=$(nvm ls \
-    | grep -Eo '\sv(\d+\.)+\d+' \
-    | tail -n 1 \
-    | tr -d '[:cntrl:]' \
-    | grep -Eo --colour=never '(\d+\.)+\d+')
-
-  latestNODE=$(nvm ls-remote \
-    | tail -n 1 \
-    | tr -d '[:cntrl:]' \
-    | grep -Eo --colour=never '(\d+\.)+\d+')
-  revolver stop
-
-  if is-at-least $latestNODE $myNODE; then
-    print '${GREEN}$myNODE${NC} is the latest version of node'
-  else
-
-    # install latest version of node
-    print '${BLUE}Upgrading NodeJS${NC} from ${GREEN}v$myNODE${NC} to ${GREEN}v$latestNODE${NC} \n'
-    nvm i node
-    print '\n\n\n'          # divide the installs visually with 2 newlines
-
-    # setup default node version
-    print '${BLUE}Setting default node version${NC} \n'
-    nvm alias default $latestNODE
-    nvm alias node $latestNODE
-    nvm use $latestNODE
-    print '\n\n\n'          # divide the installs visually with 2 newlines
-
-    nvmreset
-
-    # install NPM packages
-    print '${BLUE}Install my default NPM packages${NC} \n'
-    npmstart
-
-fi
+# Set default version: nvmu <version>
+nvmu() {
+  [[ -z "$1" ]] && { print "\n${RED}ERROR:${NC} nvmu <version>"; return 1; }
+  nvm alias default "$1"
+  nvm alias node "$1"
+  nvm alias stable "$1"
+  nvm use "$1"
 }
 
-# npm completions
+# Upgrade to latest Node
+nvmup() {
+  # Prevent nvm prefix errors
+  nvmreset() {
+    npm config delete prefix
+    npm config set prefix "$NVM_DIR/$(node --version)"
+  }
+
+  print ""
+  nvmreset
+
+  local myNODE=$(nvm current | grep -Eo '([0-9]+\.)+[0-9]+')
+  local latestNODE=$(nvm ls-remote --lts | tail -n 1 | grep -Eo '([0-9]+\.)+[0-9]+')
+
+  if [[ "$myNODE" == "$latestNODE" ]]; then
+    print "${GREEN}v$myNODE${NC} is already the latest"
+    return 0
+  fi
+
+  print "${BLUE}Upgrading Node${NC} from ${GREEN}v$myNODE${NC} to ${GREEN}v$latestNODE${NC}\n"
+  nvm install node
+
+  print "\n${BLUE}Setting default...${NC}"
+  nvm alias default "$latestNODE"
+  nvm alias node "$latestNODE"
+  nvm use "$latestNODE"
+
+  nvmreset
+
+  print "\n${BLUE}Installing NPM packages...${NC}"
+  npmstart
+
+  print "\n${GREEN}✓ Node upgraded${NC}"
+}
+
+
+#################
+# NPM — Package Management
+#################
+
+# Completions
 eval "$(npm completion 2>/dev/null)"
 
-# Install and save to dependencies in your package.json
-# npms is used by https://www.npmjs.com/package/npms
-npms() { npm i -S; }
+# Install to dependencies
+npms() { npm i -S "$@"; }
 
-# Install and save to dev-dependencies in your package.json
-# npmd is used by https://github.com/dominictarr/npmd
-npmd() { npm i -D; }
+# Install to devDependencies
+npmd() { npm i -D "$@"; }
 
+# Initialize package.json
+npmi() { npm init "$@"; }
 
-# Initialize NPM
-npmi() { npm init; }
-
-
-# Lists Local NPM Packages
+# List local packages
 npml() { npm ls --depth=0 "$@" 2>/dev/null; }
 
-# Lists Global NPM Packages
-npmg() { npm ls --depth=0 -g 2>/dev/null; }
-
-# set node to use modules
-node() { node --experimental-modules; }
+# List global packages
+npmg() { npm ls --depth=0 -g "$@" 2>/dev/null; }
