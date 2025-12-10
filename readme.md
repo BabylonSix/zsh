@@ -31,6 +31,11 @@ i             # Show version info for all package managers
 | Command | Action |
 |---------|--------|
 | `setupzsh` | Provision new machine from zero |
+| `setupCore` | Install only core packages |
+| `setupTools` | Install dev tools |
+| `setupMedia` | Install media tools |
+| `setupNetwork` | Install network tools |
+| `setupApps` | Install GUI apps |
 | `wipezsh` | Complete removal (leave no trace) |
 | `resetzsh` | Fresh start (wipe + setup) |
 | `upgradezsh` | Update to latest ZSH version |
@@ -72,32 +77,64 @@ i             # Show version info for all package managers
 
 ## Installed Tools
 
-`setupzsh` installs these via Homebrew:
+Packages are organized by category. Core packages are required — removing them breaks aliases/functions.
 
+### Core (don't remove)
+| Tool | Purpose |
+|------|---------|
+| `eza` | Modern ls (l, ll, la aliases) |
+| `fzf` | Fuzzy finder (us() pickers) |
+| `git` | Version control |
+| `nvm` | Node version manager |
+| `openssh` | SSH tools |
+| `pyenv` | Python version manager |
+| `starship` | Cross-shell prompt |
+| `trash` | Safe rm (srm alias) |
+| `zinit` | ZSH plugin manager |
+| `zoxide` | Smart cd |
+
+### Dev Tools (safe to remove)
 | Tool | Purpose |
 |------|---------|
 | `bat` | cat with syntax highlighting |
 | `btop` | Modern system monitor |
-| `eza` | Modern ls replacement |
 | `fd` | Fast find alternative |
-| `fzf` | Fuzzy finder |
+| `gdu` | Disk usage analyzer |
+| `jq` | JSON processor |
 | `lazygit` | Git TUI |
 | `neovim` | Text editor |
-| `nvm` | Node version manager |
-| `pyenv` | Python version manager |
 | `ripgrep` | Fast grep (rg) |
-| `starship` | Cross-shell prompt |
+| `tldr` | Simplified man pages |
 | `tmux` | Terminal multiplexer |
-| `trash` | Safe rm |
-| `tree` | Directory visualization |
 | `yazi` | Terminal file manager |
+
+### Media (safe to remove)
+| Tool | Purpose |
+|------|---------|
+| `ffmpeg` | Video/audio processing |
 | `yt-dlp` | YouTube downloader |
-| `zinit` | ZSH plugin manager |
-| `zoxide` | Smart cd |
 
-GUI apps: `ghostty`, `zed`
+### Network (safe to remove)
+| Tool | Purpose |
+|------|---------|
+| `httpie` | HTTP client |
+| `nmap` | Network scanner |
+| `rsync` | File sync |
+| `wget` | Download tool |
 
-ZSH plugins: `zsh-syntax-highlighting`, `zsh-autosuggestions`, `F-Sy-H`
+### macOS (safe to remove)
+| Tool | Purpose |
+|------|---------|
+| `mas` | Mac App Store CLI |
+
+### GUI Apps
+| App | Purpose |
+|-----|---------|
+| `ghostty` | Terminal |
+| `zed` | Editor |
+
+### ZSH Plugins
+`zsh-syntax-highlighting`, `zsh-autosuggestions`, `F-Sy-H`
 
 ## System Update (`us`)
 
@@ -216,8 +253,8 @@ us -h         # Show help
 | `e` | exit |
 | `ka` | killall -9 |
 | `tu` | btop (system monitor) |
-| `fp <name>` | Find process |
-| `kn <name>` | Kill named process |
+| `fp <n>` | Find process |
+| `kn <n>` | Kill named process |
 | `ram <GB>` | Create RAM disk |
 
 ### Utilities
@@ -278,6 +315,7 @@ View with: `path`
 3. **Visual errors** — Color-coded with usage examples
 4. **Self-document** — Inline comments in package arrays
 5. **Maintain modularity** — Add to existing files when possible
+6. **Package placement** — Add to correct category (Core only if dotfiles depend on it)
 
 ## Reference
 
@@ -289,5 +327,7 @@ View with: `path`
 ## Documentation
 
 - [CLAUDE.md](CLAUDE.md) — AI assistant guidance for this codebase
+- [TODO.md](TODO.md) — Master roadmap
+- [Ethos-Alignment-TODO.md](Ethos-Alignment-TODO.md) — Quick wins checklist
 - [ZSH Reference TOC](https://zsh.sourceforge.io/Doc/Release/zsh_toc.html#SEC_Contents) — Official ZSH docs
 - [256 Colors Cheat Sheet](https://www.ditig.com/256-colors-cheat-sheet) — Xterm color codes
