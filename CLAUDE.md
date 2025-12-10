@@ -184,6 +184,31 @@ When extending this system:
 7. **Clarity Over Cleverness**: Explicit code beats clever abstractions
 8. **Package Placement**: Add new packages to the correct category (Core only if dotfiles depend on it)
 
+### Functions Over Aliases
+
+All commands are functions, never aliases. This enables:
+
+- **Composability** — functions call functions, args flow through
+- **Consistency** — one pattern, one mental model
+- **Extensibility** — wrappers just work: `wrapper() { inner "$@"; }`
+
+**Pattern:**
+```zsh
+# Simple
+c() { clear; }
+
+# With args
+l() { clear; eza "$@"; }
+
+# Composed
+tree() { eza --tree --color=always -I ".git|node_modules" "$@"; }
+tl()   { tree -L "$@"; }
+t2()   { tl 2; }
+```
+
+**Rule:** Every function that wraps a command must include `"$@"` unless it explicitly takes no arguments.
+
+
 ## Future Architecture
 
 ### AI Project Context System (Planned)
