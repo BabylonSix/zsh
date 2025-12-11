@@ -1,6 +1,6 @@
 
 # DotFile Settings
-alias reload='source ~/.dotfiles/zsh/setup.sh'
+alias reload='source ~/.dotfiles/zsh/startup.sh'
 alias r='reload; clear'
 
 # System Settings
@@ -33,7 +33,7 @@ alias hd='cd ~/Desktop; l'
 alias hl='cd ~/Downloads; l'
 alias hc='cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/My\ Files/Clients; l'
 alias he='cd ~/Experiments; l'
-alias hp='cd ~/Personal\ Projects; l'
+alias hpu='cd ~/Personal\ Projects; l'
 alias hpd='cd ~/Personal\ Projects/Daily\ Project; l'
 alias hweb='cd ~/.dotfiles/web; l'
 alias hwp='cd ~/Web\ Projects; l'
