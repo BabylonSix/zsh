@@ -186,27 +186,69 @@ When extending this system:
 
 ### Functions Over Aliases
 
-All commands are functions, never aliases. This enables:
+All commands are functions to enable composability—functions can call other functions with arguments passing through correctly.
 
-- **Composability** — functions call functions, args flow through
-- **Consistency** — one pattern, one mental model
-- **Extensibility** — wrappers just work: `wrapper() { inner "$@"; }`
+**What is Composability:**
 
-**Pattern:**
+When `functionA` calls `functionB` with arguments, those arguments reach their destination:
+
 ```zsh
-# Simple
-c() { clear; }
-
-# With args
-l() { clear; eza "$@"; }
-
-# Composed
+# Three functions that work together
 tree() { eza --tree --color=always -I ".git|node_modules" "$@"; }
-tl()   { tree -L "$@"; }
-t2()   { tl 2; }
+tl() { tree -L "$@"; }
+t2() { tl 2; }
+
+# Call chain with arguments
+$ t2 -a
+# → t2 calls: tl 2 -a
+# → tl calls: tree -L 2 -a  
+# → tree calls: eza --tree -L 2 -a
+# Result: Arguments flow through all three functions to eza
 ```
 
-**Rule:** Every function that wraps a command must include `"$@"` unless it explicitly takes no arguments.
+Without `"$@"`, arguments get lost—`t2 -a` would drop the `-a` and only `2` would reach eza.
+
+**Why This Matters:**
+
+**Layering** — Build complex commands from simple ones:
+```zsh
+l() { clear; eza "$@"; }           # Base: list files
+ll() { l -lh "$@"; }               # Layer: add long format
+lla() { ll -a "$@"; }              # Layer: add hidden files
+```
+
+**Validation** — Add logic before calling other commands:
+```zsh
+md() {
+  [[ $# = 0 ]] && { error_message; return 1; }
+  mkdir -p "$1" && cd "$1" && l    # Calls l() function
+}
+```
+
+**Orchestration** — Chain multiple functions into workflows:
+```zsh
+nvmup() {
+  local latest=$(check_latest_version)
+  nvmu "$latest"      # Calls nvmu() function
+  npmstart            # Calls npmstart() function
+}
+```
+
+**The Rule:**
+
+Every function that accepts arguments must include `"$@"` to pass them through:
+
+```zsh
+# Correct
+l() { clear; eza "$@"; }
+srm() { trash "$@"; }
+
+# Wrong - arguments won't pass through
+l() { clear; eza }
+srm() { trash }
+```
+
+This pattern enables the entire system's architecture—Tool+Action Fusion, depth controls, error handling, and workflow orchestration all depend on functions calling functions correctly.
 
 
 ## Future Architecture

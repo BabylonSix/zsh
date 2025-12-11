@@ -9,28 +9,116 @@ Tactical improvements to better align the codebase with **Minimum Viable Frictio
 
 ## ✅ Completed
 
+### Architectural Improvements
+
+- [x] **Functions Over Aliases** — Complete refactor for composability
+  - directory-tools.sh: f(), d(), lns(), o(), of(), od(), srm()
+  - ssh.sh: sshl(), ssha()
+  - All functions support proper argument passthrough via `"$@"`
+  - Impact: Functions can now be composed, arguments flow through correctly
+
+- [x] **Tree Migration to Eza** — Unified tool for ls and tree
+  - Function: `tree() { eza --tree --color=always -I ".git|node_modules" "$@"; }`
+  - Depth aliases: t(), t2-t9 working
+  - Removed from Programs array
+  - Impact: Consistent tool, better performance, respects gitignore
+
+- [x] **Git Functions Refactor** — Better organization and error handling
+  - Organized into logical sections (Status, Staging, Commits, Branches, etc.)
+  - All functions properly quote arguments
+  - Better error handling with visual feedback
+  - Impact: More maintainable, safer, consistent patterns
+
+- [x] **Node Tools Cleanup** — Simplified and more reliable
+  - Removed dependency on external `revolver` tool
+  - Simplified `nvmup()` logic
+  - Better error handling throughout
+  - Impact: Fewer dependencies, clearer code
+
 ### Error Handling (Error States as Learning)
 
-- [x] `v()` — Disk volume selector with available volumes list
-- [x] `sch()` — Basic error handling (missing visual feedback)
-- [x] `md()` — Directory creation with error handling
-- [x] `cho()` — Ownership change with syntax feedback
+- [x] **v()** — Disk volume selector with available volumes list
+  - Shows list of available volumes when called without args
+  - Clear error messaging
+  - File: directory-tools.sh
+
+- [x] **sch()** — Basic error handling (missing visual feedback)
+  - Has error handling for missing path
+  - Still needs success feedback (see below)
+  - File: directory-tools.sh
+
+- [x] **md()** — Directory creation with error handling
+  - Validates directory name provided
+  - Creates and navigates in one step
+  - File: directory-tools.sh
+
+- [x] **cho()** — Ownership change with syntax feedback
+  - Error handling for missing arguments
+  - Visual feedback on success/failure
+  - File: tools.sh
+
+- [x] **zipr()** — Zip with validation
+  - Validates file/directory exists
+  - Error handling for missing args
+  - File: directory-tools.sh
 
 ### Provisioning
 
-- [x] First-run detection with interactive prompt
-- [x] `us()` with fzf version pickers for Node/Python
-- [x] Color-coded progress throughout setupzsh()
-- [x] Package modularization (Core/Tools/Media/Network/macOS/Apps)
-- [x] Unified installer functions (`installBrewPackages`, `installBrewCasks`)
+- [x] **First-run detection** — Interactive prompt
+  - Checks for .✓ marker file
+  - Prompts user to run setupzsh
+  - Graceful exit if declined
+  - File: startup.sh
+
+- [x] **us() with fzf version pickers** — Interactive Node/Python version selection
+  - `-n` flag for Node picker
+  - `-p` flag for Python picker
+  - `-a` flag for both
+  - Shows only uninstalled versions
+  - File: zsh-management.sh
+
+- [x] **Color-coded progress** — Throughout setupzsh()
+  - Blue arrows (→) for actions
+  - Green checkmarks (✓) for success
+  - Yellow warnings (⚠) for issues
+  - Red errors for failures
+  - File: zsh-management.sh
+
+- [x] **Package modularization** — Core/Tools/Media/Network/macOS/Apps
+  - Clear dependency levels
+  - Safety indicators
+  - Selective installation
+  - File: zsh-management.sh
+
+- [x] **Unified installer functions** — DRY package management
+  - installBrewPackages() for CLI tools
+  - installBrewCasks() for GUI apps
+  - Category wrappers: setupCore(), setupTools(), etc.
+  - File: zsh-management.sh
 
 ### Modern Tool Integration
 
-- [x] `cat` → `bat` alias
-- [x] `ls` → `eza` aliases (l, ll, la, lla, lh, lm)
-- [x] `top` → `btop` via `tu` alias
-- [x] `cd` → `zoxide` integration
-- [x] `y()` for yazi with cd-on-exit
+- [x] **cat → bat** — Better cat with syntax highlighting
+  - Alias: `alias cat='bat'`
+  - File: tools.sh
+
+- [x] **ls → eza** — Modern ls with better features
+  - Functions: l(), ll(), la(), lla(), lh(), lm()
+  - All support argument passthrough
+  - File: directory-tools.sh
+
+- [x] **top → btop** — Modern system monitor
+  - Alias: `alias tu='btop'`
+  - File: tools.sh
+
+- [x] **cd → zoxide** — Smart directory navigation
+  - Integrated via eval in shell.sh
+  - Learns frequently used paths
+
+- [x] **y() for yazi** — File manager with cd-on-exit
+  - Properly handles temp files
+  - Changes directory on exit
+  - File: directory-tools.sh
 
 ---
 
@@ -54,12 +142,16 @@ alias tls='tmux list-sessions'
 alias tks='tmux kill-session'
 alias tas='tmux attach-session'
 
-# Modern tool shortcuts
-alias fd='fd'     # already installed, ensure accessible
+# Modern tool shortcuts (ensure accessible)
+alias fd='fd'     # already installed via DevTools
 alias rg='rg'     # already installed via ripgrep
 ```
 
-### 2. Add Visual Feedback to sch()
+**Impact**: Single-command access to frequently used operations
+
+---
+
+### 2. Add Visual Success Feedback to sch()
 
 **File:** `directory-tools.sh`
 
@@ -78,89 +170,106 @@ sch() {
 }
 ```
 
-### 3. Add Validation to zipr()
-
-**File:** `directory-tools.sh`
-
-Current `zipr()` has no error handling.
-
-```zsh
-zipr() {
-  if [[ -z "$1" ]]; then
-    print "\n${RED}ERROR:${NC}"
-    print "\n  ${GREEN}zipr${NC} ${RED}<file-or-directory>${NC}"
-    return 1
-  fi
-  if [[ ! -e "$1" ]]; then
-    print "\n${RED}ERROR:${NC} '$1' does not exist"
-    return 1
-  fi
-  print "${BLUE}→ Compressing${NC} ${YELLOW}$1${NC}..."
-  zip -r "$1.zip" "$1"
-  print "${GREEN}✓ Created $1.zip${NC}"
-}
-```
+**Impact**: User knows operation succeeded without checking manually
 
 ---
 
 ## 🟡 Medium Priority (Consistency)
 
-### 4. Rename Functions to Match Patterns
+### 3. Rename Functions to Match Noun+Verb Pattern
+
+**File:** `test-tools.sh`
 
 **Manual terminal commands should use lowercase noun+verb:**
 
 | Current | Rename To | Reason |
 |---------|-----------|--------|
 | `split_txt()` | `txtsplit()` | noun+verb: txt+split |
-| `new-git()` | `gitcreate()` | noun+verb: git+create |
 
-### 5. Add Missing CLI Tools
+Keep old name as alias for backward compatibility:
+```zsh
+txtsplit() { ... }
+alias split_txt='txtsplit'  # backward compatibility
+```
+
+**Impact**: Consistent naming pattern across all manual commands
+
+---
+
+### 4. Add Missing CLI Tools
 
 **File:** `zsh-management.sh` DevTools array
 
-- [x] `jq` — JSON processor (added)
-- [x] `gdu` — disk usage analyzer (added)
-- [ ] `bat-extras` — batgrep, batman, batdiff, etc.
-
-### 6. Migrate tree to eza --tree
-
-**File:** `zsh-management.sh`
-- [x] Remove `tree` from Programs array
-
-**File:** `directory-tools.sh`
-- [ ] Replace tree aliases with eza equivalents:
-
 ```zsh
-# Directory tree (using eza)
-alias t='eza --tree --level=2 -I "node_modules|.git"'
-alias t2='eza --tree --level=2 -I "node_modules|.git"'
-alias t3='eza --tree --level=3 -I "node_modules|.git"'
-alias t4='eza --tree --level=4 -I "node_modules|.git"'
-alias t5='eza --tree --level=5 -I "node_modules|.git"'
-alias ta='eza --tree --level=2 -a -I "node_modules|.git"'
+# Dev tools - not system critical but useful
+DevTools=(
+  bat                      # better cat
+  bat-extras              # batgrep, batman, batdiff, prettybat
+  btop                     # system monitor
+  ripgrep                  # fast grep (rg)
+  fd                       # fast find
+  neovim                   # editor
+  lazygit                  # git TUI
+  tmux                     # terminal multiplexer
+  yazi                     # file manager
+  tldr                     # simplified man pages
+  jq                       # JSON processor
+  gdu                      # disk usage
+)
 ```
 
-### 7. Migrate grep to rg
+**Impact**: Complete modern CLI toolkit
+
+---
+
+### 5. Clean Up Remaining Tree Aliases
+
+**File:** `directory-tools.sh`
+
+Remove legacy tree-specific aliases that don't make sense with eza:
+
+```zsh
+# Remove these:
+# alias tll='tree -p'      # eza uses -l for long format
+# alias tg='tree -g'       # group display not relevant
+# alias to='tree -u'       # owner display not relevant
+```
+
+Keep what works:
+- `tree()` — eza --tree wrapper ✓
+- `t()` — shorthand ✓
+- `tl()` — tree with depth ✓
+- `t2-t9()` — specific depths ✓
+
+**Impact**: No confusing legacy aliases that don't work with eza
+
+---
+
+### 6. Migrate grep to rg
 
 **File:** `tools.sh`
 
-Change from:
-```zsh
-alias grep='grep --color=always'
-```
+Replace default grep with ripgrep for better performance and defaults:
 
-To:
 ```zsh
+# Modern Tools section
+
 # Use ripgrep as default (faster, respects .gitignore)
 alias grep='rg'
 alias grepo='command grep --color=always'  # original grep when needed
 ```
 
+**Impact**: 
+- Faster searches
+- Respects .gitignore by default
+- Better output formatting
+- Fallback to original grep available
+
 ---
 
 ## 🟢 Low Priority (Nice to Have)
 
-### 8. Add Workflow Orchestration Functions
+### 7. Add Workflow Orchestration Functions
 
 **File:** `tools.sh`
 
@@ -199,7 +308,11 @@ gitstart() {
 }
 ```
 
-### 9. Practice Environment Generators
+**When to add**: After you've manually done the workflow 5+ times and the pattern is stable.
+
+---
+
+### 8. Practice Environment Generators
 
 **File:** `tools.sh`
 
@@ -218,52 +331,72 @@ gitpractice() {
 csspractice() {
   local dir="css-practice-$(date +%s)"
   mkdir "$dir" && cd "$dir"
-  cat > index.html << 'EOF'
+  cat > index.html << 'HTML'
 <!DOCTYPE html>
 <html>
 <head><link rel="stylesheet" href="style.css"></head>
 <body><h1>CSS Practice</h1></body>
 </html>
-EOF
+HTML
   echo "/* Your CSS here */" > style.css
   code . && bss &
   print "${GREEN}✓ CSS practice environment ready${NC}"
 }
+
+# JavaScript practice sandbox
+jspractice() {
+  local dir="js-practice-$(date +%s)"
+  mkdir "$dir" && cd "$dir"
+  cat > index.html << 'HTML'
+<!DOCTYPE html>
+<html>
+<head><script src="script.js"></script></head>
+<body><h1>JavaScript Practice</h1></body>
+</html>
+HTML
+  echo "// Your JavaScript here" > script.js
+  code . && bss &
+  print "${GREEN}✓ JavaScript practice environment ready${NC}"
+}
 ```
+
+**When to add**: When you find yourself creating practice environments regularly.
 
 ---
 
-## Implementation Checklist
+## 📋 Implementation Checklist
 
 Copy this to track progress:
 
-```
-[ ] alias.sh: Add cql, pips, pipu, pipl, tls, tks, tas
-[ ] directory-tools.sh: Add visual feedback to sch()
-[ ] directory-tools.sh: Add validation to zipr()
-[ ] test-tools.sh: Rename split_txt → txtsplit
-[ ] git.sh: Rename new-git → gitcreate
-[x] zsh-management.sh: Add jq, gdu to DevTools
-[ ] zsh-management.sh: Add bat-extras to DevTools
-[x] zsh-management.sh: Remove tree from Programs
-[x] zsh-management.sh: Modularize package arrays
-[ ] directory-tools.sh: Replace tree aliases with eza --tree
-[ ] tools.sh: Change grep alias to rg
-[ ] tools.sh: Add webstart(), gitstart() (when ready)
-[ ] tools.sh: Add gitpractice(), csspractice() (when ready)
-[ ] Test all changes
-[ ] Update readme.md
-```
+### High Priority
+- [ ] alias.sh: Add cql, pips, pipu, pipl, tls, tks, tas, fd, rg
+- [ ] directory-tools.sh: Add visual success feedback to sch()
+
+### Medium Priority
+- [ ] test-tools.sh: Rename split_txt → txtsplit (keep alias)
+- [ ] zsh-management.sh: Add bat-extras to DevTools
+- [ ] directory-tools.sh: Remove legacy tree aliases (tll, tg, to)
+- [ ] tools.sh: Migrate grep to rg (add grepo fallback)
+
+### Low Priority (When Needed)
+- [ ] tools.sh: Add webstart(), gitstart() (when patterns stabilize)
+- [ ] tools.sh: Add gitpractice(), csspractice(), jspractice() (when needed)
+
+### Testing
+- [ ] Test all new aliases
+- [ ] Verify sch() success feedback
+- [ ] Test grep → rg migration (check for issues)
+- [ ] Verify bat-extras installation
 
 ---
 
 ## Philosophy Note
 
-These quick wins follow the same principle as Phase 5 (Creative Workflow Capture):
+These quick wins follow the same principle as Phase 7 (Creative Workflow Capture):
 
 > If you configure it twice, script it.
 
-The difference is scope. Phase 5 captures entire workflows (music releases, ComfyUI pipelines). This checklist captures micro-frictions—missing aliases, inconsistent feedback, naming irregularities.
+The difference is scope. Phase 7 captures entire workflows (music releases, ComfyUI pipelines). This checklist captures micro-frictions—missing aliases, inconsistent feedback, naming irregularities.
 
 Both remove the same type of friction: "I have to remember how to do this."
 
@@ -274,3 +407,4 @@ Both remove the same type of friction: "I have to remember how to do this."
 - **Backward compatibility**: Keep old function names as aliases when renaming
 - **Test error states**: Verify color codes render correctly
 - **Batch changes**: Group related edits for cleaner git history
+- **When to add workflow functions**: Only after manual workflow is proven (5+ uses)
