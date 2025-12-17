@@ -55,7 +55,11 @@ nvmup() {
 #################
 
 # Completions
-eval "$(npm completion 2>/dev/null)"
+if command -v npm >/dev/null 2>&1; then
+  if whence -w bashcompinit >/dev/null 2>&1; then
+    eval "$(npm completion 2>/dev/null)"
+  fi
+fi
 
 # Install to dependencies
 npms() { npm i -S "$@"; }

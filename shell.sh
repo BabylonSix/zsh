@@ -14,6 +14,9 @@ autoload -U zmv
 # load in new style completion for zsh
 autoload -U compinit; compinit
 
+# Allow bash completion scripts (like nvm/npm) to work inside zsh
+autoload -U +X bashcompinit && bashcompinit
+
 
 
 #################
