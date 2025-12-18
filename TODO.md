@@ -88,11 +88,11 @@ Major code quality and architecture improvements.
 
 ### Remaining Polish
 
-- [ ] Add visual success feedback to sch()
+- [*] Add visual success feedback to sch()
   - Currently has error handling but no "✓ Ownership changed" message
   - File: `directory-tools.sh`
 
-- [ ] Clean up remaining tree aliases
+- [*] Clean up remaining tree aliases
   - File: `directory-tools.sh`
   - Remove: tll, tg, to legacy aliases
   - Already removed: ta, tlla (done in current version)
@@ -147,29 +147,7 @@ Goal: All tool configurations live in `~/.dotfiles/config/` and get symlinked au
 
 Small, focused changes that remove paper cuts.
 
-### High Priority
-
-- [ ] Add missing short aliases
-  - File: `alias.sh`
-  - Add: cql, pips, pipu, pipl, tls, tks, tas
-  - Add: fd, rg (ensure accessible)
-
-- [ ] Rename functions to match noun+verb pattern
-  - File: `test-tools.sh`
-  - `split_txt()` → `txtsplit()`
-  - Keep old name as alias for backward compatibility
-  
-- [ ] Rename git function to match pattern
-  - File: `git.sh`
-  - `gitnew()` already follows pattern (was new-git in old version)
-  - No action needed ✓
-
 ### Medium Priority
-
-- [ ] Migrate grep to rg
-  - File: `tools.sh`
-  - Change: `alias grep='grep --color=always'` → `alias grep='rg'`
-  - Add: `alias grepo='command grep --color=always'` (original grep when needed)
 
 - [ ] Add workflow orchestration functions (when patterns stabilize)
   - File: `tools.sh`
