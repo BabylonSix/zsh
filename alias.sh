@@ -7,7 +7,6 @@ alias elint='ot ~/.eslintrc' # configure eslint
 alias ea='ot ~/.dotfiles/zsh/alias.sh && reload'
 alias etools='ot ~/.dotfiles/zsh/tools.sh && reload'
 alias et='etools'
-alias escreen='ot ~/.dotfiles/zsh/screen.sh'
 alias epath='ot ~/.dotfiles/zsh/path.sh' # edit $PATH
 alias eshell='ot ~/.dotfiles/zsh/shell.sh'
 alias ecolor='ot ~/.dotfiles/zsh/colors.sh'
@@ -15,13 +14,13 @@ alias edir='ot ~/.dotfiles/zsh/directory-tools.sh'
 alias edirs='ot ~/.dotfiles/zsh/directories.sh'
 alias enpm='ot ~/.dotfiles/zsh/node-management.sh'
 alias essh='ot ~/.dotfiles/zsh/ssh.sh'
-alias esetup='ot ~/.dotfiles/zsh/setup.sh'
+alias esetup='ot ~/.dotfiles/zsh/zsh-management.sh'
 alias ebin='ot ~/.dotfiles/'
 alias egit='ot ~/.dotfiles/zsh/git.sh'
 alias eweb='ot ~/.dotfiles/web/'
 alias ezsh='ot ~/.dotfiles/zsh/'
 alias esj='ot ~/.dotfiles/web/sj/'
-alias evim='ot ~/.dotfiles/nvim/settings.vim'
+# alias evim='ot ~/.dotfiles/ # <= TODO add nvim settings location
 
 # Directory Shortcuts
 alias hd='cd ~/Desktop; l'
