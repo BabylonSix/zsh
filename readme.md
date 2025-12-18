@@ -11,14 +11,18 @@ A personal productivity system for macOS optimized for learning velocity and wor
 - **Pattern-Based Discoverability** — Consistent naming creates intuitive mental models
 - **Error States as Learning** — Failures teach correct usage through visual feedback
 
-## Quick Start
+## Quick Start 
+put files into ~/.dotfiles/zsh, then
+Paste this into terminal:
+(~30 minutes for full provisioning)
 ```zsh
-# Install (symlink startup.sh to .zshrc)
 ln -sf ~/.dotfiles/zsh/startup.sh ~/.zshrc
 zsh -l
-setupzsh      # ~30 minutes for full provisioning
+setupzsh
+```
 
-# Daily use
+## Daily use
+```zsh
 reload        # Apply config changes (or just: r)
 us            # Update entire dev stack
 us -a         # Update + interactive Node/Python version selection
@@ -52,18 +56,18 @@ i             # Show version info for all package managers
 │   ├── startup.sh          # Entry point (symlink to ~/.zshrc)
 │   ├── zsh-management.sh   # setupzsh, wipezsh, resetzsh, us
 │   ├── path.sh             # PATH configuration
-│   ├── package-managers.sh # Homebrew, NVM, pyenv, zinit
 │   ├── colors.sh           # 256-color system + starship prompt
 │   ├── shell.sh            # ZSH options and keybindings
-│   ├── completion.sh       # Tab completion configuration
-│   ├── alias.sh            # 200+ shortcuts
-│   ├── tools.sh            # Custom functions and utilities
+│   ├── package-managers.sh # Homebrew, NVM, pyenv, zinit
 │   ├── directory-tools.sh  # Navigation helpers
 │   ├── directories.sh      # Predefined directory shortcuts
-│   ├── git.sh              # Git aliases and functions
-│   ├── ssh.sh              # SSH configuration
-│   ├── node-setup.sh       # Node.js global packages
+│   ├── tools.sh            # Custom functions and utilities
+│   ├── node-management.sh  # Node.js global packages
 │   ├── node-tools.sh       # NVM/NPM helpers
+│   ├── completion.sh       # Tab completion configuration
+│   ├── ssh.sh              # SSH configuration
+│   ├── git.sh              # Git aliases and functions
+│   ├── alias.sh            # 200+ shortcuts
 │   └── test-tools.sh       # Sandbox for new functions
 ├── config/
 │   ├── nvim/               # Neovim configuration

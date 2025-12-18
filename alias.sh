@@ -1,8 +1,3 @@
-
-# DotFile Settings
-alias reload='source ~/.dotfiles/zsh/startup.sh'
-alias r='reload; clear'
-
 # System Settings
 alias ehosts='ot /etc/hosts'
 alias eshells='ot /etc/shells'
@@ -18,7 +13,7 @@ alias eshell='ot ~/.dotfiles/zsh/shell.sh'
 alias ecolor='ot ~/.dotfiles/zsh/colors.sh'
 alias edir='ot ~/.dotfiles/zsh/directory-tools.sh'
 alias edirs='ot ~/.dotfiles/zsh/directories.sh'
-alias enpm='ot ~/.dotfiles/zsh/node-setup.sh'
+alias enpm='ot ~/.dotfiles/zsh/node-management.sh'
 alias essh='ot ~/.dotfiles/zsh/ssh.sh'
 alias esetup='ot ~/.dotfiles/zsh/setup.sh'
 alias ebin='ot ~/.dotfiles/'

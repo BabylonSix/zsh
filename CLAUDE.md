@@ -24,18 +24,18 @@ This is a personal productivity system optimized for learning velocity and workf
 │   ├── startup.sh              # Entry point (symlink to ~/.zshrc)
 │   ├── zsh-management.sh       # setupzsh, wipezsh, resetzsh, us
 │   ├── path.sh                 # PATH configuration
-│   ├── package-managers.sh     # Homebrew, NVM, pyenv, zinit
 │   ├── colors.sh               # 256-color system + print wrapper
 │   ├── shell.sh                # ZSH options, integrations (starship, zoxide, fzf)
-│   ├── completion.sh           # Tab completion
-│   ├── alias.sh                # Edit/directory shortcuts
-│   ├── tools.sh                # Custom functions and utilities
+│   ├── package-managers.sh     # Homebrew, NVM, pyenv, zinit
 │   ├── directory-tools.sh      # Navigation helpers, eza/tree aliases
 │   ├── directories.sh          # Predefined directory shortcuts
-│   ├── git.sh                  # Git aliases and functions
-│   ├── ssh.sh                  # SSH configuration
-│   ├── node-setup.sh           # NPM global packages manifest
+│   ├── tools.sh                # Custom functions and utilities
+│   ├── node-management.sh      # NPM global packages manifest
 │   ├── node-tools.sh           # NVM/NPM helpers
+│   ├── completion.sh           # Tab completion
+│   ├── ssh.sh                  # SSH configuration
+│   ├── git.sh                  # Git aliases and functions
+│   ├── alias.sh                # Edit/directory shortcuts
 │   └── test-tools.sh           # Sandbox for new functions
 ├── config/                     # Tool configurations (symlinked to ~/.config/)
 │   ├── nvim/                   # Neovim
@@ -59,14 +59,14 @@ This is a personal productivity system optimized for learning velocity and workf
 
 Packages are organized by dependency level in `zsh-management.sh`:
 
-| Category | Purpose | Safe to Remove? |
-|----------|---------|-----------------|
-| **Core** | Dotfiles depend on these | ❌ No — breaks aliases/functions |
-| **DevTools** | Modern CLI replacements | ✓ Yes |
-| **Media** | Audio/video work | ✓ Yes |
-| **Network** | Network tasks | ✓ Yes |
-| **macOS** | macOS utilities | ✓ Yes |
-| **GuiApps** | Casks (GUI applications) | ✓ Yes |
+| Category     | Purpose                  | Safe to Remove?                  |
+| ------------ | ------------------------ | -------------------------------- |
+| **Core**     | Dotfiles depend on these | ❌ No — breaks aliases/functions |
+| **DevTools** | Modern CLI replacements  | ✓ Yes                            |
+| **Media**    | Audio/video work         | ✓ Yes                            |
+| **Network**  | Network tasks            | ✓ Yes                            |
+| **macOS**    | macOS utilities          | ✓ Yes                            |
+| **GuiApps**  | Casks (GUI applications) | ✓ Yes                            |
 
 ```zsh
 # Full provisioning
@@ -104,21 +104,21 @@ This creates muscle memory that transfers across ALL tools: yazi, neovim, tmux, 
 
 ### Usage Context-Based Naming
 
-| Pattern | Usage | Examples |
-|---------|-------|----------|
-| lowercase compound | Interactive terminal commands | `setupzsh`, `photosize` |
-| camelCase | Script/programmatic functions | `screenSize`, `charCount` |
+| Pattern            | Usage                         | Examples                  |
+| ------------------ | ----------------------------- | ------------------------- |
+| lowercase compound | Interactive terminal commands | `setupzsh`, `photosize`   |
+| camelCase          | Script/programmatic functions | `screenSize`, `charCount` |
 
 **Principle**: Don't create aliases for camelCase functions—they exist for script readability, not typing efficiency.
 
 ### Frequency-Based Naming Hierarchy
 
-| Length | Frequency | Examples |
-|--------|-----------|----------|
-| 1-2 chars | High frequency, muscle memory | `u`, `l`, `gs`, `ga` |
-| 3-4 chars | Medium frequency, tool+action | `nvmu`, `npms` |
-| Consonant compression | Avoid conflicts | `ccnt`, `stst`, `psz` |
-| Descriptive | Complex, self-documenting | context determines case |
+| Length                | Frequency                     | Examples                |
+| --------------------- | ----------------------------- | ----------------------- |
+| 1-2 chars             | High frequency, muscle memory | `u`, `l`, `gs`, `ga`    |
+| 3-4 chars             | Medium frequency, tool+action | `nvmu`, `npms`          |
+| Consonant compression | Avoid conflicts               | `ccnt`, `stst`, `psz`   |
+| Descriptive           | Complex, self-documenting     | context determines case |
 
 ### Safety Through Naming Friction
 
@@ -201,7 +201,7 @@ t2() { tl 2; }
 # Call chain with arguments
 $ t2 -a
 # → t2 calls: tl 2 -a
-# → tl calls: tree -L 2 -a  
+# → tl calls: tree -L 2 -a
 # → tree calls: eza --tree -L 2 -a
 # Result: Arguments flow through all three functions to eza
 ```
@@ -211,6 +211,7 @@ Without `"$@"`, arguments get lost—`t2 -a` would drop the `-a` and only `2` wo
 **Why This Matters:**
 
 **Layering** — Build complex commands from simple ones:
+
 ```zsh
 l() { clear; eza "$@"; }           # Base: list files
 ll() { l -lh "$@"; }               # Layer: add long format
@@ -218,6 +219,7 @@ lla() { ll -a "$@"; }              # Layer: add hidden files
 ```
 
 **Validation** — Add logic before calling other commands:
+
 ```zsh
 md() {
   [[ $# = 0 ]] && { error_message; return 1; }
@@ -226,6 +228,7 @@ md() {
 ```
 
 **Orchestration** — Chain multiple functions into workflows:
+
 ```zsh
 nvmup() {
   local latest=$(check_latest_version)
@@ -249,7 +252,6 @@ srm() { trash }
 ```
 
 This pattern enables the entire system's architecture—Tool+Action Fusion, depth controls, error handling, and workflow orchestration all depend on functions calling functions correctly.
-
 
 ## Future Architecture
 
@@ -288,6 +290,7 @@ This is not "build platforms in advance." It's **incremental capture of working 
 The friction being removed: "I have to remember how I did this last time."
 
 Capture areas (as they emerge from use):
+
 - Web project scaffolding
 - n8n workflow export/import
 - ComfyUI pipeline management

@@ -87,18 +87,18 @@ fi
 
 . ~/.dotfiles/zsh/zsh-management.sh        # setupzsh() and related functions
 . ~/.dotfiles/zsh/path.sh                  # PATH setup (zsh-first)
-. ~/.dotfiles/zsh/package-managers.sh      # Homebrew/nvm/pyenv/zinit
 . ~/.dotfiles/zsh/colors.sh                # Color variables
+. ~/.dotfiles/zsh/shell.sh                 # Look & feel of the shell
 
 #################
 # Shell UX
 #################
 
-. ~/.dotfiles/zsh/shell.sh                 # Look & feel of the shell
+. ~/.dotfiles/zsh/package-managers.sh      # Homebrew/nvm/pyenv/zinit
 . ~/.dotfiles/zsh/directory-tools.sh       # Directory creation | navigation helpers
 . ~/.dotfiles/zsh/directories.sh           # Predefined directory shortcuts
 . ~/.dotfiles/zsh/tools.sh                 # Tools & utilitie
-. ~/.dotfiles/zsh/node-setup.sh            # NVM & NPM setup + global packages
+. ~/.dotfiles/zsh/node-management.sh       # NVM & NPM setup + global packages
 . ~/.dotfiles/zsh/node-tools.sh            # Node/NPM tools, completions, helpers
 . ~/.dotfiles/zsh/completion.sh            # ZSH completions
 . ~/.dotfiles/zsh/ssh.sh                   # SSH configuration
@@ -114,3 +114,7 @@ fi
 . ~/.dotfiles/zsh/test-tools.sh 2>/dev/null || true # Sandbox for testing new functions
 
 # (FZF is already handled in tools.sh; no need to source ~/.fzf.zsh again here)
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/bravo/.lmstudio/bin"
+# End of LM Studio CLI section

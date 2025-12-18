@@ -1,10 +1,12 @@
 #!/bin/zsh
+# zsh-management.sh
+
 
 #################
 # Package Lists
 #################
 
-# Core — dotfiles depend on these, don't remove
+# Core – dotfiles depend on these, don't remove
 CorePackages=(
   git                      # version control
   nvm                      # node version manager
@@ -23,9 +25,10 @@ ZshPlugins=(
   zsh-autosuggestions
 )
 
-# Dev tools - not system critical but useful
+# Dev tools - safe to add/remove
 DevTools=(
   bat                      # better cat
+  bat-extras               # batgrep, batman, batdiff, prettybat
   btop                     # system monitor
   ripgrep                  # fast grep (rg)
   fd                       # fast find
@@ -38,13 +41,13 @@ DevTools=(
   gdu                      # disk usage
 )
 
-# Media — for audio/video work
+# Media – for audio/video work
 MediaTools=(
   ffmpeg                   # video/audio processing
   yt-dlp                   # youtube downloader
 )
 
-# Network — for network tasks
+# Network – for network tasks
 NetworkTools=(
   httpie                   # http client
   wget                     # download tool
@@ -57,7 +60,7 @@ MacosTools=(
   mas                      # mac app store CLI
 )
 
-# GUI apps (casks) - safe to add/remove
+# GUI apps (casks)
 GuiApps=(
   ghostty                  # terminal
   zed                      # editor
@@ -66,41 +69,111 @@ GuiApps=(
 
 
 #################
+# Shell Reload
+#################
+
+reload() {
+  source "$HOME/.dotfiles/zsh/startup.sh"
+}
+
+restart() {
+  clear
+  exec zsh -l
+}
+
+r() { restart; }
+
+
+#################
+# Global Colors & Print Helper
+#################
+
+p() { builtin print -P "$@"; }
+
+# Spacing helper - adds N blank lines for visual breathing room
+# Usage: s [n]  (defaults to 1 if no arg)
+s() {
+  local n=${1:-1}
+  for ((i=0; i<n; i++)); do
+    p ""
+  done
+}
+
+# Colors
+NC='%f%b%k'
+RED='%F{009}'
+GREEN='%F{078}'
+YELLOW='%F{227}'
+BLUE='%F{075}'
+
+
+#################
+# Brew Install Helper
+#################
+
+# Formats brew install operations with spacing and visual feedback
+# Has soft-fail logic built-in (doesn't call soft_fail function)
+# Package name appears in green for visual hierarchy
+#
+# Usage: brew_install "package-name" brew install package-name
+brew_install() {
+  local pkg="$1"
+  shift
+  s 2
+  p "${BLUE}installing ${GREEN}${pkg}${BLUE} via brew${NC}"
+  # Soft-fail logic directly here
+  local had_errexit=0
+  [[ -o errexit ]] && had_errexit=1
+  set +e
+  "$@"
+  local rc=$?
+  (( had_errexit )) && set -e || set +e
+  if (( rc == 0 )); then
+    p "${GREEN}✓ ${pkg}${NC}"
+  else
+    p "${YELLOW}⚠ ${GREEN}${pkg}${YELLOW} ${RED}(failed, rc=$rc)${NC}"
+  fi
+}
+
+
+#################
 # Unified Installers
 #################
 
+# Install Homebrew packages (CLI tools)
 installBrewPackages() {
   local category="$1"
   shift
   local packages=("$@")
-
-  print "${BLUE}→ ${category}${NC}"
+  s 2
+  p "${BLUE}→ ${category}${NC}"
   for pkg in "${packages[@]}"; do
     if ! brew list "$pkg" &>/dev/null 2>&1; then
-      print "  ${YELLOW}→${NC} $pkg"
-      brew install "$pkg" || print "  ${RED}⚠${NC} Failed: $pkg"
+      brew_install "$pkg" brew install "$pkg"
     else
-      print "  ${GREEN}✓${NC} $pkg"
+      s 1
+      p "${GREEN}✓${NC} $pkg ${BLUE}(already installed)${NC}"
+      s 1
     fi
   done
-  print ""
 }
 
+# Install Homebrew casks (GUI apps)
 installBrewCasks() {
   local category="$1"
   shift
   local apps=("$@")
-
-  print "${BLUE}→ ${category}${NC}"
+  s 2
+  p "${BLUE}→ ${category}${NC}"
   for app in "${apps[@]}"; do
     if ! brew list --cask "$app" &>/dev/null 2>&1; then
-      print "  ${YELLOW}→${NC} $app"
-      brew install --cask "$app" || print "  ${RED}⚠${NC} Failed: $app"
+      brew_install "$app" brew install --cask "$app"
     else
-      print "  ${GREEN}✓${NC} $app"
+      s 1
+      p "${GREEN}✓${NC} $app ${BLUE}(already installed)${NC}"
+      s 1
     fi
   done
-  print ""
 }
 
 
@@ -130,223 +203,253 @@ setupAllPackages() {
 
 
 #################
+# Soft-fail Helper
+#################
+
+# Executes a command with soft-fail behavior
+# - Preserves and restores errexit state
+# - Logs success (✓) or failure (⚠) with exit code
+# - Always returns 0 (never propagates failure)
+#
+# Used for simple operations in setupzsh() that don't need
+# the fancy formatting of brew_install/npm_install
+#
+# Usage: soft_fail "description" command args...
+soft_fail() {
+  local desc="$1"
+  shift
+  local had_errexit=0
+  [[ -o errexit ]] && had_errexit=1
+  set +e
+  "$@"
+  local rc=$?
+  (( had_errexit )) && set -e || set +e
+  if (( rc == 0 )); then
+    p "  ${GREEN}✓${NC} $desc"
+  else
+    p "  ${YELLOW}⚠${NC} $desc ${RED}(failed, continuing; rc=$rc)${NC}"
+  fi
+  return 0
+}
+
+
+#################
 # Main Setup
 #################
 
 setupzsh() {
-  # Print wrapper for color codes (matches alias in colors.sh)
-  print() { builtin print -P "$@" }
+  set -e
 
-  # Colors (for fresh machines before colors.sh loads)
-  local NC='%f%b%k'
-  local RED='%F{009}'
-  local GREEN='%F{078}'
-  local YELLOW='%F{227}'
-  local BLUE='%F{075}'
+  p '########################'
+  p '#    SETTING UP ZSH    #'
+  p '########################'
+  s 1
 
-  set -e  # Exit immediately if any command fails
-
-
-  print '########################'
-  print '#    SETTING UP ZSH    #'
-  print '########################'
-  print '\n'
-
-  # Ensure base directories exist
   mkdir -p "$HOME/.dotfiles"
   mkdir -p "$HOME/.dotfiles/config"
   mkdir -p "$HOME/.config"
 
 
+  #################
   # Xcode Command Line Tools
+  #################
+
   if ! xcode-select -p >/dev/null 2>&1; then
-    print "${BLUE}Installing Xcode Command Line Tools...${NC}"
-
+    p "${BLUE}Installing Xcode Command Line Tools...${NC}"
     touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
-
     CLT_PRODUCT=$(/usr/sbin/softwareupdate -l 2>/dev/null \
       | awk -F'* ' '/Command Line Tools/ {print $2}' \
       | sort -V | tail -n1)
-
     if [[ -n "$CLT_PRODUCT" ]]; then
-      print "${BLUE}Installing:${NC} ${YELLOW}${CLT_PRODUCT}${NC}"
+      p "${BLUE}Installing:${NC} ${YELLOW}${CLT_PRODUCT}${NC}"
       if sudo /usr/sbin/softwareupdate -i "$CLT_PRODUCT" --verbose; then
         sudo /usr/bin/xcode-select --switch /Library/Developer/CommandLineTools
-        print "${GREEN}✓ Xcode Command Line Tools installed${NC}"
+        p "${GREEN}✓ Xcode Command Line Tools installed${NC}"
       else
-        print "${RED}ERROR:${NC} softwareupdate failed for CLT"
+        p "${RED}ERROR:${NC} softwareupdate failed for CLT"
         rm -f /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
         set +e 2>/dev/null || true
         return 1
       fi
     else
-      print "${RED}ERROR:${NC} Could not find 'Command Line Tools' in catalog"
-      print "${YELLOW}Fallback:${NC} launching GUI installer..."
+      p "${RED}ERROR:${NC} Could not find 'Command Line Tools' in catalog"
+      p "${YELLOW}Fallback:${NC} launching GUI installer..."
       xcode-select --install
-      print "${YELLOW}Please complete the installation and re-run setupzsh${NC}"
+      p "${YELLOW}Please complete the installation and re-run setupzsh${NC}"
       rm -f /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
       set +e 2>/dev/null || true
       return 1
     fi
-
     rm -f /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
   else
-    print "${GREEN}✓ Xcode Command Line Tools present${NC}"
+    p "${GREEN}✓ Xcode Command Line Tools present${NC}"
   fi
 
 
+  #################
   # Homebrew
+  #################
+
   if ! command -v brew &>/dev/null; then
-    print "${BLUE}Installing Homebrew...${NC}"
+    p "${BLUE}Installing Homebrew...${NC}"
     if ! /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; then
-      print "${RED}ERROR:${NC} Homebrew installation failed"
+      p "${RED}ERROR:${NC} Homebrew installation failed"
       set +e 2>/dev/null || true
       return 1
     fi
   else
-    print "${GREEN}✓ Homebrew already installed${NC}"
+    p "${GREEN}✓ Homebrew already installed${NC}"
   fi
 
-  if [[ -d "/opt/homebrew" ]]; then
+  if [[ -x "/opt/homebrew/bin/brew" ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
+  elif [[ -x "/usr/local/bin/brew" ]]; then
+    eval "$(/usr/local/bin/brew shellenv)"
   fi
 
-  print "${BLUE}→ Running brew doctor...${NC}"
-  brew doctor || true
-  print ""
+  soft_fail "Updating Homebrew" brew update
+  soft_fail "Running brew doctor" brew doctor
 
 
-  # Install all packages
+  #################
+  # Package Installation
+  #################
+
+  s 4
+  p "${BLUE}━━━ Package Installation ━━━${NC}"
   setupAllPackages
 
-
-  # Remove Homebrew Python (use pyenv instead)
   if brew list --formula python &>/dev/null 2>&1; then
-    print "${BLUE}→ Removing Homebrew Python (using pyenv instead)...${NC}"
-    brew uninstall --ignore-dependencies python || true
-    brew cleanup
+    soft_fail "Removing Homebrew Python (using pyenv instead)" \
+      sh -c "brew uninstall --ignore-dependencies python && brew cleanup"
   fi
 
 
-  # Source PATH
-  print "${BLUE}→ Setting up PATH...${NC}"
+  #################
+  # PATH Configuration
+  #################
+
+  s 4
+  p "${BLUE}━━━ Environment Setup ━━━${NC}"
+  s 1
+  p "${BLUE}→ Setting up PATH...${NC}"
   if [[ -f "$HOME/.dotfiles/zsh/path.sh" ]]; then
     . "$HOME/.dotfiles/zsh/path.sh"
+    p "${GREEN}✓ PATH configured${NC}"
   else
-    print "${YELLOW}⚠ path.sh not found${NC}"
+    p "${YELLOW}⚠ path.sh not found${NC}"
   fi
-  print ""
 
 
-  # Link configs
-  print "${BLUE}→ Linking configs${NC}"
+  #################
+  # Config Linking
+  #################
+
+  s 2
+  p "${BLUE}→ Linking configs${NC}"
 
   [[ -d "$HOME/.dotfiles/config/nvim" ]] && \
     ln -sf "$HOME/.dotfiles/config/nvim" "$HOME/.config/nvim" && \
-    print "  ${GREEN}✓${NC} nvim"
+    p "  ${GREEN}✓${NC} nvim"
 
   [[ -d "$HOME/.dotfiles/config/tmux" ]] && \
     ln -sf "$HOME/.dotfiles/config/tmux" "$HOME/.config/tmux" && \
-    print "  ${GREEN}✓${NC} tmux"
+    p "  ${GREEN}✓${NC} tmux"
 
   [[ -f "$HOME/.dotfiles/config/starship.toml" ]] && \
     ln -sf "$HOME/.dotfiles/config/starship.toml" "$HOME/.config/starship.toml" && \
-    print "  ${GREEN}✓${NC} starship"
+    p "  ${GREEN}✓${NC} starship"
 
   [[ -d "$HOME/.dotfiles/config/zed" ]] && \
     ln -sf "$HOME/.dotfiles/config/zed" "$HOME/.config/zed" && \
-    print "  ${GREEN}✓${NC} zed"
+    p "  ${GREEN}✓${NC} zed"
 
   [[ -d "$HOME/.dotfiles/config/ghostty" ]] && \
     ln -sf "$HOME/.dotfiles/config/ghostty" "$HOME/Library/Application Support/com.mitchellh.ghostty" && \
-    print "  ${GREEN}✓${NC} ghostty"
+    p "  ${GREEN}✓${NC} ghostty"
 
   [[ -d "$HOME/.dotfiles/config/yazi" ]] && \
     ln -sf "$HOME/.dotfiles/config/yazi" "$HOME/.config/yazi" && \
-    print "  ${GREEN}✓${NC} yazi"
-
-  print ""
+    p "  ${GREEN}✓${NC} yazi"
 
 
+
+  #################
   # Node via NVM
-  print "${BLUE}→ Setting up Node via NVM${NC}"
+  #################
+
+  s 2
+  p "${BLUE}→ Setting up Node via NVM${NC}"
 
   export NVM_DIR="$HOME/.nvm"
   mkdir -p "$NVM_DIR"
 
   if [[ -s "$(brew --prefix nvm)/nvm.sh" ]]; then
     source "$(brew --prefix nvm)/nvm.sh"
-
     if [[ ! -d "$NVM_DIR/versions/node" ]]; then
-      print "  ${YELLOW}→${NC} Installing Node (latest)"
-      if nvm install node; then
-        nvm alias default node
-        print "  ${GREEN}✓${NC} Node installed via NVM"
-      else
-        print "  ${RED}⚠${NC} Failed to install Node"
-      fi
+      soft_fail "Installing Node (latest)" nvm install node
+      soft_fail "Setting default Node" nvm alias default node
     else
-      print "  ${GREEN}✓${NC} Node already installed via NVM"
+      p "  ${GREEN}✓${NC} Node already installed via NVM"
     fi
   else
-    print "  ${RED}⚠${NC} nvm.sh not found in Homebrew"
+    p "  ${YELLOW}⚠${NC} nvm.sh not found in Homebrew"
   fi
 
-  print ""
 
-
+  #################
   # Python via pyenv
-  print "${BLUE}→ Setting up Python via pyenv${NC}"
+  #################
+
+  s 2
+  p "${BLUE}→ Setting up Python via pyenv${NC}"
 
   export PYENV_ROOT="$HOME/.pyenv"
   mkdir -p "$PYENV_ROOT"
 
   if command -v pyenv &>/dev/null; then
     eval "$(pyenv init -)"
-
     local latest_py
     latest_py=$(pyenv install --list | sed 's/^[[:space:]]*//' | grep -E '^3\.[0-9]+\.[0-9]+$' | tail -1)
-
     if [[ -n "$latest_py" ]]; then
       if [[ ! -d "$PYENV_ROOT/versions/$latest_py" ]]; then
-        print "  ${YELLOW}→${NC} Installing Python $latest_py"
-        if pyenv install "$latest_py"; then
-          pyenv global "$latest_py"
-          print "  ${GREEN}✓${NC} Python $latest_py installed"
-        else
-          print "  ${RED}⚠${NC} Failed to install Python $latest_py"
-        fi
+        soft_fail "Installing Python $latest_py" \
+          sh -c "pyenv install '$latest_py' && pyenv global '$latest_py'"
       else
-        print "  ${GREEN}✓${NC} Python $latest_py already installed"
+        p "  ${GREEN}✓${NC} Python $latest_py already installed"
       fi
     else
-      print "  ${RED}⚠${NC} Could not detect latest Python 3 version"
+      p "  ${YELLOW}⚠${NC} Could not detect latest Python 3 version"
     fi
   else
-    print "  ${RED}⚠${NC} pyenv not found in PATH"
+    p "  ${YELLOW}⚠${NC} pyenv not found in PATH"
   fi
 
-  print ""
 
+  #################
+  # NPM Global Packages
+  #################
 
-  # NPM packages
   if (( $+functions[npmstart] )); then
-    print "${BLUE}→ Installing npm packages${NC}"
-    npmstart || print "  ${YELLOW}⚠${NC} Some npm packages failed to install"
+    s 2
+    p "${BLUE}→ Installing npm packages${NC}"
+    npmstart
   else
-    print "${YELLOW}→ Skipping npm packages (npmstart not defined yet)${NC}"
+    p "${YELLOW}→ Skipping npm packages (npmstart not defined yet)${NC}"
   fi
 
-  print ""
 
+  #################
+  # Initialization Marker
+  #################
 
-  # Create initialization marker
-  print "${BLUE}→ Creating initialization marker${NC}"
+  s 2
+  p "${BLUE}→ Creating initialization marker${NC}"
 
   mkdir -p ~/.dotfiles
 
   if cat > ~/.dotfiles/.✓ << 'EOF'
-# BRAVO ZSH System — Initialization Complete
+# BRAVO ZSH System – Initialization Complete
 #
 # Usage:
 #   setupzsh    # Re-run provisioning to update tools
@@ -355,25 +458,23 @@ setupzsh() {
 #   upgradezsh  # Update to latest ZSH version
 EOF
   then
-    print "  ${GREEN}✓${NC} Marker file created"
+    p "  ${GREEN}✓${NC} Marker file created"
   else
-    print "  ${YELLOW}⚠${NC} Heredoc failed, using fallback..."
+    p "  ${YELLOW}⚠${NC} Heredoc failed, using fallback..."
     echo "BRAVO ZSH initialized on $(date)" > ~/.dotfiles/.✓
   fi
 
   if [[ -f ~/.dotfiles/.✓ ]]; then
-    print "  ${GREEN}✓${NC} Marker verified"
+    p "  ${GREEN}✓${NC} Marker verified"
   else
-    print "  ${RED}⚠${NC} Warning: Marker file not found"
-    touch ~/.dotfiles/.✓ || print "  ${RED}✗${NC} Cannot create marker file"
+    p "  ${RED}⚠${NC} Warning: Marker file not found"
+    touch ~/.dotfiles/.✓ || p "  ${RED}✗${NC} Cannot create marker file"
   fi
 
-  print ""
+  s 4
 
-
-  # Done
-  print "${GREEN}✓ Setup complete!${NC}"
-  print "${BLUE}→ Run 'reload' to activate your shell configuration${NC}"
+  p "${GREEN}✓ Setup complete!${NC}"
+  p "${BLUE}→ Run 'reload' to activate your shell configuration${NC}"
 
   set +e 2>/dev/null || true
 }
@@ -384,37 +485,36 @@ EOF
 #################
 
 wipezsh() {
-  print "\n${RED}WARNING: This will completely remove your development environment.${NC}"
+  s 2
+  p "${RED}WARNING: This will completely remove your development environment.${NC}"
   read "response?Are you sure? (y/n): "
-
-  if [[ "$response" != "y" && "$response" != "Y" ]]; then
-    print "Cancelled."
-    return 1
-  fi
-
+  [[ "$response" =~ '^[yY]$' ]] || { p "Cancelled."; return 1; }
   read "response2?Are you REALLY sure? (y/n): "
+  [[ "$response2" =~ '^[yY]$' ]] || { p "Cancelled."; return 1; }
 
-  if [[ "$response2" != "y" && "$response2" != "Y" ]]; then
-    print "Cancelled."
-    return 1
+  if command -v brew &>/dev/null; then
+    s 2
+    p "${BLUE}Removing all brew packages...${NC}"
+    brew uninstall --force --ignore-dependencies $(brew list) || true
+    s 2
+    p "${BLUE}Removing Homebrew...${NC}"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)" || true
+  else
+    p "${YELLOW}→ brew not found; skipping brew removal${NC}"
   fi
 
-  print "\n${BLUE}Removing all brew packages...${NC}"
-  brew uninstall --force $(brew list) || true
-
-  print "${BLUE}Removing Homebrew...${NC}"
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall.sh)" || true
-
-  print "${BLUE}Clearing system files...${NC}"
+  p "${BLUE}Clearing system files...${NC}"
   sudo rm -rf /opt/homebrew/
+  sudo rm -rf /usr/local/Homebrew/
   sudo rm -rf ~/.npm ~/.nvm ~/.pyenv
   sudo rm -f ~/.zshrc ~/.zcompdump
 
-  print "\n${GREEN}✓ Cleanup complete${NC}"
-
+  s 2
+  p "${GREEN}✓ Cleanup complete${NC}"
   rm -f ~/.dotfiles/.✓
-  print "${YELLOW}→ Initialization marker removed${NC}"
-  print "${BLUE}→ Run 'setupzsh' to rebuild${NC}\n"
+  p "${YELLOW}→ Initialization marker removed${NC}"
+  p "${BLUE}→ Run 'setupzsh' to rebuild${NC}"
+  s 1
 }
 
 
@@ -424,20 +524,32 @@ wipezsh() {
 
 upgradezsh() {
   if [[ ! -f ~/.dotfiles/.✓ ]]; then
-    print "${RED}ERROR:${NC} setupzsh() has not run yet"
-    print "${BLUE}→ Run: setupzsh${NC}"
+    p "${RED}ERROR:${NC} setupzsh() has not run yet"
+    p "${BLUE}→ Run: setupzsh${NC}"
     return 1
   fi
 
-  local latestZSH="/opt/homebrew/Cellar/zsh/$(\ls -t /opt/homebrew/Cellar/zsh/ | head -n 1)/bin/zsh"
+  if ! command -v brew &>/dev/null; then
+    p "${RED}ERROR:${NC} Homebrew not found"
+    return 1
+  fi
+
+  local latestZSH="$(brew --prefix)/bin/zsh"
+
+  if [[ ! -x "$latestZSH" ]]; then
+    p "${RED}ERROR:${NC} zsh not found at: $latestZSH"
+    return 1
+  fi
 
   if ! grep -q "$latestZSH" /etc/shells; then
     sudo sh -c "echo '$latestZSH' >> /etc/shells"
   fi
 
-  print "\n${BLUE}Setting default shell to latest ZSH...${NC}"
+  s 4
+  p "${BLUE}Setting default shell to Homebrew ZSH...${NC}"
   chsh -s "$latestZSH" "$USER"
-  print "${GREEN}✓ Default shell updated${NC}\n"
+  p "${GREEN}✓ Default shell updated${NC}"
+  s 1
 }
 alias upzsh='upgradezsh'
 
@@ -448,11 +560,10 @@ alias upzsh='upgradezsh'
 
 resetzsh() {
   if [[ ! -f ~/.dotfiles/.✓ ]]; then
-    print "${RED}ERROR:${NC} setupzsh() has not run yet"
-    print "${BLUE}→ Run: setupzsh${NC}"
+    p "${RED}ERROR:${NC} setupzsh() has not run yet"
+    p "${BLUE}→ Run: setupzsh${NC}"
     return 1
   fi
-
   wipezsh && setupzsh
 }
 
@@ -462,6 +573,7 @@ resetzsh() {
 #################
 
 us() {
+  set +e
   local upgrade_node=false
   local upgrade_python=false
 
@@ -471,108 +583,109 @@ us() {
       -p|--python) upgrade_python=true ;;
       -np|-pn|-a|--all) upgrade_node=true; upgrade_python=true ;;
       -h|--help)
-        print ""
-        print "${BLUE}Usage:${NC} us [-n] [-p] [-a] [-h]"
-        print "  ${GREEN}-n${NC}, ${GREEN}--node${NC}    upgrade Node version via nvm"
-        print "  ${GREEN}-p${NC}, ${GREEN}--python${NC}  upgrade Python version via pyenv"
-        print "  ${GREEN}-a${NC}, ${GREEN}--all${NC}     upgrade both Node and Python"
-        print "  ${GREEN}-h${NC}, ${GREEN}--help${NC}    show this help"
-        print ""
+        s 1
+        p "${BLUE}Usage:${NC} us [-n] [-p] [-a] [-h]"
+        p "  ${GREEN}-n${NC}, ${GREEN}--node${NC}    upgrade Node version via nvm"
+        p "  ${GREEN}-p${NC}, ${GREEN}--python${NC}  upgrade Python version via pyenv"
+        p "  ${GREEN}-a${NC}, ${GREEN}--all${NC}     upgrade both Node and Python"
+        p "  ${GREEN}-h${NC}, ${GREEN}--help${NC}    show this help"
+        s 1
         return 0
         ;;
       -*)
-        print ""
-        print "${RED}✗ Unknown flag: $1${NC}\n"
-        print "${BLUE}Usage:${NC} us [-n] [-p] [-a] [-h]"
-        print "  ${GREEN}-n${NC}, ${GREEN}--node${NC}    upgrade Node version via nvm"
-        print "  ${GREEN}-p${NC}, ${GREEN}--python${NC}  upgrade Python version via pyenv"
-        print "  ${GREEN}-a${NC}, ${GREEN}--all${NC}     upgrade both Node and Python"
-        print "  ${GREEN}-h${NC}, ${GREEN}--help${NC}    show this help"
-        print ""
+        s 1
+        p "${RED}✗ Unknown flag: $1${NC}"
+        s 1
+        p "${BLUE}Usage:${NC} us [-n] [-p] [-a] [-h]"
+        p "  ${GREEN}-n${NC}, ${GREEN}--node${NC}    upgrade Node version via nvm"
+        p "  ${GREEN}-p${NC}, ${GREEN}--python${NC}  upgrade Python version via pyenv"
+        p "  ${GREEN}-a${NC}, ${GREEN}--all${NC}     upgrade both Node and Python"
+        p "  ${GREEN}-h${NC}, ${GREEN}--help${NC}    show this help"
+        s 1
         return 1
         ;;
     esac
     shift
   done
 
-  print "\n${BLUE}╔═══════════════════════════════════╗${NC}"
-  print "${BLUE}║   Updating System & Development   ║${NC}"
-  print "${BLUE}╚═══════════════════════════════════╝${NC}\n"
+  s 4
+  p "${BLUE}╔═══════════════════════════════════╗${NC}"
+  p "${BLUE}║   Updating System & Development   ║${NC}"
+  p "${BLUE}╚═══════════════════════════════════╝${NC}"
+  s 1
 
   stty sane
 
-  # Homebrew
-  print "${BLUE}→ Updating Homebrew...${NC}"
+  p "${BLUE}→ Updating Homebrew...${NC}"
   brew update
   brew upgrade
-  print "${GREEN}✓ Homebrew updated${NC}\n"
+  p "${GREEN}✓ Homebrew updated${NC}"
+  s 1
 
-  # Node (only with -n flag)
   if [[ "$upgrade_node" == true ]]; then
     if (( $+functions[nvm] )); then
-      print "${BLUE}→ Updating Node...${NC}"
-
+      p "${BLUE}→ Updating Node...${NC}"
       local current=$(nvm current 2>/dev/null)
       local installed=$(nvm ls --no-colors | rg '^\s*v[\d.]+' -o || true)
-
       local selected=$(nvm ls-remote \
         | { [[ -n "$installed" ]] && rg -vFf <(echo "$installed") || cat; } \
         | fzf --ansi --tac --height=15 --prompt="Node (current: ${current:-none}) > " --reverse)
-
       selected=$(echo "$selected" | rg 'v[\d.]+' -o)
-
       if [[ -n "$selected" ]]; then
         nvm install "$selected"
         nvm alias default "$selected"
-        print "${GREEN}✓ Node: ${current:-none} → ${selected}${NC}\n"
+        p "${GREEN}✓ Node: ${current:-none} → ${selected}${NC}"
+        s 1
       else
-        print "${YELLOW}→ Skipping Node (cancelled)${NC}\n"
+        p "${YELLOW}→ Skipping Node (cancelled)${NC}"
+        s 1
       fi
     else
-      print "${YELLOW}→ Skipping Node (nvm not loaded)${NC}\n"
+      p "${YELLOW}→ Skipping Node (nvm not loaded)${NC}"
+      s 1
     fi
   fi
 
-  # Python (only with -p flag)
   if [[ "$upgrade_python" == true ]]; then
     if command -v pyenv &>/dev/null; then
-      print "${BLUE}→ Updating Python...${NC}"
-
+      p "${BLUE}→ Updating Python...${NC}"
       local current=$(pyenv global 2>/dev/null | head -n1)
       local installed=$(pyenv versions --bare || true)
-
       local selected=$(pyenv install --list \
         | rg '^\s*3\.[\d.]+$' --trim \
         | { [[ -n "$installed" ]] && rg -vxFf <(echo "$installed") || cat; } \
         | fzf --tac --height=15 --prompt="Python (current: ${current:-none}) > " --reverse)
-
       if [[ -n "$selected" ]]; then
         pyenv install "$selected"
         pyenv global "$selected"
-        print "${GREEN}✓ Python: ${current:-none} → ${selected}${NC}\n"
+        p "${GREEN}✓ Python: ${current:-none} → ${selected}${NC}"
+        s 1
       else
-        print "${YELLOW}→ Skipping Python (cancelled)${NC}\n"
+        p "${YELLOW}→ Skipping Python (cancelled)${NC}"
+        s 1
       fi
     else
-      print "${YELLOW}→ Skipping Python (pyenv not found)${NC}\n"
+      p "${YELLOW}→ Skipping Python (pyenv not found)${NC}"
+      s 1
     fi
   fi
 
-  # NPM
-  print "${BLUE}→ Updating NPM packages...${NC}"
+  p "${BLUE}→ Updating NPM packages...${NC}"
   npm update -g
   npm upgrade -g
-  print "${GREEN}✓ NPM packages updated${NC}\n"
+  p "${GREEN}✓ NPM packages updated${NC}"
+  s 1
 
   [[ -f ~/.npmrc ]] && rm ~/.npmrc
 
-  # System maintenance
-  print "${BLUE}→ Running system maintenance...${NC}"
+  p "${BLUE}→ Running system maintenance...${NC}"
   if [[ -f /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister ]]; then
     /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister \
       -kill -r -domain local -domain system -domain user 2>/dev/null || true
   fi
-  print "${GREEN}✓ System updated${NC}\n"
+  p "${GREEN}✓ System updated${NC}"
+  s 1
 
-  print "${GREEN}✓ All systems updated!${NC}\n"
+  p "${GREEN}✓ All systems updated!${NC}"
+  s 1
 }
