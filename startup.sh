@@ -95,6 +95,7 @@ fi
 #################
 
 . ~/.dotfiles/zsh/package-managers.sh      # Homebrew/nvm/pyenv/zinit
+. ~/.dotfiles/zsh/config-migration.sh      # Configuration migration
 . ~/.dotfiles/zsh/directory-tools.sh       # Directory creation | navigation helpers
 . ~/.dotfiles/zsh/directories.sh           # Predefined directory shortcuts
 . ~/.dotfiles/zsh/tools.sh                 # Tools & utilitie
