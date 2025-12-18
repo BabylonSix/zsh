@@ -34,12 +34,6 @@ Core provisioning system is fully operational.
 - [x] Remove `tree` from package arrays (replaced by eza --tree)
 - [x] Add `jq`, `gdu`, `tldr` to DevTools
 
-### Remaining Polish
-
-- [ ] Add `bat-extras` to DevTools (batgrep, batman, batdiff, prettybat)
-  - File: `zsh-management.sh` DevTools array
-  - Action: Add to array with inline comment
-
 ---
 
 ## Phase 2: Architectural Improvements ✅
@@ -332,12 +326,6 @@ This is not "build platforms in advance." This is **incremental capture of worki
 ---
 
 ## Next Actions
-
-### Immediate (This Week)
-1. Add bat-extras to DevTools
-2. Add visual feedback to sch()
-3. Add missing aliases (cql, pips, tls, etc.)
-4. Clean up remaining tree aliases
 
 ### Short Term (This Month)
 1. Create link_dotfile() helper
