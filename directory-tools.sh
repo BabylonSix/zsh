@@ -26,7 +26,9 @@ sch() {
     print "\n  ${GREEN}sch${NC} ${RED}<path>${NC}"
     return 1
   fi
+  print "${BLUE}→ Taking ownership of${NC} ${YELLOW}$1${NC}"
   sudo chown -R "$(whoami)":admin "$1"
+  print "${GREEN}✓ Ownership changed${NC}"  # ← Add this line
 }
 
 
