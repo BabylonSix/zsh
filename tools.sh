@@ -72,22 +72,149 @@ alias ka='killall -9'   # kill a running program
 # Process Monitor
 alias tu='btop'         # modern system monitor (replaces htop)
 
-# find process X
-fp() {
-  ps ax | grep "$1"
-}
-
 # Print with prompt expansion (zsh-native)
 alias print='print -P'
+
+
+#################
+# Find System (rg + fzf powered)
+#################
+
+# Find file (interactive picker)
+ff() {
+  local file
+  file=$(fd --type f --hidden --exclude .git | fzf --preview 'bat --color=always {}')
+  if [[ -n "$file" ]]; then
+    print "${GREEN}✓${NC} $file"
+    echo "$file"
+  fi
+}
+
+# Find text (content search)
+ft() {
+  if [[ -z "$1" ]]; then
+    print "\n${RED}ERROR:${NC}"
+    print "\n  ${GREEN}ft${NC} ${RED}<search-term>${NC}"
+    print "\n  Example: ft \"TODO\""
+    return 1
+  fi
+  rg "$@"
+}
+
+# Find edit (pick file, then edit)
+fe() {
+  local file
+  file=$(ff)
+  [[ -n "$file" ]] && ot "$file"
+}
+
+# Find search (search text, pick file, edit)
+fs() {
+  if [[ -z "$1" ]]; then
+    print "\n${RED}ERROR:${NC}"
+    print "\n  ${GREEN}fs${NC} ${RED}<search-term>${NC}"
+    print "\n  Searches for text, then lets you pick a file to edit"
+    return 1
+  fi
+  local file
+  file=$(rg --files-with-matches "$1" | fzf --preview "rg --color=always '$1' {}")
+  if [[ -n "$file" ]]; then
+    print "${BLUE}→ Opening${NC} ${YELLOW}$file${NC}"
+    ot "$file"
+  fi
+}
+
+# Find directory (pick and cd)
+fcd() {
+  local dir
+  dir=$(fd --type d --hidden --exclude .git | fzf)
+  if [[ -n "$dir" ]]; then
+    cd "$dir" && l
+  fi
+}
+
+# Find config (search in dotfiles)
+fc() {
+  if [[ -z "$1" ]]; then
+    print "\n${RED}ERROR:${NC}"
+    print "\n  ${GREEN}fc${NC} ${RED}<search-term>${NC}"
+    print "\n  Searches only in ~/.dotfiles"
+    return 1
+  fi
+  rg "$@" ~/.dotfiles
+}
+
+# Find kill (pick process and kill)
+fk() {
+  local pid
+  pid=$(ps aux | fzf --header="Pick process to kill" | awk '{print $2}')
+  if [[ -n "$pid" ]]; then
+    print "${BLUE}→ Killing process${NC} ${YELLOW}$pid${NC}"
+    kill -9 "$pid" && print "${GREEN}✓ Process killed${NC}"
+  fi
+}
+
+# Find history (pick command and run)
+fh() {
+  local cmd
+  cmd=$(history | fzf --tac | sed 's/^[[:space:]]*[0-9]*[[:space:]]*//')
+  if [[ -n "$cmd" ]]; then
+    print "${BLUE}→ Running:${NC} ${YELLOW}$cmd${NC}"
+    eval "$cmd"
+  fi
+}
+
+# Find branch (pick and checkout)
+fb() {
+  local branch
+  branch=$(git branch --all | grep -v HEAD | sed 's/^..//' | fzf)
+  if [[ -n "$branch" ]]; then
+    git checkout "$branch"
+  fi
+}
+
+# Find commit (pick and show)
+fco() {
+  local commit
+  commit=$(git log --oneline | fzf | awk '{print $1}')
+  if [[ -n "$commit" ]]; then
+    git show "$commit"
+  fi
+}
+
+# Find node version (pick and use) - you already have this in us()!
+fn() {
+  local version
+  version=$(nvm ls-remote | fzf --tac --prompt="Node > ")
+  if [[ -n "$version" ]]; then
+    version=$(echo "$version" | grep -Eo 'v[0-9]+\.[0-9]+\.[0-9]+')
+    nvm install "$version" && nvm use "$version"
+  fi
+}
+
+# Find port (what's running on which port)
+fport() {
+  lsof -i -P -n | grep LISTEN | fzf
+}
+
+# Find package (pick and install)
+fpkg() {
+  local pkg
+  pkg=$(brew search | fzf --preview 'brew info {}')
+  if [[ -n "$pkg" ]]; then
+    print "${BLUE}→ Installing${NC} ${YELLOW}$pkg${NC}"
+    brew install "$pkg"
+  fi
+}
 
 
 #################
 # Modern Tools
 #################
 
+alias grep='grep --color=always'
 alias lg='lazygit'           # Git TUI
 alias cat='bat'              # Better cat with syntax highlighting
-alias grep='grep --color=always'
 
 
 #################
