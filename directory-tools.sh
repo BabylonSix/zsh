@@ -58,7 +58,7 @@ zipr() {
 
 # Directory display (use eza if available, fallback to ls)
 if command -v eza &>/dev/null; then
-  ls() { eza "$@" --group-directories-first; } # eza globals
+  ls()   { eza "$@" --group-directories-first; } # eza globals
   l()    { clear; ls "$@" ; }
   la()   { clear; ls -a "$@"; }
   ll()   { clear; ls -lh "$@"; }
