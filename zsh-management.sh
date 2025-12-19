@@ -39,6 +39,7 @@ DevTools=(
   tldr                     # simplified man pages
   jq                       # JSON processor
   gdu                      # disk usage
+  entr                     # run command when file changes
 )
 
 # Media – for audio/video work
