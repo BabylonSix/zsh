@@ -58,32 +58,37 @@ zipr() {
 
 # Directory display (use eza if available, fallback to ls)
 if command -v eza &>/dev/null; then
-  l()   { clear; eza "$@"; }
-  la()  { clear; eza -a "$@"; }
-  ll()  { clear; eza -lh "$@"; }
-  lla() { clear; eza -alh "$@"; }
-  lh()  { clear; eza -d .[^.]* "$@"; }
-  llh() { clear; eza -dlh .[^.]* "$@"; }
-  lm()  { clear; eza -s modified "$@"; }
-  llm() { clear; eza -lhs modified "$@"; }
+  ls() { eza "$@" --group-directories-first; } # eza globals
+  l()    { clear; ls "$@" ; }
+  la()   { clear; ls -a "$@"; }
+  ll()   { clear; ls -lh "$@"; }
+  lla()  { clear; ls -alh "$@"; }
+  llg()  { clear; ls -lh --git-repos "$@"; }
+  llga() { clear; ls -alh --git-repos "$@"; }
+  lh()   { clear; ls -d .[^.]* "$@"; }
+  llh()  { clear; ls -dlh repos .[^.]* "$@"; }
+  lm()   { clear; ls -s modified "$@"; }
+  llm()  { clear; ls -lhs modified "$@"; }
 else
-  ls()  { command ls -G "$@"; }
-  l()   { clear; ls "$@"; }
-  ll()  { clear; ls -lh "$@"; }
-  la()  { clear; ls -A "$@"; }
-  lla() { clear; ls -Alh "$@"; }
-  lh()  { clear; ls -d .[^.]* "$@"; }
-  llh() { clear; ls -dlh .[^.]* "$@"; }
-  lm()  { clear; ls -t "$@"; }
-  llm() { clear; ls -lht "$@"; }
+  ls()   { command ls -G "$@"; }
+  l()    { clear; ls "$@"; }
+  ll()   { clear; ls -lh "$@"; }
+  la()   { clear; ls -A "$@"; }
+  lla()  { clear; ls -Alh "$@"; }
+  lh()   { clear; ls -d .[^.]* "$@"; }
+  llh()  { clear; ls -dlh .[^.]* "$@"; }
+  lm()   { clear; ls -t "$@"; }
+  llm()  { clear; ls -lht "$@"; }
 fi
 
 
 # Directory tree
-tree() { eza --tree --color=always -I ".git|node_modules" "$@"; }
+tree() { eza --tree --color=always --group-directories-first -I ".git|node_modules" "$@"; }
 t() { tree "$@"; }
+ta() { tree -a "$@"; }
 
 tl() { tree -L "$@"; }
+tla() { tree -L -a "$@"; }
 
 t2() { tl 2; }
 t3() { tl 3; }
