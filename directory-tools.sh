@@ -87,8 +87,8 @@ tree() { eza --tree --color=always --group-directories-first -I ".git|node_modul
 t() { tree "$@"; }
 ta() { tree -a "$@"; }
 
-tl() { tree -L "$@"; }
-tla() { tree -L -a "$@"; }
+td() { tree -L "$@"; }
+tda() { tree -a -L "$@"; }
 
 t2() { tl 2; }
 t3() { tl 3; }
