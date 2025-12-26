@@ -97,6 +97,7 @@ fi
 . ~/.dotfiles/zsh/package-managers.sh      # Homebrew/nvm/pyenv/zinit
 . ~/.dotfiles/zsh/directory-tools.sh       # Directory creation | navigation helpers
 . ~/.dotfiles/zsh/directories.sh           # Predefined directory shortcuts
+                                           # Provides d, f, md, u
 . ~/.dotfiles/zsh/tools.sh                 # Tools & utilitie
 . ~/.dotfiles/zsh/node-management.sh       # NVM & NPM setup + global packages
 . ~/.dotfiles/zsh/node-tools.sh            # Node/NPM tools, completions, helpers
@@ -104,6 +105,18 @@ fi
 . ~/.dotfiles/zsh/ssh.sh                   # SSH configuration
 . ~/.dotfiles/zsh/git.sh                   # Git configuration
 . ~/.dotfiles/zsh/alias.sh                 # Shortcut / alias commands
+
+
+#################
+# Integrated Tools (Optional)
+#################
+
+# dotconf - Config portability (uses BRAVØ affordances)
+[[ -f ~/.dotfiles/dotconf/dotconf.sh ]] && . ~/.dotfiles/dotconf/dotconf.sh
+
+# stager - Test environments (uses BRAVØ affordances)
+[[ -f ~/.dotfiles/stager/stager.sh ]] && . ~/.dotfiles/stager/stager.sh
+
 
 #################
 # Optional / Project-Specific
@@ -115,6 +128,11 @@ fi
 
 # (FZF is already handled in tools.sh; no need to source ~/.fzf.zsh again here)
 
+
+#################
+# Optional / (non Bravo tools or integrations)
+#################
+
 # Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/bravo/.lmstudio/bin"
+export PATH="$PATH:/Users/$USER/.lmstudio/bin"
 # End of LM Studio CLI section
