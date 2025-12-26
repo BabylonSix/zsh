@@ -25,7 +25,7 @@ ZshPlugins=(
   zsh-autosuggestions
 )
 
-# Dev tools - safe to add/remove
+# Dev tools - our deve dependencies
 DevTools=(
   bat                      # better cat
   bat-extras               # batgrep, batman, batdiff, prettybat
@@ -34,12 +34,14 @@ DevTools=(
   fd                       # fast find
   neovim                   # editor
   lazygit                  # git TUI
+  delta                    # git diff viewer
   tmux                     # terminal multiplexer
   yazi                     # file manager
   tldr                     # simplified man pages
   jq                       # JSON processor
   gdu                      # disk usage
   entr                     # run command when file changes
+  rsync                    # file sync
 )
 
 # Media – for audio/video work
@@ -52,7 +54,6 @@ MediaTools=(
 NetworkTools=(
   httpie                   # http client
   wget                     # download tool
-  rsync                    # file sync
   nmap                     # network scanner
 )
 
